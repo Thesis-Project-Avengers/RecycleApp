@@ -27,7 +27,6 @@ export default function App() {
           inactiveTintColor: "#222222"
         }}
       >
-
         <Tab.Screen
           options={{
             tabBarIcon: ({ focused, color, size }) => (
