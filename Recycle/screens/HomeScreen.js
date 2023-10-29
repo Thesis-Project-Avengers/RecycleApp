@@ -6,9 +6,7 @@ const HomeScreen = ({navigation}) => {
     return (
         <View style={styles.container}>
             <Text>HomeScreen</Text>
-            <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate("Exapmle")} >
-                <Text>Press Here To navigate </Text>
-            </TouchableOpacity>
+           
 
 
         </View>
