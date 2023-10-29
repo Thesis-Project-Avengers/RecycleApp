@@ -1,37 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, Polyline } from 'react-native-maps';
 import * as Location from 'expo-location';
 import MapViewDirections from 'react-native-maps-directions';
 
 
 export default function Map() {
-    // ADD THis to the .env
   const API_KEY = 'AIzaSyCz7OmCHc00wzjQAp4KcZKzzNK8lHCGkgo';
-  // your current position 
   const [currentRegion, setCurrentRegion] = useState(null);
-    // the selected position
   const [selectedPos, setselectedPos] = useState(null);
 
 
   useEffect(() => {
 
     (async () => {
-        // get the current position
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         console.error('Permission to access location was denied');
         return;
       }
+
       let location = await Location.getCurrentPositionAsync({});
       const { latitude, longitude } = location.coords;
-     
+
       setCurrentRegion({
         latitude,
         longitude,
+        latitudeDelta: 0.0922, // Adjust as needed
+        longitudeDelta: 0.0421, // Adjust as needed
       });
     })();
-
   }, []);
 
   const styles = StyleSheet.create({
@@ -44,17 +42,23 @@ export default function Map() {
     },
   });
 
+
+
+
+
+
+  
+
+
   return (
     <View style={styles.container}>
       {currentRegion ? (
-        //the map component
         <MapView
           style={styles.map} initialRegion={currentRegion}
           showsUserLocation
-          //set the selected position 
           onPress={(e)=> setselectedPos(e.nativeEvent.coordinate)}
+
         >
-          {/* the marker of your position */}
           <Marker
             draggable
             coordinate={currentRegion}
@@ -66,9 +70,6 @@ export default function Map() {
               style={{ width: 30, height: 30 }} // Set the width and height as needed
             />
           </Marker>
-
-
-          {/* if u have a selected postion the route will be showen */}
          { selectedPos ? <Marker
             draggable
             coordinate={selectedPos}
@@ -83,7 +84,6 @@ export default function Map() {
             />
           </Marker> : null}
 
-    {/*  the route  */}
           <MapViewDirections
             origin={currentRegion}
             destination={selectedPos}
