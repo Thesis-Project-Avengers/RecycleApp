@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './screens/HomeScreen';
+import Map from "./screens/Map"
 import ExapmleScreen from './screens/ExapmleScreen';
 import { AnimatedTabBarNavigator } from 'react-native-animated-nav-tab-bar';
 
@@ -63,7 +64,7 @@ export default function App() {
               />
             )
           }}
-          name="Map" component={HomeScreen} />
+          name="Map" component={Map} />
         <Tab.Screen
           options={{
             tabBarIcon: ({ focused, color, size }) => (
