@@ -1,14 +1,11 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({ navigation }) => {
     //use navigation to navigate to another screen
     return (
         <View style={styles.container}>
             <Text>HomeScreen</Text>
-           
-
-
         </View>
     )
 }
