@@ -45,14 +45,14 @@ export default function App() {
           options={{
             tabBarIcon: ({ focused, color, size }) => (
               <Icon
-                name="book"
+                name="lightbulb-o"
                 size={size ? size : 24}
                 color={focused ? color : "#222222"}
                 focused={focused}
               />
             )
           }}
-          name="Feeds" component={ExapmleScreen} />
+          name="Tips" component={ExapmleScreen} />
         <Tab.Screen
           options={{
             tabBarIcon: ({ focused, color, size }) => (
