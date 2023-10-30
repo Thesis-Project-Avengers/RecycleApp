@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image,ActivityIndicator } from "react-native";
 import MapView, { Marker, Polyline } from "react-native-maps";
 import * as Location from "expo-location";
 import MapViewDirections from "react-native-maps-directions";
 import customMapStyleJSON from "../mapStyle";
 import OnePosition from "../components/onePosition";
+import Modal from 'react-native-modal';
 export default function Map() {
   const API_KEY = "AIzaSyCz7OmCHc00wzjQAp4KcZKzzNK8lHCGkgo";
   const [currentRegion, setCurrentRegion] = useState(null);
   const [selectedPos, setselectedPos] = useState(null);
+  const [visibleModal, setVisibleModal] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -88,6 +90,12 @@ export default function Map() {
       },
     },
   ];
+console.log(selectedPos);
+  const renderModalContent = () => (
+    <View style={styles.modalContent}>
+      <Text>{selectedPos.name}</Text>
+    </View>
+  );
 
   const styles = StyleSheet.create({
     container: {
@@ -99,6 +107,19 @@ export default function Map() {
       width: "100%",
       height: "100%",
     },
+    modalContent: {
+      height:'50%',
+      backgroundColor: 'white',
+      padding: 22,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderTopLeftRadius: 50,
+      borderTopRightRadius: 50,
+    },
+    bottomModal: {
+      justifyContent: 'flex-end',
+      margin: 0,
+    }
   });
 
   return (
@@ -111,18 +132,20 @@ export default function Map() {
           showsUserLocation
         >
           {places.map((loc) => {
-            return <OnePosition loc={loc} key={loc.id} setselectedPos={setselectedPos} />
+            return <OnePosition loc={loc} key={loc.id} setselectedPos={setselectedPos} setVisibleModal={setVisibleModal}/>
              
             ;
           })}
+          {selectedPos ?
 
           <MapViewDirections
             origin={currentRegion}
-            destination={selectedPos}
+            destination={selectedPos.location}
             apikey={API_KEY}
             strokeWidth={4}
             strokeColor="green"
-          />
+          /> : null
+        }
         </MapView>
       ) : (
         <>
@@ -132,6 +155,14 @@ export default function Map() {
         </Text>
         </>
       )}
+       <Modal
+        isVisible={visibleModal === 1}
+        style={styles.bottomModal}
+        onSwipeComplete={() => setVisibleModal(null)} 
+        swipeDirection={'down'}
+      >
+        {renderModalContent()}
+      </Modal>
     </View>
   );
 }

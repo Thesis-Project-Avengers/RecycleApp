@@ -26,6 +26,7 @@
     "react-native-animated-nav-tab-bar": "^3.1.10",
     "react-native-maps": "1.7.1",
     "react-native-maps-directions": "^1.9.0",
+    "react-native-modal": "^13.0.1",
     "react-native-phone-number-input": "^2.1.0",
     "react-native-safe-area-context": "4.6.3",
     "react-native-screens": "~3.22.0",

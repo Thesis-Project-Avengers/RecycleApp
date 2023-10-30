@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 const { width, height } = Dimensions.get("window");
-const COLORS = { primary: "#282534", white: "#ffffff" };
+const COLORS = { primary: "white", white: "green" };
 const slides = [
   {
     id: "1",
@@ -34,10 +34,10 @@ const slides = [
 ];
 const Slide = ({ item }) => {
   return (
-    <View style={{ alignItems: "center" }}>
+    <View style={{ flex:1,alignItems: "center",justifyContent:"center" }}>
       <Image
         source={item.image}
-        style={{ height: "75%", width, resizeMode: "contain" }}
+        style={{ height: "50%", width, resizeMode: "contain",paddingBottom:"20"}}
       />
       <Text style={styles.title}>{item.title}</Text>
       <Text style={styles.subtitle}>{item.subtitle}</Text>
