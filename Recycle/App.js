@@ -6,6 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import OnboardingScreen from "./components/OnBroadingScreen";
+import SecondOnBording from "./components/SecondOnBording";
 import HomeScreen from './screens/HomeScreen';
 import Map from "./screens/Map"
 import ExapmleScreen from './screens/ExapmleScreen';
@@ -38,7 +39,7 @@ export default function App() {
   return (
     <NavigationContainer >
       <Stack.Navigator initialRouteName={"ombording"} screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="ombording" component={OnboardingScreen} />
+        <Stack.Screen name="ombording" component={OnboardingScreen/* SecondOnBording*/} />
         <Stack.Screen name="auth" component={AuthStack} />
         <Stack.Screen name="App" component={RealApp} />
       </Stack.Navigator>
