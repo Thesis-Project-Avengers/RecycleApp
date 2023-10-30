@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { StatusBar } from 'expo-status-bar';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { StyleSheet, Text, View } from 'react-native';
@@ -17,18 +17,28 @@ const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator()
 export default function App() {
   //Onboarding 
-  const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState(null)
+  // const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState(true)
+  const [first,setFirst] = useState(true);
+
 
   const fetch = async () => {
-    const appData = await AsyncStorage.getItem("isAppFirstLaunched")
-    console.log(appData);
-    if (appData == null) {
-      setIsAppFirstLaunched(true)
-      AsyncStorage.setItem('isAppFirstLaunched', 'true')
-    } else {
-      setIsAppFirstLaunched(false)
-      AsyncStorage.setItem('isAppFirstLaunched', 'false')
-    }
+    const x = await AsyncStorage.getItem("first")
+    console.log(x);
+     if(!x){
+      setFirst(false)
+     }else{
+      AsyncStorage.setItem("first","false") 
+     }
+  
+    // const appData = await AsyncStorage.getItem("isAppFirstLaunched")
+    // console.log(appData);
+    // if (appData == true) {
+    //   setIsAppFirstLaunched(false)
+    //   AsyncStorage.setItem('isAppFirstLaunched', 'false')
+    // } else {
+    //   setIsAppFirstLaunched(true)
+    //   AsyncStorage.setItem('isAppFirstLaunched', 'true')
+    // }
   }
   React.useEffect(() => {
     fetch()
