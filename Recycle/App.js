@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { StatusBar } from 'expo-status-bar';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { StyleSheet, Text, View } from 'react-native';
@@ -13,33 +13,41 @@ import ExapmleScreen from './screens/ExapmleScreen';
 import { AnimatedTabBarNavigator } from 'react-native-animated-nav-tab-bar';
 import SignIn from "./screens/SignIn";
 import ConfirmCode from "./screens/ConfirmCode";
-import ScanQR from "./screens/ScanQR";
-import GenerateQr from "./screens/GenrateQR";
-
+import ChatScreen from "./screens/ChatScreen";
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator()
 export default function App() {
   //Onboarding 
-  const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState(null)
+  // const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState(true)
+  const [first,setFirst] = useState(true);
+
 
   const fetch = async () => {
-    const appData = await AsyncStorage.getItem("isAppFirstLaunched")
-    console.log(appData);
-    if (appData == null) {
-      setIsAppFirstLaunched(true)
-      AsyncStorage.setItem('isAppFirstLaunched', 'true')
-    } else {
-      setIsAppFirstLaunched(false)
-      AsyncStorage.setItem('isAppFirstLaunched', 'false')
-    }
+    const x = await AsyncStorage.getItem("first")
+    console.log(x);
+     if(!x){
+      setFirst(false)
+     }else{
+      AsyncStorage.setItem("first","false") 
+     }
+  
+    // const appData = await AsyncStorage.getItem("isAppFirstLaunched")
+    // console.log(appData);
+    // if (appData == true) {
+    //   setIsAppFirstLaunched(false)
+    //   AsyncStorage.setItem('isAppFirstLaunched', 'false')
+    // } else {
+    //   setIsAppFirstLaunched(true)
+    //   AsyncStorage.setItem('isAppFirstLaunched', 'true')
+    // }
   }
   React.useEffect(() => {
     fetch()
   }, [])
   return (
     <NavigationContainer >
-      <Stack.Navigator initialRouteName={"ombording"} screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="ombording" component={OnboardingScreen/* SecondOnBording*/} />
+      <Stack.Navigator initialRouteName={"App"} screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="ombording" component={OnboardingScreen} />
         <Stack.Screen name="auth" component={AuthStack} />
         <Stack.Screen name="App" component={RealApp} />
       </Stack.Navigator>
@@ -60,8 +68,7 @@ export const RealApp = () => {
         tabBarBackground: "#f7f6f6",
         shadow: true,
         tabButtonLayout: "horizontal",
-        dotCornerRadius: 100,
-        floating: true,
+        dotCornerRadius: 15,
       }}
       tabBarOptions={{
         activeBackgroundColor: "#73d905",
@@ -117,7 +124,7 @@ export const RealApp = () => {
             />
           )
         }}
-        name="Chat" component={HomeScreen} />
+        name="Chat" component={ChatScreen} />
       <Tab.Screen
         options={{
           tabBarIcon: ({ focused, color, size }) => (
