@@ -12,6 +12,7 @@ import ExapmleScreen from './screens/ExapmleScreen';
 import { AnimatedTabBarNavigator } from 'react-native-animated-nav-tab-bar';
 import SignIn from "./screens/SignIn";
 import ConfirmCode from "./screens/ConfirmCode";
+import ChatScreen from "./screens/ChatScreen";
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator()
 export default function App() {
@@ -113,7 +114,7 @@ export const RealApp = () => {
             />
           )
         }}
-        name="Chat" component={HomeScreen} />
+        name="Chat" component={ChatScreen} />
       <Tab.Screen
         options={{
           tabBarIcon: ({ focused, color, size }) => (
