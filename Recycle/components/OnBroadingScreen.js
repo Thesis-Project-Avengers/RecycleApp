@@ -37,7 +37,11 @@ const Slide = ({ item }) => {
     <View style={{ flex:1,alignItems: "center",justifyContent:"center" }}>
       <Image
         source={item.image}
+<<<<<<< HEAD
         style={{ height: "50%", width, resizeMode: "contain",paddingBottom:"20"}}
+=======
+        style={{ height: "50%", width, resizeMode: "contain" }}
+>>>>>>> acbfac34b27912958bd358773f56955ddbbab664
       />
       <Text style={styles.title}>{item.title}</Text>
       <Text style={styles.subtitle}>{item.subtitle}</Text>
@@ -79,7 +83,7 @@ const OnboardingScreen = ({ navigation }) => {
         <View style={{ marginBottom: 20 }}>
           {currentSlideIndex == slides.length - 1 ? (
             <View style={{ height: 50 }}>
-              <TouchableOpacity style={[styles.btn]} onPress={()=>navigation.navigate("App")}>
+              <TouchableOpacity style={[styles.btn]} onPress={()=>navigation.navigate("auth")}>
                 <Text style={{ fontWeight: "bold", fontSize: 15 }}>
                   GET sTARTED
                 </Text>

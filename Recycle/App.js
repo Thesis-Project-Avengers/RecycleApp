@@ -11,10 +11,9 @@ import Map from "./screens/Map"
 import ExapmleScreen from './screens/ExapmleScreen';
 import { AnimatedTabBarNavigator } from 'react-native-animated-nav-tab-bar';
 import SignIn from "./screens/SignIn";
-
+import ConfirmCode from "./screens/ConfirmCode";
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator()
-
 export default function App() {
   //Onboarding 
   // const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState(true)
@@ -43,22 +42,21 @@ export default function App() {
   React.useEffect(() => {
     fetch()
   }, [])
-
   return (
     <NavigationContainer >
-      <Stack.Navigator initialRouteName={first?"ombording":"App"} screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName={"ombording"} screenOptions={{ headerShown: false }}>
         <Stack.Screen name="ombording" component={OnboardingScreen} />
         <Stack.Screen name="auth" component={AuthStack} />
         <Stack.Screen name="App" component={RealApp} />
       </Stack.Navigator>
     </NavigationContainer>
   )
-
 }
-
 export const AuthStack = () => {
   return <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="signIn" component={SignIn} />
+    <Stack.Screen name="confirmCode" component={ConfirmCode} />
+    
   </Stack.Navigator>
 }
 export const RealApp = () => {
