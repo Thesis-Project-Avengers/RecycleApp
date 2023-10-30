@@ -5,7 +5,7 @@ const HomeScreen = ({ navigation }) => {
     //use navigation to navigate to another screen
     return (
         <View style={styles.container}>
-            <Text>HomeScreen</Text>
+            <Text>Home Screen</Text>
         </View>
     )
 }

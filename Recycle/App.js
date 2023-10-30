@@ -11,14 +11,11 @@ import Map from "./screens/Map"
 import ExapmleScreen from './screens/ExapmleScreen';
 import { AnimatedTabBarNavigator } from 'react-native-animated-nav-tab-bar';
 import SignIn from "./screens/SignIn";
-
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator()
-
 export default function App() {
   //Onboarding 
   const [isAppFirstLaunched, setIsAppLastLaunched] = React.useState(false)
-
   const fetch = async () => {
     const appData = await AsyncStorage.getItem("isAppFirstLaunched")
     console.log(appData);
@@ -28,14 +25,10 @@ export default function App() {
     } else {
       setIsAppLastLaunched(false)
     }
-
   }
-
   React.useEffect(() => {
     fetch()
   }, [])
-
-
   return (
     <NavigationContainer >
       <Stack.Navigator initialRouteName="ombording" screenOptions={{ headerShown: false }}>
@@ -45,12 +38,7 @@ export default function App() {
       </Stack.Navigator>
     </NavigationContainer>
   )
-
-
-
-
 }
-
 export const AuthStack = () => {
   return <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="signIn" component={SignIn} />
@@ -133,11 +121,6 @@ export const RealApp = () => {
           )
         }}
         name="Profile" component={HomeScreen} />
-
-
-
-
-
     </Tab.Navigator>
   )
 
