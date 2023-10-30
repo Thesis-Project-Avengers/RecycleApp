@@ -36,7 +36,7 @@ export default function App() {
                 size={size ? size : 24}
                 color={focused ? color : "#222222"}
                 focused={focused}
-              // color={color}
+            
               />
             )
           }}
