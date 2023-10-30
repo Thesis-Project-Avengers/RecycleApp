@@ -92,6 +92,8 @@ export default function Map() {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
+      justifyContent: 'center',
+      alignItems:"center",
     },
     map: {
       width: "100%",
@@ -123,7 +125,12 @@ export default function Map() {
           />
         </MapView>
       ) : (
-        <Text>Loading...</Text>
+        <>
+        <ActivityIndicator size="large"  color="green"/>
+        <Text>
+          Loading
+        </Text>
+        </>
       )}
     </View>
   );
