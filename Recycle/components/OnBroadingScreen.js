@@ -65,7 +65,7 @@ const OnboardingScreen = ({ navigation }) => {
           }}
         >
           {slides.map((_, index) => (
-            <View
+            <View key={index}
               style={[
                 styles.indicator,
                 currentSlideIndex == index && {
@@ -79,7 +79,7 @@ const OnboardingScreen = ({ navigation }) => {
         <View style={{ marginBottom: 20 }}>
           {currentSlideIndex == slides.length - 1 ? (
             <View style={{ height: 50 }}>
-              <TouchableOpacity style={[styles.btn]} onPress={()=>navigation.navigate("HomeScreen")}>
+              <TouchableOpacity style={[styles.btn]} onPress={()=>navigation.navigate("App")}>
                 <Text style={{ fontWeight: "bold", fontSize: 15 }}>
                   GET sTARTED
                 </Text>
@@ -163,13 +163,13 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     fontSize: 22,
     fontWeight: "bold",
-    maringTop: 20,
+    // maringTop: 20,
     textAlign: "center",
   },
   subtitle: {
     color: COLORS.white,
     fontSize: 13,
-    maringTop: 10,
+    // maringTop: 10,
     maxWidth: "70%",
     textAlign: "center",
     lineHeight: 23,
