@@ -12,6 +12,7 @@ import ExapmleScreen from './screens/ExapmleScreen';
 import { AnimatedTabBarNavigator } from 'react-native-animated-nav-tab-bar';
 import SignIn from "./screens/SignIn";
 import ConfirmCode from "./screens/ConfirmCode";
+import ChatScreen from "./screens/ChatScreen";
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator()
 export default function App() {
@@ -44,7 +45,7 @@ export default function App() {
   }, [])
   return (
     <NavigationContainer >
-      <Stack.Navigator initialRouteName={"ombording"} screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName={"App"} screenOptions={{ headerShown: false }}>
         <Stack.Screen name="ombording" component={OnboardingScreen} />
         <Stack.Screen name="auth" component={AuthStack} />
         <Stack.Screen name="App" component={RealApp} />
@@ -66,8 +67,7 @@ export const RealApp = () => {
         tabBarBackground: "#f7f6f6",
         shadow: true,
         tabButtonLayout: "horizontal",
-        dotCornerRadius: 100,
-        floating: true,
+        dotCornerRadius: 15,
       }}
       tabBarOptions={{
         activeBackgroundColor: "#73d905",
@@ -123,7 +123,7 @@ export const RealApp = () => {
             />
           )
         }}
-        name="Chat" component={HomeScreen} />
+        name="Chat" component={ChatScreen} />
       <Tab.Screen
         options={{
           tabBarIcon: ({ focused, color, size }) => (

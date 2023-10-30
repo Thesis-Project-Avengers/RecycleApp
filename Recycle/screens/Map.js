@@ -93,7 +93,7 @@ export default function Map() {
 console.log(selectedPos);
   const renderModalContent = () => (
     <View style={styles.modalContent}>
-      <Text>{selectedPos.name}</Text>
+      <Text>{selectedPos?.name}</Text>
     </View>
   );
 
