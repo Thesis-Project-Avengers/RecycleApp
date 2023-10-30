@@ -1,4 +1,4 @@
-import  "dotenv/config"
+// import  "dotenv/config"
 import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
 import { initializeAuth, getReactNativePersistence } from "firebase/auth"
@@ -10,12 +10,12 @@ import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 
 // Your web app's Firebase configuration
 export const firebaseConfig = {
-  apiKey: process.env.APIKEY,
-  authDomain: process.env.AUTHDOMAIN,
-  projectId: process.env.PROJECTID,
-  storageBucket: process.env.STORGAEBUCKET,
-  messagingSenderId: process.env.MESSAGINGSENDERID,
-  appId: process.env.APPID
+  apiKey: "AIzaSyDIX9agEqxrTUPV7qydY49Ja40WJ3z_SIg",
+  authDomain: "recycle-20fae.firebaseapp.com",
+  projectId: "recycle-20fae",
+  storageBucket: "recycle-20fae.appspot.com",
+  messagingSenderId: "637778408728",
+  appId: "1:637778408728:web:cb36d1547108f4cd659a6d"
 };
 
 // Initialize Firebase
