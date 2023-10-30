@@ -117,22 +117,10 @@ export default function App() {
 
 
       </Tab.Navigator>
-      {/* <Stack.Navigator initialRouteName='Home'>
-        <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Exapmle" component={ExapmleScreen} options={{ headerShown: false }} />
-        here you  put your screens like the previous one 
-      </Stack.Navigator> */}
-
+      
     </NavigationContainer>
     )
-    // <NavigationContainer >
-    //   <Stack.Navigator initialRouteName='Home'>
-    //     <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-    //     <Stack.Screen name="Exapmle" component={ExapmleScreen} options={{ headerShown: false }} />
-    //     {/* here you  put your screens like the previous one  */}
-    //   </Stack.Navigator>
 
-    // </NavigationContainer>
     
   
 }
