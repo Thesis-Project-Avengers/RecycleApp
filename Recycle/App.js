@@ -15,15 +15,17 @@ const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator()
 export default function App() {
   //Onboarding 
-  const [isAppFirstLaunched, setIsAppLastLaunched] = React.useState(false)
+  const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState(null)
+
   const fetch = async () => {
     const appData = await AsyncStorage.getItem("isAppFirstLaunched")
     console.log(appData);
     if (appData == null) {
-      setIsAppLastLaunched(true)
-      AsyncStorage.setItem('isAppLastLaunched', 'false')
+      setIsAppFirstLaunched(true)
+      AsyncStorage.setItem('isAppFirstLaunched', 'true')
     } else {
-      setIsAppLastLaunched(false)
+      setIsAppFirstLaunched(false)
+      AsyncStorage.setItem('isAppFirstLaunched', 'false')
     }
   }
   React.useEffect(() => {
@@ -31,7 +33,7 @@ export default function App() {
   }, [])
   return (
     <NavigationContainer >
-      <Stack.Navigator initialRouteName="ombording" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName={isAppFirstLaunched?"ombording":"App"} screenOptions={{ headerShown: false }}>
         <Stack.Screen name="ombording" component={OnboardingScreen} />
         <Stack.Screen name="auth" component={AuthStack} />
         <Stack.Screen name="App" component={RealApp} />
