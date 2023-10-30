@@ -7,7 +7,6 @@ const ChatScreen = () => {
   return (
     <View style={{ padding: 10, gap: 25, backgroundColor: "white" }}>
       <ChatHeader />
-
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -19,17 +18,7 @@ const ChatScreen = () => {
         <ChatBullet image="https://scontent.ftun9-1.fna.fbcdn.net/v/t1.6435-9/117819560_2661299077469617_4702109921898009994_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=be3454&_nc_ohc=NVXqH3bdGdEAX93wn09&_nc_ht=scontent.ftun9-1.fna&oh=00_AfCZ2FfSV-Y-u8SQaE1tPWMYvSAMPcY1AF3RyjuUOdAOrA&oe=6567978C" />
         <ChatBullet image="https://scontent.ftun9-1.fna.fbcdn.net/v/t39.30808-6/292294810_1093193028298518_8936023195463806182_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=5f2048&_nc_ohc=-hjlA_8N0TAAX9OkGdi&_nc_oc=AQlWgMCsZtr04ZHiZwKF6YoBKqNiTglW1WEXfL3rjFNho9E8Gbqh3tgYUbmgZaHKe2g&_nc_ht=scontent.ftun9-1.fna&oh=00_AfD48MhGWcnm-V1Rz5I9JjASJtgAZ1uPdL3QKWPshYirJA&oe=6544DCA8" />
       </ScrollView>
-      <ScrollView>
-        <ChatRow />
-        <ChatRow />
-        <ChatRow />
-        <ChatRow />
-        <ChatRow />
-        <ChatRow />
-        <ChatRow />
-        <ChatRow />
-        <ChatRow />
-        <ChatRow />
+      <ScrollView style={{ height: "67%" }}>
         <ChatRow />
         <ChatRow />
         <ChatRow />
@@ -54,7 +43,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   chatBullet: {
-    // backgroundColor:"red" ,
+    height: 110,
     gap: 10,
   },
 });

@@ -67,8 +67,7 @@ export const RealApp = () => {
         tabBarBackground: "#f7f6f6",
         shadow: true,
         tabButtonLayout: "horizontal",
-        dotCornerRadius: 100,
-        floating: true,
+        dotCornerRadius: 15,
       }}
       tabBarOptions={{
         activeBackgroundColor: "#73d905",
