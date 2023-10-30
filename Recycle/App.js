@@ -46,7 +46,7 @@ export const AuthStack = () => {
   return <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="signIn" component={SignIn} />
     <Stack.Screen name="confirmCode" component={ConfirmCode} />
-    
+
   </Stack.Navigator>
 }
 export const RealApp = () => {
