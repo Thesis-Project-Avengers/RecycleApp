@@ -14,7 +14,7 @@
     "@react-navigation/native-stack": "^6.9.16",
     "dotenv": "^16.3.1",
     "expo": "~49.0.15",
-    "expo-barcode-scanner": "^12.7.0",
+    "expo-barcode-scanner": "~12.5.3",
     "expo-firebase-recaptcha": "^2.3.1",
     "expo-location": "~16.1.0",
     "expo-status-bar": "~1.6.0",

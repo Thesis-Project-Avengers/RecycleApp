@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
-const ScanCode = () => {
+const ScanQR = () => {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
     const [text, setText] = useState("Not Yet Scanned");
@@ -55,7 +55,7 @@ const ScanCode = () => {
     );
 }
 
-export default ScanCode
+export default ScanQR
 
 const styles = StyleSheet.create({
     container: {

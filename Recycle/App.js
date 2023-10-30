@@ -11,6 +11,8 @@ import Map from "./screens/Map"
 import ExapmleScreen from './screens/ExapmleScreen';
 import { AnimatedTabBarNavigator } from 'react-native-animated-nav-tab-bar';
 import SignIn from "./screens/SignIn";
+import ScanQR from "./screens/ScanQR";
+import GenerateQr from "./screens/GenrateQR";
 
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator()
