@@ -29,7 +29,7 @@ const OnBroadingScreen = () => {
       subtitle: "Explore and enjoy our app's many features.",
       image: (
         <Image
-          source={require("../assets/navigation.png")}
+          source={require("../assets/recycle.png")}
           style={styles.imageStyle}
         />
       ),
