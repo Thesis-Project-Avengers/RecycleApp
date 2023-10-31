@@ -14,6 +14,7 @@ import { AnimatedTabBarNavigator } from 'react-native-animated-nav-tab-bar';
 import SignIn from "./screens/SignIn";
 import ConfirmCode from "./screens/ConfirmCode";
 import ChatScreen from "./screens/ChatScreen";
+import Proifle from "./screens/Proifle";
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator()
 export default function App() {
@@ -136,7 +137,7 @@ export const RealApp = () => {
             />
           )
         }}
-        name="Profile" component={HomeScreen} />
+        name="Profile" component={Proifle} />
     </Tab.Navigator>
   )
 
