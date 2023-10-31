@@ -1,53 +1,65 @@
 import Onboarding from "react-native-onboarding-swiper";
-import React from 'react'
-import { StyleSheet,Image } from "react-native";
+import React from "react";
+import { Image, StyleSheet } from "react-native";
 
 const OnBroadingScreen = () => {
   const pages = [
     {
-      title: 'Welcome to MyApp',
-      subtitle: 'Discover the amazing features of our app.',
-      image: <Image source={require("../assets/recycle.png")}/>,
+      title: "Welcome to MyApp",
+      subtitle: "Discover the amazing features of our app.",
+      image: (
+        <Image
+          source={require("../assets/earth.png")}
+          style={styles.imageStyle}
+        />
+      ),
     },
     {
-      title: 'Get Started',
-      subtitle: 'Create an account and start using our app today.',
-      image: <Image source={require("../assets/placeholder.png")} />,
+      title: "Get Started",
+      subtitle: "Create an account and start using our app today.",
+      image: (
+        <Image
+          source={require("../assets/recycle_earth.png")}
+          style={styles.imageStyle}
+        />
+      ),
     },
     {
-      title: 'Explore',
-      subtitle: 'Explore and enjoy our app\'s many features.',
-      image: <Image source={require("../assets/navigation.png")}/>,
+      title: "Explore",
+      subtitle: "Explore and enjoy our app's many features.",
+      image: (
+        <Image
+          source={require("../assets/navigation.png")}
+          style={styles.imageStyle}
+        />
+      ),
     },
   ];
-  const customStyles = {
-    title: {
-      fontSize: 24, // Adjust the font size as needed
-      color: 'blue',$ // Change the color as desired
-    },
-    
-    image: {
-      fontSize: 16, // Adjust the font size as needed
-      color: 'green', // Change the color as desired
-    },
-  };
-  return (
-    <Onboarding
-  pages={pages}
-  titleStyles={customStyles.title}
-  subTitleStyles={customStyles.subtitle}
-/>
 
-  )
-}
+  return <Onboarding pages={pages} 
+  titleStyles={styles.titleStyle}
+  subTitleStyles={styles.subtitleStyle}
+  bottomBarHighlight={false} 
+  bottomBarColor="green" 
+  />;
+};
+const styles = StyleSheet.create({
+  imageStyle: {
+    width: 200,
+    height: 200,
+    resizeMode: "contain",
+  },
+  titleStyle: {
+    color: 'green', 
+    fontSize: 24, 
+  },
+  subtitleStyle: {
+    color: 'green', 
+    fontSize: 16,
+  }
+});
 
-
-
-export default OnBroadingScreen
-
-
-
-
+export default OnBroadingScreen;
 
 // import React, { useState } from "react";
 // import {
