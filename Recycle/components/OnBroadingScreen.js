@@ -23,7 +23,7 @@ const OnBroadingScreen = () => {
   const customStyles = {
     title: {
       fontSize: 24, // Adjust the font size as needed
-      color: 'blue', // Change the color as desired
+      color: 'blue',$ // Change the color as desired
     },
     
     image: {
