@@ -71,7 +71,7 @@ export const RealApp = () => {
         dotCornerRadius: 15,
       }}
       tabBarOptions={{
-        activeBackgroundColor: "#73d905",
+        activeBackgroundColor: "#93C572",
         activeTintColor: "white",
         inactiveTintColor: "#222222"
       }}
