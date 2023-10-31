@@ -2,7 +2,7 @@ import { View, Text } from "react-native";
 import React from "react";
 import { Marker } from "react-native-maps";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-const OnePosition = ({loc,setselectedPos,setVisibleModal}) => {
+const OnePosition = ({loc,setselectedPos,setVisibleModal,getSelectedInformation}) => {
     
   return (
     <Marker
@@ -10,7 +10,7 @@ const OnePosition = ({loc,setselectedPos,setVisibleModal}) => {
     //     latitude: loc.location.latitude,
     //     longitude: loc.location.longitude,
     //   })}
-      onPress={()=>{setselectedPos(loc);setVisibleModal(1)}}
+      onPress={()=>{setselectedPos(loc);setVisibleModal(1);getSelectedInformation()}}
       coordinate={{
         latitude: loc.location.latitude,
         longitude: loc.location.longitude,
