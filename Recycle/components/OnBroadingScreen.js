@@ -15,13 +15,13 @@ const COLORS = { primary: "white", white: "green" };
 const slides = [
   {
     id: "1",
-    image: require("../assets/recycle.png"),
+    image: require("../assets/accumulator.jpg"),
     title: "nice",
     subtitle: "Grow your business",
   },
   {
     id: "2",
-    image: require("../assets/placeholder.png"),
+    image: require("../assets/collecteur.jpg"),
     title: "accumulator",
     subtitle: "Grow your business",
   },
