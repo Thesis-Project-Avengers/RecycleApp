@@ -2,7 +2,6 @@ import { View, Text , StyleSheet} from 'react-native'
 import React from 'react'
 import  Icon from 'react-native-vector-icons/Feather'
 import { SafeAreaView } from 'react-native-safe-area-context'
-
 const ChatHeader = () => {
   return (
     <SafeAreaView style={styles.headerContainer}>
@@ -13,7 +12,6 @@ const ChatHeader = () => {
     </SafeAreaView>
   )
 }
-
 export default ChatHeader
 const styles = StyleSheet.create({
     headerContainer:{
