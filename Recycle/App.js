@@ -146,8 +146,7 @@ export const ProfileStack = () => {
   return (
     <Stack.Navigator >
       <Stack.Screen name="mainprofile" component={Profile} />
-      <Stack.Screen name="editprofile" component={EditProfileScreen} />
-      
+      <Stack.Screen name="editprofile" component={EditProfileScreen} options={{headerShown:false}} />
     </Stack.Navigator>
   )
 }
