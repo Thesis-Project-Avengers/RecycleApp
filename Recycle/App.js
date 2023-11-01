@@ -30,7 +30,8 @@ export default function App() {
      }else{
       AsyncStorage.setItem("first","false") 
      }
-  
+     //commenteiremta3 7atchy
+     //7atchay
     // const appData = await AsyncStorage.getItem("isAppFirstLaunched")
     // console.log(appData);
     // if (appData == true) {
