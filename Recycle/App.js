@@ -17,6 +17,7 @@ import EditProfileScreen from "./screens/EditProfileScreen";
 import Profile from "./screens/Profile";
 import TipsScreen from "./screens/TipsScreen";
 import FormAfterAuth from "./screens/FormAfterAuth"
+import ChooseScreen from "./screens/ChooseScreen";
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator()
 export default function App() {
@@ -59,11 +60,13 @@ export default function App() {
 }
 export const AuthStack = () => {
   return (
-    <Stack.Navigator initialRouteName="formAfterAuth" screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName="chooseScreen" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="signIn" component={SignIn} />
       <Stack.Screen name="confirmCode" component={ConfirmCode} />
       <Stack.Screen name="formAfterAuth" component={FormAfterAuth} />
+      <Stack.Screen name="chooseScreen" component={ChooseScreen} />
 
+      
     </Stack.Navigator>)
 }
 export const RealApp = () => {
