@@ -146,8 +146,8 @@ export const RealApp = () => {
 }
 export const ProfileStack = () => {
   return (
-    <Stack.Navigator >
-      <Stack.Screen name="mainprofile" component={Profile} options={{ headerShown: false }} />
+    <Stack.Navigator screenOptions={{headerShown:false}}>
+      <Stack.Screen name="mainprofile" component={Profile}  />
       <Stack.Screen name="editprofile" component={EditProfileScreen} />
 
     </Stack.Navigator>
