@@ -9,7 +9,7 @@ import Modal from "react-native-modal";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import axios from "axios";
 import { TouchableOpacity } from "react-native";
-export default function Map() {
+export default  Map = () => {
   const API_KEY = "AIzaSyCz7OmCHc00wzjQAp4KcZKzzNK8lHCGkgo";
   const [currentRegion, setCurrentRegion] = useState(null);
   const [selectedPos, setselectedPos] = useState(null);
@@ -102,7 +102,7 @@ export default function Map() {
     setCurrentInformation({ ...data.data.rows[0].elements[0], ...data.data });
   };
 
-  console.log(currentInformation);
+
   const renderModalContent = () => (
     <View style={styles.modalContent}>
       <Icon
@@ -153,9 +153,10 @@ export default function Map() {
             style={{
               marginRight: 10,
               fontSize: 40,
+
             }}
           />
-          <Text style={{ fontSize: 20 }}>
+          <Text style={{ fontSize: 20 } }>
             {currentInformation?.duration.text}
           </Text>
         </View>
@@ -164,13 +165,12 @@ export default function Map() {
         <Text
           style={{
             backgroundColor: "#93C572",
-            paddingTop: 15, // Padding for the top
-            paddingBottom: 15, // Padding for the bottom
-            paddingLeft: 80, // Padding for the left
+            paddingTop: 15, 
+            paddingBottom: 15,
+            paddingLeft: 80, 
             paddingRight: 80,
             borderRadius:40,
             color:"white"
-           
           }}
         >
           Press Me
