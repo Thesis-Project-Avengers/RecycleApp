@@ -16,7 +16,7 @@ const Square = ({ isLight, selected }) => {
         <View
             style={{
                 width: 6,
-                height: 6,
+                height: 6, 
                 marginHorizontal: 3,
                 backgroundColor,
             }}
