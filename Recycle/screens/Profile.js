@@ -5,7 +5,7 @@ import * as Progress from 'react-native-progress'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 
-const Proifle = () => {
+const Profile = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <View style={styles.profileHeader}>
@@ -32,7 +32,9 @@ const Proifle = () => {
                     <Icon name='qr-code' size={36} />
                     <Text style={styles.optionsContent} >My Qr Code</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button} >
+                <TouchableOpacity
+                    onPress={() => navigation.navigate("editprofile")}
+                    style={styles.button} >
                     <Icon name='edit' size={36} />
                     <Text style={styles.optionsContent} >Edit Profile</Text>
                 </TouchableOpacity>
@@ -49,7 +51,7 @@ const Proifle = () => {
     )
 }
 
-export default Proifle
+export default Profile
 
 const styles = StyleSheet.create({
     container: {
