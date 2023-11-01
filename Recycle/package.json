@@ -26,6 +26,7 @@
     "react": "18.2.0",
     "react-native": "0.72.6",
     "react-native-animated-nav-tab-bar": "^3.1.10",
+    "react-native-floating-action": "^1.22.0",
     "react-native-maps": "1.7.1",
     "react-native-maps-directions": "^1.9.0",
     "react-native-modal": "^13.0.1",

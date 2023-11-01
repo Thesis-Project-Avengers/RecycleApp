@@ -9,6 +9,7 @@ import Modal from "react-native-modal";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import axios from "axios";
 import { TouchableOpacity } from "react-native";
+import { FloatingAction } from "react-native-floating-action";
 export default function Map() {
   const API_KEY = "AIzaSyCz7OmCHc00wzjQAp4KcZKzzNK8lHCGkgo";
   const [currentRegion, setCurrentRegion] = useState(null);
@@ -168,9 +169,9 @@ export default function Map() {
             paddingBottom: 15, // Padding for the bottom
             paddingLeft: 80, // Padding for the left
             paddingRight: 80,
-            borderRadius:40,
-            color:"white"
-           
+            borderRadius: 40,
+            color: "white"
+
           }}
         >
           Press Me
@@ -254,6 +255,8 @@ export default function Map() {
       >
         {renderModalContent()}
       </Modal>
+      <FloatingAction color='#93C572' />
+
     </View>
   );
 }
