@@ -15,6 +15,7 @@ import ConfirmCode from "./screens/ConfirmCode";
 import ChatScreen from "./screens/ChatScreen";
 import EditProfileScreen from "./screens/EditProfileScreen";
 import Profile from "./screens/Profile";
+import TipsScreen from "./screens/TipsScreen";
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator()
 export default function App() {
@@ -78,7 +79,9 @@ export const RealApp = () => {
       }}
     >
       <Tab.Screen
+
         options={{
+        
           tabBarIcon: ({ focused, color, size }) => (
             <Icon
               name="home"
@@ -101,7 +104,7 @@ export const RealApp = () => {
             />
           )
         }}
-        name="Tips" component={ExapmleScreen} />
+        name="Tips" component={TipsScreen} />
       <Tab.Screen
         options={{
           tabBarIcon: ({ focused, color, size }) => (
@@ -140,14 +143,13 @@ export const RealApp = () => {
         name="Profile" component={ProfileStack} />
     </Tab.Navigator>
   )
-
 }
 export const ProfileStack = () => {
   return (
     <Stack.Navigator >
-      <Stack.Screen name="mainprofile" component={Profile} />
+      <Stack.Screen name="mainprofile" component={Profile} options={{ headerShown: false }} />
       <Stack.Screen name="editprofile" component={EditProfileScreen} />
-      
+
     </Stack.Navigator>
   )
 }
