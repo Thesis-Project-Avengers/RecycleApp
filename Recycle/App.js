@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { StatusBar } from 'expo-status-bar';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { StyleSheet, Text, View } from 'react-native';
@@ -14,25 +14,25 @@ import { AnimatedTabBarNavigator } from 'react-native-animated-nav-tab-bar';
 import SignIn from "./screens/SignIn";
 import ConfirmCode from "./screens/ConfirmCode";
 import ChatScreen from "./screens/ChatScreen";
-import Proifle from "./screens/Proifle";
+import EditProfileScreen from "./screens/EditProfileScreen";
+import Profile from "./screens/Profile";
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator()
 export default function App() {
   //Onboarding 
   // const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState(true)
-  const [first,setFirst] = useState(true);
+  const [first, setFirst] = useState(true);
 
 
   const fetch = async () => {
     const x = await AsyncStorage.getItem("first")
     console.log(x);
-     if(!x){
+    if (!x) {
       setFirst(false)
-     }else{
-      AsyncStorage.setItem("first","false") 
-     }
-     //commenteiremta3 7atchy
-     //7atchay
+    } else {
+      AsyncStorage.setItem("first", "false")
+    }
+
     // const appData = await AsyncStorage.getItem("isAppFirstLaunched")
     // console.log(appData);
     // if (appData == true) {
@@ -57,11 +57,11 @@ export default function App() {
   )
 }
 export const AuthStack = () => {
-  return <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name="signIn" component={SignIn} />
-    <Stack.Screen name="confirmCode" component={ConfirmCode} />
-    
-  </Stack.Navigator>
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="signIn" component={SignIn} />
+      <Stack.Screen name="confirmCode" component={ConfirmCode} />
+    </Stack.Navigator>)
 }
 export const RealApp = () => {
   return (
@@ -73,7 +73,7 @@ export const RealApp = () => {
         dotCornerRadius: 15,
       }}
       tabBarOptions={{
-        activeBackgroundColor: "#73d905",
+        activeBackgroundColor: "#93C572",
         activeTintColor: "white",
         inactiveTintColor: "#222222"
       }}
@@ -138,8 +138,17 @@ export const RealApp = () => {
             />
           )
         }}
-        name="Profile" component={Proifle} />
+        name="Profile" component={ProfileStack} />
     </Tab.Navigator>
   )
 
+}
+export const ProfileStack = () => {
+  return (
+    <Stack.Navigator >
+      <Stack.Screen name="mainprofile" component={Profile} />
+      <Stack.Screen name="editprofile" component={EditProfileScreen} />
+      
+    </Stack.Navigator>
+  )
 }
