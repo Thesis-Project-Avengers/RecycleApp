@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StatusBar } from 'expo-status-bar';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { StyleSheet, Text, View } from 'react-native';
@@ -12,29 +12,43 @@ import ExapmleScreen from './screens/ExapmleScreen';
 import { AnimatedTabBarNavigator } from 'react-native-animated-nav-tab-bar';
 import SignIn from "./screens/SignIn";
 import ConfirmCode from "./screens/ConfirmCode";
+import ChatScreen from "./screens/ChatScreen";
+import EditProfileScreen from "./screens/EditProfileScreen";
+import Profile from "./screens/Profile";
+import TipsScreen from "./screens/TipsScreen";
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator()
 export default function App() {
   //Onboarding 
-  const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState(null)
+  // const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState(true)
+  const [first, setFirst] = useState(true);
+
 
   const fetch = async () => {
-    const appData = await AsyncStorage.getItem("isAppFirstLaunched")
-    console.log(appData);
-    if (appData == null) {
-      setIsAppFirstLaunched(true)
-      AsyncStorage.setItem('isAppFirstLaunched', 'true')
+    const x = await AsyncStorage.getItem("first")
+    console.log(x);
+    if (!x) {
+      setFirst(false)
     } else {
-      setIsAppFirstLaunched(false)
-      AsyncStorage.setItem('isAppFirstLaunched', 'false')
+      AsyncStorage.setItem("first", "false")
     }
+
+    // const appData = await AsyncStorage.getItem("isAppFirstLaunched")
+    // console.log(appData);
+    // if (appData == true) {
+    //   setIsAppFirstLaunched(false)
+    //   AsyncStorage.setItem('isAppFirstLaunched', 'false')
+    // } else {
+    //   setIsAppFirstLaunched(true)
+    //   AsyncStorage.setItem('isAppFirstLaunched', 'true')
+    // }
   }
   React.useEffect(() => {
     fetch()
   }, [])
   return (
     <NavigationContainer >
-      <Stack.Navigator initialRouteName={"ombording"} screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName={"App"} screenOptions={{ headerShown: false }}>
         <Stack.Screen name="ombording" component={OnboardingScreen} />
         <Stack.Screen name="auth" component={AuthStack} />
         <Stack.Screen name="App" component={RealApp} />
@@ -43,11 +57,11 @@ export default function App() {
   )
 }
 export const AuthStack = () => {
-  return <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name="signIn" component={SignIn} />
-    <Stack.Screen name="confirmCode" component={ConfirmCode} />
-    
-  </Stack.Navigator>
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="signIn" component={SignIn} />
+      <Stack.Screen name="confirmCode" component={ConfirmCode} />
+    </Stack.Navigator>)
 }
 export const RealApp = () => {
   return (
@@ -56,17 +70,18 @@ export const RealApp = () => {
         tabBarBackground: "#f7f6f6",
         shadow: true,
         tabButtonLayout: "horizontal",
-        dotCornerRadius: 100,
-        floating: true,
+        dotCornerRadius: 15,
       }}
       tabBarOptions={{
-        activeBackgroundColor: "#73d905",
+        activeBackgroundColor: "#93C572",
         activeTintColor: "white",
         inactiveTintColor: "#222222"
       }}
     >
       <Tab.Screen
+
         options={{
+
           tabBarIcon: ({ focused, color, size }) => (
             <Icon
               name="home"
@@ -89,7 +104,7 @@ export const RealApp = () => {
             />
           )
         }}
-        name="Tips" component={ExapmleScreen} />
+        name="Tips" component={TipsScreen} />
       <Tab.Screen
         options={{
           tabBarIcon: ({ focused, color, size }) => (
@@ -113,7 +128,7 @@ export const RealApp = () => {
             />
           )
         }}
-        name="Chat" component={HomeScreen} />
+        name="Chat" component={ChatScreen} />
       <Tab.Screen
         options={{
           tabBarIcon: ({ focused, color, size }) => (
@@ -125,8 +140,16 @@ export const RealApp = () => {
             />
           )
         }}
-        name="Profile" component={HomeScreen} />
+        name="Profile" component={ProfileStack} />
     </Tab.Navigator>
   )
+}
+export const ProfileStack = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }} >
+      <Stack.Screen name="mainprofile" component={Profile} />
+      <Stack.Screen name="editprofile" component={EditProfileScreen} />
 
+    </Stack.Navigator>
+  )
 }
