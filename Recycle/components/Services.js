@@ -1,22 +1,60 @@
 import React from "react";
-import { Text, View,TouchableOpacity, StyleSheet } from "react-native";
+import { Text, View,TouchableOpacity, StyleSheet, ScrollView, } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 
 const Services = () => {
   return (
     <View style={styles.containerServices}>
+    
+        <Text style={{ fontSize: 17, fontWeight: 500 }}>Recycling Material</Text>
+        <View style={styles.categoryServices}>
+        <ScrollView  horizontal={true} showsHorizontalScrollIndicator={false} style={{ margin: 5,gap: 10 }}>
       <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
       <View style={styles.oneService}>
-        <Icon name="dollar-sign" size={80} />
-        <Text style={{ fontSize: 14, fontWeight: 800 }}>Exchange points</Text>
+        <Icon name="add" size={28} color="white"/>
+        <Text style={{ fontSize: 15 ,color: "white" }} >Plastic</Text>
+      </View>
+        </TouchableOpacity>
+       
+      <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
+      <View style={styles.oneService}>
+      <Icon name="dollar-sign" size={28} color="white"/>
+        <Text style={{ fontSize: 15,color: "white" }}>Metal</Text>
       </View>
         </TouchableOpacity>
       <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
       <View style={styles.oneService}>
-        <Icon name="shopping-cart" size={80} />
-        <Text style={{ fontSize: 14, fontWeight: 800 }} >Store</Text>
+        <Icon name="dollar-sign" size={28} color="white"/>
+        <Text style={{ fontSize: 15 ,color: "white"}}>Glass</Text>
+       
       </View>
         </TouchableOpacity>
+      <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
+      <View style={styles.oneService}>
+         <Icon name="dollar-sign" size={28} color="white"/>
+         <Text style={{ fontSize: 15 ,color: "white"}}>Glass</Text>
+      </View>
+        </TouchableOpacity>
+      <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
+      <View style={styles.oneService}>
+         <Icon name="dollar-sign" size={28} color="white"/>
+        <Text style={{ fontSize: 15 ,color: "white"}}>Glass</Text>
+      </View>
+        </TouchableOpacity>
+      <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
+      <View style={styles.oneService}>
+         <Icon name="dollar-sign" size={28} color="white"/>
+        <Text style={{ fontSize: 15 ,color: "white"}}>Glass</Text>
+      </View>
+        </TouchableOpacity>
+      <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
+      <View style={styles.oneService}>
+         <Icon name="dollar-sign" size={28} color="white"/>
+        <Text style={{ fontSize: 15 ,color: "white"}}>Glass</Text>
+      </View>
+        </TouchableOpacity>
+</ScrollView>
+        </View>
     </View>
   );
 };
@@ -24,20 +62,21 @@ const Services = () => {
 export default Services;
 const styles = StyleSheet.create({
   containerServices: {
-    flexDirection: "row",
-    margin2: 5,
+    flexDirection: "column",
+    margin: 2,
     display: "flex",
-    justifyContent: "center",
+    
   },
+  // categoryServices:{
+  //   margin: 3,
+  // },
   oneService: {
-    width: 150,
-    height: 150,
+    width: 70,
+    height: 70,
     borderRadius: 10,
-    backgroundColor: "#eef",
-    display: "flex",
-    flexDirection:"column",
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor:"green",
     margin: 5,
   },
 });

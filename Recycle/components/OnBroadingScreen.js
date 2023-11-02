@@ -2,7 +2,7 @@ import Onboarding from "react-native-onboarding-swiper";
 import React from "react";
 import { Image, StyleSheet } from "react-native";
 
-const OnBroadingScreen = () => {
+const OnBroadingScreen = ({navigation}) => {
   const pages = [
     {
       title: "Welcome to MyApp",
@@ -36,7 +36,9 @@ const OnBroadingScreen = () => {
     },
   ];
 
-  return <Onboarding pages={pages} 
+  return <Onboarding
+  onDone={()=>{navigation.navigate("auth")}}
+  pages={pages} 
   titleStyles={styles.titleStyle}
   subTitleStyles={styles.subtitleStyle}
   bottomBarHighlight={false} 
