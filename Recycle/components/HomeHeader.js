@@ -6,7 +6,7 @@ const HomeHeader = () => {
   return (
     <SafeAreaView style={styles.headerContainerHome}>
       <View style={styles.text}>
-        <Text style={{ fontSize: 20, fontWeight: 900, color: "#73d90" }}>
+        <Text style={{ fontSize: 20, fontWeight: 900, color: "green" }}>
           Hi,Clawrence!
         </Text>
         <Text style={{ fontSize: 15, color: "black" }}>

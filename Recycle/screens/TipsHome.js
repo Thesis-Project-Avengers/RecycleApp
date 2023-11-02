@@ -12,14 +12,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { FloatingAction } from "react-native-floating-action";
 import OneTipHome from "../components/OneTipHome";
 
-const TipsScreen = () => {
+const TipsHome = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.articlesContainer}>
         <View style={styles.textContainer}>
           <Text style={{ fontSize: 17, fontWeight: 700 }}>Articles</Text>
           <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
-          <Text style={{ fontSize: 13, color: "#73d90" }}>View All</Text>
+          <Text style={{ fontSize: 13, color: "green" }}>View All</Text>
           </TouchableOpacity>
         </View>
         <ScrollView style={{ gap: 10 }} showsVerticalScrollIndicator={false}>
@@ -42,7 +42,7 @@ const TipsScreen = () => {
   );
 };
 
-export default TipsScreen;
+export default TipsHome;
 
 export const styles = StyleSheet.create({
   articlesContainer: {
