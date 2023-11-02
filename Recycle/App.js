@@ -16,6 +16,11 @@ import ConfirmCode from "./screens/ConfirmCode";
 import ChatScreen from "./screens/ChatScreen";
 import EditProfileScreen from "./screens/EditProfileScreen";
 import Profile from "./screens/Profile";
+import TipsScreen from "./screens/TipsScreen";
+import FormAfterAuth from "./screens/FormAfterAuth"
+import ChooseScreen from "./screens/ChooseScreen";
+import CollectorScreen from "./screens/CollectorScreen";
+import AccumulatorScreen from "./screens/AccumulatorScreen";
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator()
 export default function App() {
@@ -48,7 +53,7 @@ export default function App() {
   }, [])
   return (
     <NavigationContainer >
-      <Stack.Navigator initialRouteName={"App"} screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName={"ombording"} screenOptions={{ headerShown: false }}>
         <Stack.Screen name="ombording" component={OnboardingScreen} />
         <Stack.Screen name="auth" component={AuthStack} />
         <Stack.Screen name="App" component={RealApp} />
@@ -58,9 +63,16 @@ export default function App() {
 }
 export const AuthStack = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName="formAfterAuth" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="signIn" component={SignIn} />
       <Stack.Screen name="confirmCode" component={ConfirmCode} />
+      <Stack.Screen name="formAfterAuth" component={FormAfterAuth} />
+      <Stack.Screen name="chooseScreen" component={ChooseScreen} />
+      <Stack.Screen name="collector" component={CollectorScreen} />
+      <Stack.Screen name="accumulator" component={AccumulatorScreen} />
+
+
+      
     </Stack.Navigator>)
 }
 export const RealApp = () => {
@@ -79,7 +91,9 @@ export const RealApp = () => {
       }}
     >
       <Tab.Screen
+
         options={{
+
           tabBarIcon: ({ focused, color, size }) => (
             <Icon
               name="home"
@@ -102,7 +116,7 @@ export const RealApp = () => {
             />
           )
         }}
-        name="Tips" component={ExapmleScreen} />
+        name="Tips" component={TipsScreen} />
       <Tab.Screen
         options={{
           tabBarIcon: ({ focused, color, size }) => (
@@ -141,14 +155,13 @@ export const RealApp = () => {
         name="Profile" component={ProfileStack} />
     </Tab.Navigator>
   )
-
 }
 export const ProfileStack = () => {
   return (
-    <Stack.Navigator >
+    <Stack.Navigator screenOptions={{ headerShown: false }} >
       <Stack.Screen name="mainprofile" component={Profile} />
       <Stack.Screen name="editprofile" component={EditProfileScreen} />
-      
+
     </Stack.Navigator>
   )
 }
