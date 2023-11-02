@@ -13,6 +13,7 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 const TipsScreen = () => {
     const [tips, setTips] = useState([])
+    const [update, setUpdate] = useState(false)
     const [visibleModal, setVisibleModal] = useState(false);
     const [tipForm, setTipForm] = useState({
         content: null,
@@ -28,7 +29,6 @@ const TipsScreen = () => {
                 resolve(xhr.response);
             };
             xhr.onerror = function (e) {
-                console.log(e);
                 reject(new TypeError("Network request failed"));
             };
             xhr.responseType = "blob";
@@ -80,6 +80,12 @@ const TipsScreen = () => {
                 // Add more fields as needed
             };
             await addDoc(tipscollection, tipData)
+            setVisibleModal(false);
+            setUpdate(!update)
+            setTipForm({
+                content: null,
+                image: null,
+            })
         } catch (error) {
             console.log(error);
         }
@@ -91,16 +97,13 @@ const TipsScreen = () => {
         getDocs(refrence).then((querySnapshot) => {
             const tipsData = [];
             querySnapshot.forEach((doc) => {
-                console.log(doc.id);
                 const data = { id: doc.id, ...doc.data() }
-
-
                 tipsData.push(data);
             });
             setTips(tipsData);
         })
 
-    }, [])
+    }, [update])
     if (tips.length > 0) {
         return (<SafeAreaView style={styles.container} >
             < ScrollView
@@ -111,6 +114,7 @@ const TipsScreen = () => {
 
             </ScrollView>
             <FloatingAction
+                overlayColor='transparent'
                 onPressMain={() => setVisibleModal(true)} color='#93C572' />
             <Modal
                 isVisible={visibleModal}
