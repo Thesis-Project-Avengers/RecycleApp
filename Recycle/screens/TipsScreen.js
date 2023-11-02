@@ -165,6 +165,7 @@ export default TipsScreen
 
 
 
+
 export const styles = StyleSheet.create({
     container: {
         padding: 15,
