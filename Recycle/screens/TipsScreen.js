@@ -28,7 +28,6 @@ const TipsScreen = () => {
                 resolve(xhr.response);
             };
             xhr.onerror = function (e) {
-                console.log(e);
                 reject(new TypeError("Network request failed"));
             };
             xhr.responseType = "blob";
@@ -91,10 +90,7 @@ const TipsScreen = () => {
         getDocs(refrence).then((querySnapshot) => {
             const tipsData = [];
             querySnapshot.forEach((doc) => {
-                console.log(doc.id);
                 const data = { id: doc.id, ...doc.data() }
-
-
                 tipsData.push(data);
             });
             setTips(tipsData);
@@ -111,6 +107,7 @@ const TipsScreen = () => {
 
             </ScrollView>
             <FloatingAction
+                overlayColor='transparent'
                 onPressMain={() => setVisibleModal(true)} color='#93C572' />
             <Modal
                 isVisible={visibleModal}
