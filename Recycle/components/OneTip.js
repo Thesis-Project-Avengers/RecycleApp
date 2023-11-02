@@ -39,7 +39,7 @@ const OneTip = ({ tip }) => {
             </View>
             {true &&
                 <TouchableOpacity onPress={() => setVisibleModal(true)} >
-                    <Image style={{ flex: 1, objectFit: "contain" }} height={150} borderRadius={25} source={{ uri: tip.image }} />
+                    <Image style={{ flex: 1, objectFit: "cover" }} height={150} borderRadius={25} source={{ uri: tip.image }} />
                 </TouchableOpacity>
 
 
@@ -71,7 +71,7 @@ const OneTip = ({ tip }) => {
             >
                 <View style={{
                     backgroundColor: "white",
-                    height:'50%',
+                    height: '50%',
                     gap: 10,
                     borderRadius: 20
                 }}>

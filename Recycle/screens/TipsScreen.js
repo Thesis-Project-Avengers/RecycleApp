@@ -13,6 +13,7 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 const TipsScreen = () => {
     const [tips, setTips] = useState([])
+    const [update, setUpdate] = useState(false)
     const [visibleModal, setVisibleModal] = useState(false);
     const [tipForm, setTipForm] = useState({
         content: null,
@@ -79,6 +80,12 @@ const TipsScreen = () => {
                 // Add more fields as needed
             };
             await addDoc(tipscollection, tipData)
+            setVisibleModal(false);
+            setUpdate(!update)
+            setTipForm({
+                content: null,
+                image: null,
+            })
         } catch (error) {
             console.log(error);
         }
@@ -96,7 +103,7 @@ const TipsScreen = () => {
             setTips(tipsData);
         })
 
-    }, [])
+    }, [update])
     if (tips.length > 0) {
         return (<SafeAreaView style={styles.container} >
             < ScrollView
