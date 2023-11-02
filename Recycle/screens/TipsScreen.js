@@ -31,7 +31,6 @@ const TipsScreen = () => {
                 <OneTip/>
                 <OneTip/>
                 <OneTip/>
-               
             </ScrollView>
             <FloatingAction color='#93C572' />
         </SafeAreaView>

@@ -25,7 +25,7 @@ const ConfirmCode = ({route,navigation}) => {
       // added to ther firebase
       setCode("");
       Alert.alert("login successfully");
-      navigation.navigate("App")
+      navigation.navigate("formAfterAuth")
     } catch (error) {
       throw error;
     }

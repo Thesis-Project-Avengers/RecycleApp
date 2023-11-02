@@ -22,10 +22,12 @@ const Profile = ({ navigation }) => {
                 <Text style={styles.statsValue} >75% of your weekly goal is done</Text>
                 <Progress.Bar style={styles.statsProgress} progress={0.7} width={300} color='#73d905' />
             </View>
-            <ScrollView >
-                <View style={styles.profileOptions} >
-
+<View style={styles.profileOptions} >
+            
                 <Text style={styles.optionHeader} >Manage My Account</Text>
+                <ScrollView>
+                <View style={styles.many} >
+                
                 <TouchableOpacity style={styles.button} >
                     <Icon name='history' size={36} />
                     <Text style={styles.optionsContent} >My Payments</Text>
@@ -49,7 +51,8 @@ const Profile = ({ navigation }) => {
                     <Text style={styles.optionsContent} >Delete Account</Text>
                 </TouchableOpacity>
                 </View>
-            </ScrollView>
+                </ScrollView>
+                </View>
         </View>
     )
 }
@@ -63,17 +66,19 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-start',
         gap: 5,
+        
 
     },
     profileHeader: {
-        display: 'flex',
+        flex:1,
         flexDirection: "row",
         alignItems: 'center',
-        justifyContent: 'flex-start',
-        padding: 10,
+        justifyContent: 'space-around',
+        padding: 15,
+        paddingBottom:30,
         width: "100%",
         gap: 15,
-        height: 100,
+        
         marginTop: 50,
         borderWidth: 0.3,
         borderTopColor: "#fff",
@@ -131,12 +136,11 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     profileOptions: {
-        display: 'flex',
+        width:"100%",
         flexDirection: "column",
         alignItems: 'flex-start',
         justifyContent: 'center',
-        gap: 15,
-        width: '100%',
+         backgroundColor:"#eee",
         // backgroundColor: 'red',
         padding: 10
     },
