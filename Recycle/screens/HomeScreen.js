@@ -18,6 +18,11 @@ const HomeScreen = ({ navigation }) => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
+  container:{
+    padding: 8,
+    margin:2,
+    gap: 2,
+  },
   button: {
     alignItems: "center",
     backgroundColor: "#DDDDDD",
