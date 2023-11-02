@@ -17,7 +17,7 @@ const TipsHome = () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.articlesContainer}>
         <View style={styles.textContainer}>
-          <Text style={{ fontSize: 17, fontWeight: 700 }}>Tips</Text>
+          <Text style={{ fontSize: 20, fontWeight: 700 }}>Tips</Text>
           <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
           <Text style={{ fontSize: 13, color: "green" }}>View All</Text>
           </TouchableOpacity>
@@ -50,13 +50,14 @@ export const styles = StyleSheet.create({
 //   },
   articlesContainer: {
     flexDirection: "column",
-    gap: 5,
-    padding: 2,
+    gap: 2,
+    padding: 1,
+    marginBottom: 10
   },
   textContainer: {
     flexDirection: "row",
     justifyContent: "start",
-    gap: 220,
+    gap: 230,
     alignItems: "center",
     margin: 1,
     padding:5

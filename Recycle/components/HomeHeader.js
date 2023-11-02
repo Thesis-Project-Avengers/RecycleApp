@@ -10,9 +10,9 @@ const HomeHeader = () => {
         <Text style={{ fontSize: 20, fontWeight: 900, color: "green" }}>
           Hi,Clawrence!
         </Text>
-        <Text style={{ fontSize: 15, color: "black" }}>
+        {/* <Text style={{ fontSize: 15, color: "black" }}>
           Let's Contribute to our earth
-        </Text>
+        </Text> */}
       </View>
       <View style={styles.Icons}>
       <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
@@ -32,15 +32,16 @@ const styles = StyleSheet.create({
   headerContainerHome: {
     flexDirection: "row",
     justifyContent: "space-between",
-    gap: 80,
+    gap: 50,
     alignItems: "center",
-    margin: 10,
+    margin: 5,
+
   },
   text: {
     flexDirection: "column",
   },
   Icons: {
     flexDirection:"row",
-    gap:15
+    gap:20
   }
 });

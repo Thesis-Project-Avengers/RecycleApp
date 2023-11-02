@@ -2,14 +2,14 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import HomeHeader from "../components/HomeHeader";
 import TipsHome from "./TipsHome";
-// import Services from "../components/Services";
+import Services from "../components/Services";
 
 const HomeScreen = ({ navigation }) => {
   //use navigation to navigate to another screen
   return (
     <View style={styles.container}>
       <HomeHeader />
-      {/* <Services /> */}
+      <Services />
       <TipsHome />
     </View>
   );
@@ -18,6 +18,11 @@ const HomeScreen = ({ navigation }) => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
+  container:{
+    padding: 8,
+    margin:2,
+    gap: 2,
+  },
   button: {
     alignItems: "center",
     backgroundColor: "#DDDDDD",
