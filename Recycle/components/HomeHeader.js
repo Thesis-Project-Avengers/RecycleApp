@@ -1,7 +1,8 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet,TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Feather";
+
 const HomeHeader = () => {
   return (
     <SafeAreaView style={styles.headerContainerHome}>
@@ -13,7 +14,14 @@ const HomeHeader = () => {
           Let's Contribute to our earth
         </Text>
       </View>
-      <Icon name="menu" size={28} />
+      <View style={styles.Icons}>
+      <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
+      <Icon name="shopping-cart" size={28} />
+      </TouchableOpacity>
+      <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
+      <Icon name="dollar-sign" size={28} />
+     </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };
@@ -31,4 +39,8 @@ const styles = StyleSheet.create({
   text: {
     flexDirection: "column",
   },
+  Icons: {
+    flexDirection:"row",
+    gap:15
+  }
 });
