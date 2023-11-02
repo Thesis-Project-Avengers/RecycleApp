@@ -32,12 +32,12 @@ const EditProfileScreen = () => {
           <TextInput style={styles.inputEditProfile} placeholder="LastName" />
         </View>
         <View style={styles.inputContainer}>
-          <Text>FirstName</Text>
-          <TextInput style={styles.inputEditProfile} placeholder="FirstName" />
+          <Text>Birth-date</Text>
+          <TextInput style={styles.inputEditProfile} placeholder="Birth-date" />
         </View>
         <View style={styles.inputContainer}>
-          <Text>FirstName</Text>
-          <TextInput style={styles.inputEditProfile} placeholder="FirstName" />
+          <Text>Email</Text>
+          <TextInput style={styles.inputEditProfile} placeholder="Email" />
         </View>
         <TouchableOpacity style={styles.buttonEditProfile}>
           <Text style={{ textAlign: "center", color: "white",fontSize:16,fontWeight:800 }}>
