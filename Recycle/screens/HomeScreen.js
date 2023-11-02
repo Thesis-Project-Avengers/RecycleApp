@@ -1,27 +1,26 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import React from "react";
+import HomeHeader from "../components/HomeHeader";
+import TipsHome from "./TipsHome";
+import Services from "../components/Services";
 
 const HomeScreen = ({ navigation }) => {
-    //use navigation to navigate to another screen
-    return (
-        <View style={styles.container}>
-            <Text>Home Screen</Text>
-        </View>
-    )
-}
+  //use navigation to navigate to another screen
+  return (
+    <View style={styles.container}>
+      <HomeHeader />
+      <Services />
+      <TipsHome />
+    </View>
+  );
+};
 
-export default HomeScreen
+export default HomeScreen;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    button: {
-        alignItems: 'center',
-        backgroundColor: '#DDDDDD',
-        padding: 10,
-    }
+  button: {
+    alignItems: "center",
+    backgroundColor: "#DDDDDD",
+    padding: 10,
+  },
 });
