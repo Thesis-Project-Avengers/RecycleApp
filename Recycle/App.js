@@ -8,7 +8,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import OnboardingScreen from "./components/OnBroadingScreen";
 import HomeScreen from './screens/HomeScreen';
 import Map from "./screens/Map"
-import ExapmleScreen from './screens/ExapmleScreen';
 import { AnimatedTabBarNavigator } from 'react-native-animated-nav-tab-bar';
 import SignIn from "./screens/SignIn";
 import ConfirmCode from "./screens/ConfirmCode";
