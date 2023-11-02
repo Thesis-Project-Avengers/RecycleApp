@@ -15,6 +15,7 @@ export default function Map() {
   const [currentRegion, setCurrentRegion] = useState(null);
   const [selectedPos, setselectedPos] = useState(null);
   const [visibleModal, setVisibleModal] = useState(null);
+  const [addModal, setVisibleAddModal] = useState(null);
   const [currentInformation, setCurrentInformation] = useState(null);
 
   useEffect(() => {
@@ -103,7 +104,6 @@ export default function Map() {
     setCurrentInformation({ ...data.data.rows[0].elements[0], ...data.data });
   };
 
-
   const renderModalContent = () => (
     <View style={styles.modalContent}>
       <Icon
@@ -154,10 +154,9 @@ export default function Map() {
             style={{
               marginRight: 10,
               fontSize: 40,
-
             }}
           />
-          <Text style={{ fontSize: 20 } }>
+          <Text style={{ fontSize: 20 }}>
             {currentInformation?.duration.text}
           </Text>
         </View>
@@ -166,12 +165,12 @@ export default function Map() {
         <Text
           style={{
             backgroundColor: "#93C572",
-            paddingTop: 15, 
+            paddingTop: 15,
             paddingBottom: 15,
-            paddingLeft: 80, 
+            paddingLeft: 80,
             paddingRight: 80,
-            borderRadius:40,
-            color:"white"
+            borderRadius: 40,
+            color: "white",
           }}
         >
           Press Me
@@ -179,6 +178,15 @@ export default function Map() {
       </TouchableOpacity>
     </View>
   );
+
+
+
+  const AddModalContent = () => (
+    <View style={styles.modalContent}>
+      <Text>Hello</Text>
+    </View>
+  );
+
 
   const styles = StyleSheet.create({
     container: {
@@ -206,6 +214,19 @@ export default function Map() {
     bottomModal: {
       justifyContent: "flex-end",
       margin: 0,
+    },
+    addPost: {
+      position: "absolute",
+      bottom: 0,
+      right:0,
+      width:50,
+      height:50,
+      justifyContent:"center",
+      alignItems:"center",
+      
+      backgroundColor: "#93C572",
+      margin: 10,
+      borderRadius: 50,
     },
   });
 
@@ -255,8 +276,18 @@ export default function Map() {
       >
         {renderModalContent()}
       </Modal>
-      <FloatingAction color='#93C572' />
-
+      <Modal
+        isVisible={addModal === 1}
+        style={styles.bottomModal}
+        onSwipeComplete={() => setVisibleAddModal(null)}
+        swipeDirection={"down"}
+        onBackdropPress={() => setVisibleAddModal(null)}
+      >
+        {AddModalContent()}
+      </Modal>
+      <TouchableOpacity style={styles.addPost} onPress={()=>{setVisibleAddModal(1)}}>
+        <Text style={{color:"white",fontSize:30}}>+</Text>
+      </TouchableOpacity>
     </View>
   );
 }
