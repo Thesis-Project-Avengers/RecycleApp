@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity,ScrollView } from 'react-native'
 import React from 'react'
 import recycle from '../assets/recycle.png'
 import * as Progress from 'react-native-progress'
@@ -22,7 +22,9 @@ const Profile = ({ navigation }) => {
                 <Text style={styles.statsValue} >75% of your weekly goal is done</Text>
                 <Progress.Bar style={styles.statsProgress} progress={0.7} width={300} color='#73d905' />
             </View>
-            <View style={styles.profileOptions} >
+            <ScrollView >
+                <View style={styles.profileOptions} >
+
                 <Text style={styles.optionHeader} >Manage My Account</Text>
                 <TouchableOpacity style={styles.button} >
                     <Icon name='history' size={36} />
@@ -46,7 +48,8 @@ const Profile = ({ navigation }) => {
                     <Icon name='delete' size={36} />
                     <Text style={styles.optionsContent} >Delete Account</Text>
                 </TouchableOpacity>
-            </View>
+                </View>
+            </ScrollView>
         </View>
     )
 }

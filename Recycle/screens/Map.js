@@ -9,7 +9,8 @@ import Modal from "react-native-modal";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import axios from "axios";
 import { TouchableOpacity } from "react-native";
-export default  Map = () => {
+import { FloatingAction } from "react-native-floating-action";
+export default function Map() {
   const API_KEY = "AIzaSyCz7OmCHc00wzjQAp4KcZKzzNK8lHCGkgo";
   const [currentRegion, setCurrentRegion] = useState(null);
   const [selectedPos, setselectedPos] = useState(null);
@@ -254,6 +255,8 @@ export default  Map = () => {
       >
         {renderModalContent()}
       </Modal>
+      <FloatingAction color='#93C572' />
+
     </View>
   );
 }
