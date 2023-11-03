@@ -19,10 +19,12 @@ const TipsHome = () => {
         <View style={styles.textContainer}>
           <Text style={{ fontSize: 20, fontWeight: 700 }}>Tips</Text>
           <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
-          <Text style={{ fontSize: 13, color: "green" }}>View All</Text>
+          <Text style={{ fontSize: 13, color: "#93C572" }}>View All</Text>
           </TouchableOpacity>
         </View>
-        <ScrollView style={{ gap: 10 }} showsVerticalScrollIndicator={false}>
+        <ScrollView  horizontal  
+      pagingEnabled showsHorizontalScrollIndicator={false} style={{ margin: 3,gap: 1 }}>
+        
           <OneTipHome />
           <OneTipHome />
           <OneTipHome />
@@ -35,9 +37,10 @@ const TipsHome = () => {
           <OneTipHome />
           <OneTipHome />
           <OneTipHome />
+        
         </ScrollView>
       </View>
-      <FloatingAction color="#93C572" />
+      
     </SafeAreaView>
   );
 };
