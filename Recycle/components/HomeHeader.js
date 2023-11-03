@@ -25,7 +25,7 @@ const HomeHeader = ({ image }) => {
       </View>
         <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
       <View style={styles.point}>
-          <Text style={{ fontSize: 15, color: "#fff" }}>Points600</Text>
+          <Text style={{ fontSize: 15, color: "#fff" }}>Points 600</Text>
       </View>
         </TouchableOpacity>
     </SafeAreaView>

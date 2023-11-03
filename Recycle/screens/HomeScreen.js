@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView,SafeAreaView } from "react-native";
 import React from "react";
 import HomeHeader from "../components/HomeHeader";
 import TipsHome from "./TipsHome";
@@ -7,13 +7,13 @@ import Services from "../components/Services";
 const HomeScreen = ({ navigation }) => {
   //use navigation to navigate to another screen
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <HomeHeader />
       <ScrollView  showsVerticalScrollIndicator={false} style={{ margin: 5,gap: 10 }}>
       <Services />
       <TipsHome />
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

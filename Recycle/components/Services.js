@@ -5,13 +5,14 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  SafeAreaView
 } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 
 const Services = () => {
   return (
-    <View style={styles.containerServices}>
-      <Text style={{ fontSize: 17, fontWeight: 500 }}>Recycling Material</Text>
+    <SafeAreaView style={styles.containerServices}>
+      <Text style={{ fontSize: 17,color:"gray",marginLeft:10 }}>What would you like to recycle Today?</Text>
       <View style={styles.categoryServices}>
         <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
           <View style={styles.oneService}>
@@ -33,7 +34,7 @@ const Services = () => {
           </View>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -41,8 +42,10 @@ export default Services;
 const styles = StyleSheet.create({
   containerServices: {
     flexDirection: "column",
-    margin: 2,
+   gap:10,
     display: "flex",
+    // padding:4
+    // backgroundColor:"red"
   },
   categoryServices: {
     margin: 3,
