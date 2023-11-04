@@ -20,6 +20,7 @@ import ChooseScreen from "./screens/ChooseScreen";
 import CollectorScreen from "./screens/CollectorScreen";
 import AccumulatorScreen from "./screens/AccumulatorScreen";
 import ProfileCollector from "./screens/ProfileCollector";
+import AccOnboarding from "./components/AccOnboarding";
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator()
 export default function App() {
@@ -53,7 +54,7 @@ export default function App() {
   return (
     <NavigationContainer >
       <Stack.Navigator initialRouteName={"ombording"} screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="ombording" component={AccOnboarding} />
+        <Stack.Screen name="ombording" component={OnboardingScreen} />
         <Stack.Screen name="auth" component={AuthStack} />
         <Stack.Screen name="App" component={RealApp} />
       </Stack.Navigator>
