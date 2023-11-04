@@ -1,62 +1,40 @@
 import React from "react";
-import { Text, View,TouchableOpacity, StyleSheet, ScrollView, } from "react-native";
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  SafeAreaView
+} from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 
 const Services = () => {
   return (
-    <View style={styles.containerServices}>
-    
-        <Text style={{ fontSize: 17, fontWeight: 500 }}>Recycling Material</Text>
-        <View style={styles.categoryServices}>
-        <ScrollView  horizontal={true} showsHorizontalScrollIndicator={false} style={{ margin: 5,gap: 10 }}>
-      <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
-      <View style={styles.oneService}>
-        {/* change the name add dosen 't exist  */}
-        <Icon name="add" size={28} color="white"/>
-        <Text style={{ fontSize: 15 ,color: "white" }} >Plastic</Text>
-      </View>
+    <SafeAreaView style={styles.containerServices}>
+      <Text style={{ fontSize: 17,color:"gray",marginLeft:10 }}>What would you like to recycle Today?</Text>
+      <View style={styles.categoryServices}>
+        <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
+          <View style={styles.oneService}>
+            <Icon name="wine-bottle" size={28} color="white" />
+            <Text style={{ fontSize: 15, color: "white" }}>Plastic</Text>
+          </View>
         </TouchableOpacity>
-       
-      <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
-      <View style={styles.oneService}>
-      <Icon name="dollar-sign" size={28} color="white"/>
-        <Text style={{ fontSize: 15,color: "white" }}>Metal</Text>
-      </View>
+
+        <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
+          <View style={styles.oneService}>
+            <Icon name="dollar-sign" size={28} color="white" />
+            <Text style={{ fontSize: 15, color: "white" }}>Metal</Text>
+          </View>
         </TouchableOpacity>
-      <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
-      <View style={styles.oneService}>
-        <Icon name="dollar-sign" size={28} color="white"/>
-        <Text style={{ fontSize: 15 ,color: "white"}}>Glass</Text>
-       
-      </View>
+        <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
+          <View style={styles.oneService}>
+            <Icon name="glass" size={28} color="white" />
+            <Text style={{ fontSize: 15, color: "white" }}>Glass</Text>
+          </View>
         </TouchableOpacity>
-      <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
-      <View style={styles.oneService}>
-         <Icon name="dollar-sign" size={28} color="white"/>
-         <Text style={{ fontSize: 15 ,color: "white"}}>Glass</Text>
       </View>
-        </TouchableOpacity>
-      <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
-      <View style={styles.oneService}>
-         <Icon name="dollar-sign" size={28} color="white"/>
-        <Text style={{ fontSize: 15 ,color: "white"}}>Glass</Text>
-      </View>
-        </TouchableOpacity>
-      <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
-      <View style={styles.oneService}>
-         <Icon name="dollar-sign" size={28} color="white"/>
-        <Text style={{ fontSize: 15 ,color: "white"}}>Glass</Text>
-      </View>
-        </TouchableOpacity>
-      <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
-      <View style={styles.oneService}>
-         <Icon name="dollar-sign" size={28} color="white"/>
-        <Text style={{ fontSize: 15 ,color: "white"}}>Glass</Text>
-      </View>
-        </TouchableOpacity>
-</ScrollView>
-        </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -64,20 +42,22 @@ export default Services;
 const styles = StyleSheet.create({
   containerServices: {
     flexDirection: "column",
-    margin: 2,
+   gap:10,
     display: "flex",
-    
+    // padding:4
+    // backgroundColor:"red"
   },
-  // categoryServices:{
-  //   margin: 3,
-  // },
+  categoryServices: {
+    margin: 3,
+    flexDirection: "row",
+  },
   oneService: {
-    width: 70,
-    height: 70,
+    width: 100,
+    height: 100,
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor:"green",
+    backgroundColor: "#93C572",
     margin: 5,
   },
 });
