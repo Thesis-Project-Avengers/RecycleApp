@@ -1,64 +1,63 @@
-import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image,SafeAreaView } from 'react-native'
+import Icon from 'react-native-vector-icons/FontAwesome'
 
-const OneTipHome = () => {
-  return (
-    //articales titles
-      <View style={styles.tips}>
-        <View style={styles.oneTipsContainer}>
-          <Image  source={{
-          uri: "https://scontent.ftun9-1.fna.fbcdn.net/v/t39.30808-6/347253762_632332375434169_2230005292919228659_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5f2048&_nc_ohc=kq-7lFGMHY8AX_Vvp9L&_nc_ht=scontent.ftun9-1.fna&oh=00_AfD61NRsgJU3pfxXDGKzJoC0IGJIcoaQHLZNc-FmkR6rBw&oe=6545A321",
-        }} style={styles.oneImage} />
-          <View style={styles.oneTipsText}>
-            <Text style={{ fontSize: 15, fontWeight: 500 }}>belhassan</Text>
-            <Text style={{ fontSize: 12 }}>Recycling is...</Text>
-          </View>
-        </View>
-        <View style={styles.oneTipsContainer}>
-          <Image source={{
-          uri: "https://scontent.ftun9-1.fna.fbcdn.net/v/t39.30808-6/347253762_632332375434169_2230005292919228659_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5f2048&_nc_ohc=kq-7lFGMHY8AX_Vvp9L&_nc_ht=scontent.ftun9-1.fna&oh=00_AfD61NRsgJU3pfxXDGKzJoC0IGJIcoaQHLZNc-FmkR6rBw&oe=6545A321",
-        }} style={styles.oneImage} />
-          <View style={styles.oneTipsText}>
-            <Text style={{ fontSize: 15, fontWeight: 500 }}>
-            belhassan 
-            </Text>
-            <Text style={{ fontSize: 12 }}>
-              In an effect to boost recycling ...
-            </Text>
-          </View>
-        </View>
-        </View>
- 
-  );
-};
+import React, { useState } from 'react'
+import { FIREBASE_DB } from '../firebaseConfig'
+import { doc, updateDoc } from 'firebase/firestore'
 
-export default OneTipHome;
-const styles = StyleSheet.create({
-  
-  tips: {
-    flexDirection: "Column",
-    justifyContent: "start",
-    gap: 5,
-    margin: 5,
-  },
-  oneTipsContainer: {
-    flexDirection: "row",
-    justifyContent: "start",
-    gap: 10,
-   
-   
-  },
-  oneTipsText: {
-    flexDirection: "column",
-    justifyContent: "start",
-    margin: 8,
-    
-  },
-  oneImage: {
-    width: 90,
-    height: 90,
-    borderRadius: 10,
-    borderWidth: 3,
-    borderColor: "#eef",
-  },
-});
+const OneTipHome = ({ tip }) => {
+    const [isLiked, setIsliked] = useState(tip.isLiked.includes("4gdEnxf0UJSpDimpbhTHdGnefkC2"))
+    const updateLikeState = async () => {
+        const documentReference = doc(FIREBASE_DB, 'Tips', tip.id);
+        if (isLiked) {
+            tip.isLiked.splice(tip.isLiked.indexOf("yet"), 1)
+            tip.numlikes--
+        } else {
+            tip.isLiked.push("4gdEnxf0UJSpDimpbhTHdGnefkC2")
+            tip.numlikes++
+        }
+        await updateDoc(documentReference, {
+            isLiked: tip.isLiked,
+            numlikes: tip.numlikes
+        })
+        setIsliked(!isLiked)
+    }
+    return (
+        <SafeAreaView style={{ flex: 1, padding: 20, marginBottom: 15, borderWidth: 2, borderColor: "#eee", borderRadius: 20, width: 300,height:250 ,gap: 3, flexDirection: 'column', pa: 20 }} >
+            <View style={{ flexDirection: "row", alignItems: 'center', justifyContent: "space-between" }}>
+                <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+                    <Image borderRadius={50}
+                        source={{
+                            uri: tip.user.pdpPhoto
+                        }} width={40} height={40} />
+                    <Text style={{ fontSize: 15, fontWeight: 700 }}>{tip.user.name}</Text>
+                </View>
+                <Text>{tip.createdAt}</Text>
+            </View>
+            {true && <Image style={{ flex: 1, objectFit: "contain" }} height={50} borderRadius={20} source={{ uri: tip.image }} />}
+            <Text>{tip.content}</Text>
+            <View style={{ flexDirection: "row", gap: 50 }}>
+                <TouchableOpacity
+                    onPress={() => updateLikeState()}
+                    style={{ flexDirection: "row", gap: 5 }}>
+                    <Icon
+                        onPress={() => updateLikeState()}
+                        size={20}
+                        name={isLiked ? "trash" : "trash-o"}
+                        color={isLiked && "green"}
+                    />
+                    <Text style={{ fontWeight: 700 }}>{tip.numlikes} Collab</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
+                    <Icon
+                        size={20}
+                        name="comment-o"
+                    />
+                    <Text style={{ fontWeight: 700 }}>Comment</Text>
+                </TouchableOpacity>
+            </View>
+        </SafeAreaView>
+    )
+}
+
+export default OneTipHome
