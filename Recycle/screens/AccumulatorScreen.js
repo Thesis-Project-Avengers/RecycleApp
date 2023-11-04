@@ -9,11 +9,7 @@ import {
 import React, { useEffect, useState } from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
 const AccumulatorScreen = ({ navigation }) => {
- 
-
-
   return (
     <SafeAreaView>
       <View style={styles.backContainer}>

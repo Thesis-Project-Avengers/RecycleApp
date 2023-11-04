@@ -31,8 +31,6 @@ export default function App() {
   //Onboarding 
   // const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState(true)
   const [first, setFirst] = useState(true);
-
-
   const fetch = async () => {
     const x = await AsyncStorage.getItem("first")
     console.log(x);
@@ -41,7 +39,6 @@ export default function App() {
     } else {
       AsyncStorage.setItem("first", "false")
     }
-
     // const appData = await AsyncStorage.getItem("isAppFirstLaunched")
     // console.log(appData);
     // if (appData == true) {
@@ -67,7 +64,7 @@ export default function App() {
 }
 export const AuthStack = () => {
   return (
-    <Stack.Navigator initialRouteName="signIn" screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName="profileCollector" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="signIn" component={SignIn} />
       <Stack.Screen name="confirmCode" component={ConfirmCode} />
       <Stack.Screen name="formAfterAuth" component={FormAfterAuth} />
@@ -75,9 +72,6 @@ export const AuthStack = () => {
       <Stack.Screen name="collector" component={CollectorScreen} />
       <Stack.Screen name="accumulator" component={AccumulatorScreen} />
       <Stack.Screen name="profileCollector" component={ProfileCollector} />
-
-
-
     </Stack.Navigator>)
 }
 export const RealApp = () => {
@@ -164,7 +158,7 @@ export const RealApp = () => {
 
 export const ProfileStack = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }} >
+    <Stack.Navigator initialRouteName="mainprofile" screenOptions={{ headerShown: false }} >
       <Stack.Screen name="mainprofile" component={Profile} />
       <Stack.Screen name="editprofile" component={EditProfileScreen} />
     </Stack.Navigator>
