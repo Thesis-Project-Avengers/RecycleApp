@@ -91,7 +91,6 @@ const TipsHome = () => {
       querySnapshot.forEach((doc) => {
         console.log(doc.id);
         const data = { id: doc.id, ...doc.data() };
-
         tipsData.push(data);
       });
       setTips(tipsData);
@@ -111,7 +110,7 @@ const TipsHome = () => {
           horizontal
           pagingEnabled
           showsHorizontalScrollIndicator={false}
-          style={{ gap: 10 }}
+          style={{ gap: 20 }}
         >
           {/* < ScrollView
               style={{ gap: 10 }}

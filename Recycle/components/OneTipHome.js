@@ -6,24 +6,24 @@ import { FIREBASE_DB } from '../firebaseConfig'
 import { doc, updateDoc } from 'firebase/firestore'
 
 const OneTipHome = ({ tip }) => {
-    const [isLiked, setIsliked] = useState(tip.isLiked.includes("4gdEnxf0UJSpDimpbhTHdGnefkC2"))
-    const updateLikeState = async () => {
-        const documentReference = doc(FIREBASE_DB, 'Tips', tip.id);
-        if (isLiked) {
-            tip.isLiked.splice(tip.isLiked.indexOf("yet"), 1)
-            tip.numlikes--
-        } else {
-            tip.isLiked.push("4gdEnxf0UJSpDimpbhTHdGnefkC2")
-            tip.numlikes++
-        }
-        await updateDoc(documentReference, {
-            isLiked: tip.isLiked,
-            numlikes: tip.numlikes
-        })
-        setIsliked(!isLiked)
-    }
+    // const [isLiked, setIsliked] = useState(tip.isLiked.includes("4gdEnxf0UJSpDimpbhTHdGnefkC2"))
+    // const updateLikeState = async () => {
+    //     const documentReference = doc(FIREBASE_DB, 'Tips', tip.id);
+    //     if (isLiked) {
+    //         tip.isLiked.splice(tip.isLiked.indexOf("yet"), 1)
+    //         tip.numlikes--
+    //     } else {
+    //         tip.isLiked.push("4gdEnxf0UJSpDimpbhTHdGnefkC2")
+    //         tip.numlikes++
+    //     }
+    //     await updateDoc(documentReference, {
+    //         isLiked: tip.isLiked,
+    //         numlikes: tip.numlikes
+    //     })
+    //     setIsliked(!isLiked)
+    // }
     return (
-        <SafeAreaView style={{ flex: 1, padding: 20, marginBottom: 15, borderWidth: 2, borderColor: "#eee", borderRadius: 20, width: 300,height:250 ,gap: 3, flexDirection: 'column', pa: 20 }} >
+        <SafeAreaView style={{ flex: 1, padding: 20, marginBottom: 15, borderWidth: 2, borderColor: "#eee", borderRadius: 20, width: 250,height:250 ,gap: 10, flexDirection: 'column', pa: 20 }} >
             <View style={{ flexDirection: "row", alignItems: 'center', justifyContent: "space-between" }}>
                 <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                     <Image borderRadius={50}
@@ -34,9 +34,9 @@ const OneTipHome = ({ tip }) => {
                 </View>
                 <Text>{tip.createdAt}</Text>
             </View>
-            {true && <Image style={{ flex: 1, objectFit: "contain" }} height={50} borderRadius={20} source={{ uri: tip.image }} />}
+            {true && <Image style={{ flex: 1, objectFit: "cover" }} height={50} borderRadius={20} source={{ uri: tip.image }} />}
             <Text>{tip.content}</Text>
-            <View style={{ flexDirection: "row", gap: 50 }}>
+            {/* <View style={{ flexDirection: "row", gap: 50 }}>
                 <TouchableOpacity
                     onPress={() => updateLikeState()}
                     style={{ flexDirection: "row", gap: 5 }}>
@@ -55,7 +55,7 @@ const OneTipHome = ({ tip }) => {
                     />
                     <Text style={{ fontWeight: 700 }}>Comment</Text>
                 </TouchableOpacity>
-            </View>
+            </View> */}
         </SafeAreaView>
     )
 }
