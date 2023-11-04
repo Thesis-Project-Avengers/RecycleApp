@@ -36,15 +36,15 @@ const AccOnboarding = () => {
     })
   
     const [colQuestion, setColQuestion] = useState([null, null, null, null])
-    const onboardingRef = useRef < Onboarding > (null)
+    const onboardingRef = useRef(null)
     const handleYesPress = () => {
         setColQuestion(colQuestion => [...colQuestion, true])
-        onboardingRef.current?.next()
+        onboardingRef.current?.goNext()
     }
 
     const handleNoPress = () => {
         setColQuestion(colQuestion => [...colQuestion, false])
-        onboardingRef.current?.next()
+        onboardingRef.current?.goNext()
     }
     return (
         <View style={{ flex: 1, width: "100%" }}>
@@ -62,10 +62,10 @@ const AccOnboarding = () => {
                             <View style={styles.subtitleMainView}>
                                 <Text style={{ textAlign: 'center' }}>Do you have a significant amount of waste in your house that you need to dispose of ?</Text>
                                 <View style={styles.subtitleSecondView}>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={handleYesPress}>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleYesPress()}}>
                                         <Text style={{ color: 'white' }} >YES</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={handleNoPress}>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleNoPress()}}>
                                         <Text style={{ color: 'white' }} >NO</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -83,10 +83,10 @@ const AccOnboarding = () => {
                             <View style={styles.subtitleMainView}>
                                 <Text style={{ textAlign: 'center' }}>"Do you commit to sorting your waste and putting recyclable materials in the correct recycling bins?"</Text>
                                 <View style={styles.subtitleSecondView}>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle}>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleYesPress()}}>
                                         <Text style={{ color: 'white' }} >YES</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle}>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleNoPress()}}> 
                                         <Text style={{ color: 'white' }} >NO</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -104,10 +104,10 @@ const AccOnboarding = () => {
                             <View style={styles.subtitleMainView}>
                                 <Text style={{ textAlign: 'center' }}>Do you like interacting and sharing articles with other app users ?</Text>
                                 <View style={styles.subtitleSecondView}>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle}>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleYesPress()}}>
                                         <Text style={{ color: 'white' }} >YES</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle}>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleNoPress()}}>
                                         <Text style={{ color: 'white' }} >NO</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -125,10 +125,10 @@ const AccOnboarding = () => {
                             <View style={styles.subtitleMainView}>
                                 <Text style={{ textAlign: 'center' }}>Would you like to be part of our initiative to make the world greener by planting a tree for every significant waste contribution you make ?</Text>
                                 <View style={styles.subtitleSecondView}>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle}>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleYesPress()}}>
                                         <Text style={{ color: 'white' }} >YES</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle}>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleNoPress()}}>
                                         <Text style={{ color: 'white' }} >NO</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -159,6 +159,7 @@ const AccOnboarding = () => {
                 bottomBarColor={"#93c572"}
                 transitionAnimationDuration={700}
                 onSkip={() => Alert.alert('Skipped')}
+                ref = {onboardingRef}
             />
         </View>
     )
