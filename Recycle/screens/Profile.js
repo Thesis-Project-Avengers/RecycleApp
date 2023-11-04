@@ -15,12 +15,11 @@ const Profile = () => {
           {/* <Icon name="arrow-return-left" 
           size={22}
           color={"#93C572"}
-
           /> */}
         </View>
         <View style={styles.points}>
           <Text style={{ textAlign: "center", color: "white", fontSize: "16" }}>
-            points
+            points : 100
           </Text>
         </View>
       </View>
@@ -33,7 +32,7 @@ const Profile = () => {
       </View>
       <View style={styles.statContainer}>
         <View style={styles.oneRec}>
-          <Icon name="bottle-wine-outline" size={40} color={"#93C572"} />
+          <Icon name="bottle-wine-outline" size={45} color={"#93C572"} />
           <Text>20</Text>
         </View>
         <View style={styles.oneRec}>
@@ -50,26 +49,26 @@ const Profile = () => {
         </View>
       </View>
         {/* <ScrollView style={styles.scroll}> */}
-          <View style={{gap:10}}>
+          <View style={{marginBottom:25}}>
           <View style={styles.oneButton}>
           <Icon4 name="back-in-time" size={40} color={"#93C572"} />
           <TouchableOpacity><Text style={{fontSize:17}}>My Payments</Text></TouchableOpacity>
           </View>
           <View  style={styles.oneButton}>
             <Icon5 name="qrcode" size={40} color={"#93C572"} />
-          <TouchableOpacity><Text style={{fontSize:23}}>My Qr Code</Text></TouchableOpacity>
+          <TouchableOpacity><Text style={{fontSize:17}}>My Qr Code</Text></TouchableOpacity>
           </View>
           <View  style={styles.oneButton}>
           <Icon5 name="edit" size={40} color={"#93C572"}/>
-          <TouchableOpacity><Text style={{fontSize:23}}>Edit Profile</Text></TouchableOpacity>
+          <TouchableOpacity><Text style={{fontSize:17}}>Edit Profile</Text></TouchableOpacity>
           </View>
           <View  style={styles.oneButton}>
           <Icon name="logout" size={40} color={"#93C572"} />
-          <TouchableOpacity><Text style={{fontSize:23}}>Log Out</Text></TouchableOpacity>
+          <TouchableOpacity><Text style={{fontSize:17}}>Log Out</Text></TouchableOpacity>
           </View>
           <View  style={styles.oneButton}>
           <Icon name="logout" size={40} color={"#93C572"} />
-          <TouchableOpacity><Text style={{fontSize:23}}>Delete Account</Text></TouchableOpacity>
+          <TouchableOpacity><Text style={{fontSize:17}}>Delete Account</Text></TouchableOpacity>
           </View>
           </View>
     </ScrollView>
@@ -90,8 +89,8 @@ const styles = StyleSheet.create({
   points: {
     backgroundColor: "#93C572",
     borderRadius: 20,
-    padding: 15,
-    width: 90,
+    padding: 5,
+    width: 150,
     textAlign: "center",
   },
   return: {
