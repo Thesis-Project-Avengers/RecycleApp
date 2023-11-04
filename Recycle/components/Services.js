@@ -11,7 +11,7 @@ const Services = () => {
         <ScrollView  horizontal={true} showsHorizontalScrollIndicator={false} style={{ margin: 5,gap: 10 }}>
       <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
       <View style={styles.oneService}>
-        <Icon name="add" size={28} color="white"/>
+        <Icon name="home" size={28} color="white"/>
         <Text style={{ fontSize: 15 ,color: "white" }} >Plastic</Text>
       </View>
         </TouchableOpacity>
