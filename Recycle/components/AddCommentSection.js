@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { addDoc, collection } from 'firebase/firestore';
 import { FIREBASE_AUTH, FIREBASE_DB } from '../firebaseConfig';
 
-const AddCommentSection = ({ postId }) => {
+const AddCommentSection = ({ postId, update, setUpdate }) => {
     const [content, setContent] = useState("")
     const handleAddComment = async () => {
         try {
@@ -18,6 +18,8 @@ const AddCommentSection = ({ postId }) => {
                     },
                     createdAt: new Date()
                 })
+                setUpdate(!update)
+                setContent("")
             }
         } catch (error) {
             console.log("error adding comment");
@@ -28,6 +30,7 @@ const AddCommentSection = ({ postId }) => {
     return (
         <View style={styles.container}>
             <TextInput
+                value={content}
                 onChangeText={setContent}
                 multiline={true}
                 numberOfLines={2}

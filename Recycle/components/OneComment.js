@@ -2,7 +2,6 @@ import { View, Text, StyleSheet, Image } from 'react-native'
 import React from 'react'
 
 const OneComment = ({ comment }) => {
-    console.log(comment.createdAt.toDate().toString());
     return (
         <View style={styles.container}>
             <View style={styles.commentHeader}>
@@ -10,7 +9,7 @@ const OneComment = ({ comment }) => {
                     <Image source={{ uri: comment.user.photoURL }} width={40} height={40} borderRadius={50} />
                     <Text>{comment.user.displayName}</Text>
                 </View>
-                <Text style={{ color: "green" }}>{comment.createdAt.toDate().toString().slice(0, 10)}</Text>
+                <Text style={{ color: "green" }}>{comment.createdAt.toDate().toString().slice(15,21)} PM</Text>
             </View>
             <View style={styles.commentBody}>
                 <Text>{comment.content}</Text>

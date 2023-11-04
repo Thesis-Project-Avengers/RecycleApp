@@ -8,20 +8,24 @@ import { FIREBASE_DB } from '../firebaseConfig'
 
 const CommentsScreen = ({ route }) => {
     const [comments, setComments] = useState([])
-    console.log("this comments",comments);
+    const [update,setUpdate]=useState(false)
+    console.log("this comments", comments);
     console.log(route.params.postId);
     useEffect(() => {
-        const commentsRef = collection(FIREBASE_DB, "comments");
-        const q = query(commentsRef, where("postId", "==", route.params.postId));
-        const data = []
-        onSnapshot(q, (snapShot) => {
-            snapShot.docs.map((doc) => {
-                console.log(doc.data());
-                data.push(doc.data());
+        const fetch = async () => {
+            const commentsRef = collection(FIREBASE_DB, "comments");
+            const q = query(commentsRef, where("postId", "==", route.params.postId));
+            const data = []
+            onSnapshot(q, (snapShot) => {
+                snapShot.docs.map((doc) => {
+                    console.log(doc.data());
+                    data.push(doc.data());
+                });
+                setComments(data);
             });
-            setComments(data.reverse());
-        });
-    }, [])
+        }
+        fetch();
+    }, [update])
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView
@@ -29,7 +33,10 @@ const CommentsScreen = ({ route }) => {
                 contentContainerStyle={{ gap: 20 }}>
                 {comments.map((comment, index) => <OneComment key={index} comment={comment} />)}
             </ScrollView>
-            <AddCommentSection postId={route.params.postId} />
+            <AddCommentSection 
+            update={update}
+            setUpdate={setUpdate}
+            postId={route.params.postId} />
         </SafeAreaView>
     )
 }
