@@ -8,7 +8,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import OnboardingScreen from "./components/OnBroadingScreen";
 import HomeScreen from './screens/HomeScreen';
 import Map from "./screens/Map"
-import ExapmleScreen from './screens/ExapmleScreen';
 import { AnimatedTabBarNavigator } from 'react-native-animated-nav-tab-bar';
 import SignIn from "./screens/SignIn";
 import ConfirmCode from "./screens/ConfirmCode";
@@ -20,14 +19,18 @@ import FormAfterAuth from "./screens/FormAfterAuth"
 import ChooseScreen from "./screens/ChooseScreen";
 import CollectorScreen from "./screens/CollectorScreen";
 import AccumulatorScreen from "./screens/AccumulatorScreen";
+import ProfileCollector from "./screens/ProfileCollector";
+
+
+import AccOnboarding from "./components/AccOnboarding";
+import CommentsScreen from "./screens/CommentsScreen";
+
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator()
 export default function App() {
   //Onboarding 
   // const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState(true)
   const [first, setFirst] = useState(true);
-
-
   const fetch = async () => {
     const x = await AsyncStorage.getItem("first")
     console.log(x);
@@ -36,7 +39,6 @@ export default function App() {
     } else {
       AsyncStorage.setItem("first", "false")
     }
-
     // const appData = await AsyncStorage.getItem("isAppFirstLaunched")
     // console.log(appData);
     // if (appData == true) {
@@ -62,16 +64,14 @@ export default function App() {
 }
 export const AuthStack = () => {
   return (
-    <Stack.Navigator initialRouteName="formAfterAuth" screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName="profileCollector" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="signIn" component={SignIn} />
       <Stack.Screen name="confirmCode" component={ConfirmCode} />
       <Stack.Screen name="formAfterAuth" component={FormAfterAuth} />
       <Stack.Screen name="chooseScreen" component={ChooseScreen} />
       <Stack.Screen name="collector" component={CollectorScreen} />
       <Stack.Screen name="accumulator" component={AccumulatorScreen} />
-
-
-      
+      <Stack.Screen name="profileCollector" component={ProfileCollector} />
     </Stack.Navigator>)
 }
 export const RealApp = () => {
@@ -115,7 +115,7 @@ export const RealApp = () => {
             />
           )
         }}
-        name="Tips" component={TipsScreen} />
+        name="Tips" component={TipsStack} />
       <Tab.Screen
         options={{
           tabBarIcon: ({ focused, color, size }) => (
@@ -155,12 +155,25 @@ export const RealApp = () => {
     </Tab.Navigator>
   )
 }
+
 export const ProfileStack = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }} >
+    <Stack.Navigator initialRouteName="mainprofile" screenOptions={{ headerShown: false }} >
       <Stack.Screen name="mainprofile" component={Profile} />
       <Stack.Screen name="editprofile" component={EditProfileScreen} />
-
     </Stack.Navigator>
   )
+}
+
+export const TipsStack = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }} >
+      <Stack.Screen name="tipsMain" component={TipsScreen} />
+      <Stack.Screen name="commentScreen" component={CommentsScreen} options={{ 
+        headerTitleAlign: "center",
+        headerShown: true, 
+        title: "Comments",
+        }} />
+
+    </Stack.Navigator>)
 }

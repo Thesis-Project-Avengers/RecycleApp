@@ -1,171 +1,145 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity,ScrollView } from 'react-native'
-import React from 'react'
-import recycle from '../assets/recycle.png'
-import * as Progress from 'react-native-progress'
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { SafeAreaView, StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from "react-native";
+import React from "react";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import Icon2 from "react-native-vector-icons/FontAwesome5";
+import Icon3 from "react-native-vector-icons/FontAwesome5";
+import Icon4 from "react-native-vector-icons/Entypo";
+import Icon5 from "react-native-vector-icons/AntDesign";
 
-
-const Profile = ({ navigation }) => {
-    return (
-        <View style={styles.container}>
-            <View style={styles.profileHeader}>
-                <View style={styles.imageContainer}>
-                    <Image style={styles.image} source={recycle} />
-                </View>
-                <View style={styles.nameContainer}>
-                    <Text style={styles.welcome}>Welcome</Text>
-                    <Text style={styles.name}>Flen Fouleni</Text>
-                </View>
-            </View>
-            <View style={styles.stats} >
-                <Text style={styles.statsTitle} >You've collected 3 Items this week</Text>
-                <Text style={styles.statsValue} >75% of your weekly goal is done</Text>
-                <Progress.Bar style={styles.statsProgress} progress={0.7} width={300} color='#73d905' />
-            </View>
-<View style={styles.profileOptions} >
-            
-                <Text style={styles.optionHeader} >Manage My Account</Text>
-                <ScrollView>
-                <View style={styles.many} >
-                
-                <TouchableOpacity style={styles.button} >
-                    <Icon name='history' size={36} />
-                    <Text style={styles.optionsContent} >My Payments</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} >
-                    <Icon name='qr-code' size={36} />
-                    <Text style={styles.optionsContent} >My Qr Code</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => navigation.navigate("editprofile")}
-                    style={styles.button} >
-                    <Icon name='edit' size={36} />
-                    <Text style={styles.optionsContent} >Edit Profile</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} >
-                    <Icon name='logout' size={36} />
-                    <Text style={styles.optionsContent} >Log Out</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} >
-                    <Icon name='delete' size={36} />
-                    <Text style={styles.optionsContent} >Delete Account</Text>
-                </TouchableOpacity>
-                </View>
-                </ScrollView>
-                </View>
+const Profile = () => {
+  return (
+    <SafeAreaView  style={{ padding: "40%" }}>
+    <ScrollView showsVerticalScrollIndicator={false} style={styles.scroll} >
+      <View style={styles.returnPoints}>
+        <View style={styles.return}>
+          {/* <Icon name="arrow-return-left" 
+          size={22}
+          color={"#93C572"}
+          /> */}
         </View>
-    )
-}
-
-export default Profile
-
+        <View style={styles.points}>
+          <Text style={{ textAlign: "center", color: "white", fontSize: "16" }}>
+            points : 100
+          </Text>
+        </View>
+      </View>
+      <View style={styles.imageTextName}>
+        <Image
+          source={require("../assets/khalil.jpg")}
+          style={styles.imageProfile}
+        />
+        <Text style={styles.textName}>khalil kouroghli</Text>
+      </View>
+      <View style={styles.statContainer}>
+        <View style={styles.oneRec}>
+          <Icon name="bottle-wine-outline" size={45} color={"#93C572"} />
+          <Text>20</Text>
+        </View>
+        <View style={styles.oneRec}>
+          <Icon2
+            name="people-arrows" size={40} color={"#93C572"}
+          />
+          <Text>35</Text>
+        </View>
+        <View style={styles.oneRec}>
+          <Icon3
+            name="money-bill-wave" size={40} color={"#93C572"}
+          />
+          <Text>100</Text>
+        </View>
+      </View>
+        {/* <ScrollView style={styles.scroll}> */}
+          <View style={{marginBottom:25}}>
+          <View style={styles.oneButton}>
+          <Icon4 name="back-in-time" size={40} color={"#93C572"} />
+          <TouchableOpacity><Text style={{fontSize:17}}>My Payments</Text></TouchableOpacity>
+          </View>
+          <View  style={styles.oneButton}>
+            <Icon5 name="qrcode" size={40} color={"#93C572"} />
+          <TouchableOpacity><Text style={{fontSize:17}}>My Qr Code</Text></TouchableOpacity>
+          </View>
+          <View  style={styles.oneButton}>
+          <Icon5 name="edit" size={40} color={"#93C572"}/>
+          <TouchableOpacity><Text style={{fontSize:17}}>Edit Profile</Text></TouchableOpacity>
+          </View>
+          <View  style={styles.oneButton}>
+          <Icon name="logout" size={40} color={"#93C572"} />
+          <TouchableOpacity><Text style={{fontSize:17}}>Log Out</Text></TouchableOpacity>
+          </View>
+          <View  style={styles.oneButton}>
+          <Icon name="logout" size={40} color={"#93C572"} />
+          <TouchableOpacity><Text style={{fontSize:17}}>Delete Account</Text></TouchableOpacity>
+          </View>
+          </View>
+    </ScrollView>
+    </SafeAreaView>
+  );
+};
+export default Profile;
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        gap: 5,
-        
-
-    },
-    profileHeader: {
-        flex:1,
-        flexDirection: "row",
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        padding: 15,
-        paddingBottom:30,
-        width: "100%",
-        gap: 15,
-        
-        marginTop: 50,
-        borderWidth: 0.3,
-        borderTopColor: "#fff",
-        borderLeftColor: "#fff",
-        borderRightColor: "#fff",
-    },
-    imageContainer: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 500,
-        overflow: 'hidden',
-        width: 70,
-        height: 70,
-    },
-    nameContainer: {
-        display: 'flex',
-        alignContent: 'center',
-        justifyContent: 'center',
-        gap: 6
-    },
-    image: {
-        borderRadius: 500,
-        width: 70,
-        height: 70,
-    },
-    welcome: {
-        fontSize: 24,
-        fontWeight: 'bold',
-    },
-    name: {
-        fontSize: 18,
-        fontWeight: '400'
-    },
-    stats: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: "rgb(230, 230, 230)",
-        width: '90%',
-        height: 100,
-        borderRadius: 25
-    },
-    statsTitle: {
-        fontSize: 20,
-        fontWeight: '600',
-    },
-    statsValue: {
-        fontSize: 14,
-        fontWeight: '400',
-    },
-    statsProgress: {
-        backgroundColor: 'white',
-        borderColor: 'transparent',
-        marginTop: 10
-    },
-    profileOptions: {
-        width:"100%",
-        flexDirection: "column",
-        alignItems: 'flex-start',
-        justifyContent: 'center',
-         backgroundColor:"#eee",
-        // backgroundColor: 'red',
-        padding: 10
-    },
-    button: {
-        // backgroundColor: 'green',
-        width: '100%',
-        height: 80,
-        borderWidth: 0.3,
-        borderTopColor: "#fff",
-        borderLeftColor: "#fff",
-        borderRightColor: "#fff",
-        display: 'flex',
-        flexDirection: "row",
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        padding: 10,
-        gap: 10
-
-    },
-    optionHeader: {
-        fontSize: 24,
-        fontWeight: '600',
-    },
-    optionsContent: {
-        fontSize: 20,
-        fontWeight: '400',
-    },
+  returnPoints: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    // backgroundColor:"red",
+    padding: 5,
+    alignContent: "center",
+  },
+  points: {
+    backgroundColor: "#93C572",
+    borderRadius: 20,
+    padding: 5,
+    width: 150,
+    textAlign: "center",
+  },
+  return: {
+    padding: 15,
+    width: 90,
+    textAlign: "center",
+  },
+  imageTextName: {
+    // backgroundColor:"red",
+    gap: 10,
+  },
+  imageProfile: {
+    alignSelf: "center",
+    borderRadius: 50,
+    width: 100,
+    height: 100,
+  },
+  textName: {
+    alignSelf: "center",
+    fontSize: "18",
+  },
+  statContainer: {
+    flexDirection: "row",
+    // backgroundColor: "red",
+    padding: 10,
+    marginTop: 10,
+    justifyContent: "space-around",
+    height: "20%",
+    alignItems: "center",
+  },
+  oneRec: {
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    // backgroundColor: "green",
+    padding: 15,
+    gap:10, 
+height:"100%"
+  },
+  scroll:{
+    padding:5,
+    height:"100%"
+    // backgroundColor:"red",
+    // gap:30
+  },
+  oneButton:{
+    // backgroundColor:"green",
+    width:"100%", 
+    padding:30,
+    flexDirection:"row",
+    alignItems:"center",
+    gap:25
+  }
 });
