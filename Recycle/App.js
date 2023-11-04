@@ -21,14 +21,13 @@ import ChooseScreen from "./screens/ChooseScreen";
 import CollectorScreen from "./screens/CollectorScreen";
 import AccumulatorScreen from "./screens/AccumulatorScreen";
 import ProfileCollector from "./screens/ProfileCollector";
+import OnBroadingScreen from "./components/OnBroadingScreen";
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator()
 export default function App() {
   //Onboarding 
   // const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState(true)
   const [first, setFirst] = useState(true);
-
-
   const fetch = async () => {
     const x = await AsyncStorage.getItem("first")
     console.log(x);
@@ -37,7 +36,6 @@ export default function App() {
     } else {
       AsyncStorage.setItem("first", "false")
     }
-
     // const appData = await AsyncStorage.getItem("isAppFirstLaunched")
     // console.log(appData);
     // if (appData == true) {
@@ -53,8 +51,8 @@ export default function App() {
   }, [])
   return (
     <NavigationContainer >
-      <Stack.Navigator initialRouteName={"ombording"} screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="ombording" component={AccOnboarding} />
+      <Stack.Navigator initialRouteName={"App"} screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="ombording" component={OnBroadingScreen}/>
         <Stack.Screen name="auth" component={AuthStack} />
         <Stack.Screen name="App" component={RealApp} />
       </Stack.Navigator>
@@ -69,11 +67,8 @@ export const AuthStack = () => {
       <Stack.Screen name="formAfterAuth" component={FormAfterAuth} />
       <Stack.Screen name="chooseScreen" component={ChooseScreen} />
       <Stack.Screen name="collector" component={CollectorScreen} />
-      <Stack.Screen name="accumulator" component={AccumulatorScreen} />
-      <Stack.Screen name="profileCollector" component={ProfileCollector} />
-
-
-      
+      <Stack.Screen name="accumulator" component={AccumulatorScreen}/>
+      <Stack.Screen name="profileCollector" component={ProfileCollector}/>
     </Stack.Navigator>)
 }
 export const RealApp = () => {
