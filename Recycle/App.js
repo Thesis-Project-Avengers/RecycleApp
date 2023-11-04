@@ -72,9 +72,6 @@ export const AuthStack = () => {
       <Stack.Screen name="collector" component={CollectorScreen} />
       <Stack.Screen name="accumulator" component={AccumulatorScreen} />
       <Stack.Screen name="profileCollector" component={ProfileCollector} />
-
-
-
     </Stack.Navigator>)
 }
 export const RealApp = () => {

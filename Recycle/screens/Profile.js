@@ -75,9 +75,7 @@ const Profile = () => {
     </SafeAreaView>
   );
 };
-
 export default Profile;
-
 const styles = StyleSheet.create({
   returnPoints: {
     flexDirection: "row",
