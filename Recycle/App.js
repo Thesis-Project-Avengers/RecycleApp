@@ -159,7 +159,7 @@ export const RealApp = () => {
 }
 export const ProfileStack = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }} >
+    <Stack.Navigator initialRouteName="mainprofile" screenOptions={{ headerShown: false }} >
       <Stack.Screen name="mainprofile" component={Profile} />
       <Stack.Screen name="editprofile" component={EditProfileScreen} />
 
