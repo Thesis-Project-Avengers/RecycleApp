@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const Example = () => {
+const AccProfile = () => {
   return (
     <View>
-      <Text>Example component</Text>
+      <Text>AccProfile</Text>
     </View>
   )
 }
 
-export default Example
+export default AccProfile

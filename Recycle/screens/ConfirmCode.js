@@ -6,6 +6,7 @@ import {
     signInWithCredential,
   } from "firebase/auth";
 import { FIREBASE_AUTH } from '../firebaseConfig';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const ConfirmCode = ({route,navigation}) => {
@@ -24,6 +25,7 @@ const ConfirmCode = ({route,navigation}) => {
       const res = await signInWithCredential(auth, credential);
       // added to ther firebase
       setCode("");
+      await AsyncStorage.setItem("uid",res.user.uid)
       Alert.alert("login successfully");
       navigation.navigate("formAfterAuth")
     } catch (error) {

@@ -5,13 +5,59 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
+  ScrollView,
+  Alert,
 } from "react-native";
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from "react-native-vector-icons/FontAwesome5";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  onAuthStateChanged,
+  sendEmailVerification,
+  updateEmail,
+  updateProfile,
+} from "firebase/auth";
+import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
+import { addDoc, collection, setDoc } from "firebase/firestore";
 // import image from "../assets/formPictureAuth.png"
-const FormAfterAuth = () => {
+const FormAfterAuth = ({ navigation }) => {
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    onAuthStateChanged(FIREBASE_AUTH, (user) => {
+      const { photoURL, displayName, phoneNumber, uid } = user;
+      setUser({ photoURL, displayName, phoneNumber, uid });
+    });
+  }, []);
+  const checkEmail = (email) => {
+    return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+  };
+
+  const handleNextPress = async () => {
+    try {
+      if (form.email && form.firstName && form.lastName) {
+        const userCollectionRef = collection(FIREBASE_DB, "users");
+        const userData = {
+          ...user,
+          ...form,
+        };
+        await addDoc(userCollectionRef, userData).then(() => {
+          navigation.navigate("chooseScreen");
+        });
+      }else {
+        Alert.alert("Verify Inforamtion")
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+  });
+  console.log("here", form);
+
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: "center" }}>
       <View style={{ height: "40%" }}>
@@ -20,24 +66,83 @@ const FormAfterAuth = () => {
           source={require("../assets/formPictureAuth.png")}
         />
       </View>
-      <View style={styles.inputContainer}>
-        <View style={styles.firstInputForm}>
-          <TextInput placeholder="FirstName" style={styles.firstName} />
-          <TextInput placeholder="LastName" style={styles.lastName} />
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        automaticallyAdjustKeyboardInsets={true}
+      >
+        <View style={styles.inputContainer}>
+          <View style={styles.firstInputForm}>
+            <TextInput
+              // style={}
+              placeholder="FirstName"
+              style={{
+                ...styles.firstName,
+                borderColor:
+                  form.firstName.length === 0
+                    ? "black"
+                    : form.firstName.length > 5
+                    ? "green"
+                    : "red",
+              }}
+              onChangeText={(firstName) => {
+                setForm({ ...form, firstName });
+              }}
+            />
+            <TextInput
+              onChangeText={(lastName) => {
+                setForm({ ...form, lastName });
+              }}
+              placeholder="LastName"
+              style={{
+                ...styles.lastName,
+                borderColor:
+                  form.lastName.length === 0
+                    ? "black"
+                    : form.lastName.length > 4
+                    ? "green"
+                    : "red",
+              }}
+            />
+          </View>
+          <View>
+            <TextInput
+              onChangeText={(email) => {
+                setForm({ ...form, email });
+              }}
+              placeholder="Email"
+              style={{
+                ...styles.email,
+                borderColor: !form.email
+                  ? "black"
+                  : checkEmail(form.email)
+                  ? "green"
+                  : "red",
+              }}
+            />
+          </View>
         </View>
-        <View>
-          <TextInput placeholder="Email" style={styles.email} />
-        </View>
-      </View>
-      <View style={{width:"100%",marginTop:20}}>
-      <TouchableOpacity style={styles.button} >
-        <Text style={{textAlign:"right",color:"white",fontSize:20,marginRight:10}}  > Next </Text> 
-        <Icon 
-        name="arrow-right"
-        size={20}
-        color={"white"}
-        />
-      </TouchableOpacity>
+      </ScrollView>
+      <View style={{ width: "100%", marginTop: 20 }}>
+        <TouchableOpacity
+          onPress={() => {
+            handleNextPress();
+            // navigation.navigate("collector");
+          }}
+          style={styles.button}
+        >
+          <Text
+            style={{
+              textAlign: "right",
+              color: "white",
+              fontSize: 20,
+              marginRight: 10,
+            }}
+          >
+            {" "}
+            Next{" "}
+          </Text>
+          <Icon name="arrow-right" size={20} color={"white"} />
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
@@ -54,6 +159,7 @@ const styles = StyleSheet.create({
     gap: 20,
     // backgroundColor:"grey",
     // height:"50%"
+    height: "130%",
   },
   firstInputForm: {
     flexDirection: "row",
@@ -72,34 +178,31 @@ const styles = StyleSheet.create({
   },
   firstName: {
     width: "47%",
-    borderWidth: 2,
+    borderWidth: 1,
     padding: 15,
-    borderColor:"#93C572",
-    borderRadius:10
-
+    borderRadius: 10,
   },
   lastName: {
     width: "47%",
-    borderWidth: 2,
+    borderWidth: 1,
     padding: 15,
-    borderColor:"#93C572",
-    borderRadius:10
-
+    borderColor: "black",
+    borderRadius: 10,
   },
   email: {
     width: "100%",
-    borderWidth: 2,
+    borderWidth: 1,
     padding: 15,
-    borderColor:"#93C572",
-    borderRadius:10
+    borderColor: "black",
+    borderRadius: 10,
   },
-  button:{
-    backgroundColor:"#93C572",
-    width:"40%", 
-    padding:10,
-    alignSelf:"flex-end", 
-    flexDirection:"row", 
-    gap:7,
-    alignItems:"center"
-  }
+  button: {
+    backgroundColor: "#93C572",
+    width: "40%",
+    padding: 10,
+    alignSelf: "flex-end",
+    flexDirection: "row",
+    gap: 7,
+    alignItems: "center",
+  },
 });

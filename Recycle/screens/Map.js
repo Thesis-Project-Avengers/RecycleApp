@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Image, ActivityIndicator } from "react-native";
-import MapView from "react-native-maps";
+import { View, Text, StyleSheet, Image, ActivityIndicator,TouchableOpacity } from "react-native";
+import MapView , {GooglePlacesAutocomplete} from "react-native-maps";
 import * as Location from "expo-location";
 import MapViewDirections from "react-native-maps-directions";
 import customMapStyleJSON from "../mapStyle";
@@ -8,15 +8,17 @@ import OnePosition from "../components/onePosition";
 import Modal from "react-native-modal";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import axios from "axios";
-import { TouchableOpacity } from "react-native";
-import { FloatingAction } from "react-native-floating-action";
 export default function Map() {
   const API_KEY = "AIzaSyCz7OmCHc00wzjQAp4KcZKzzNK8lHCGkgo";
   const [currentRegion, setCurrentRegion] = useState(null);
   const [selectedPos, setselectedPos] = useState(null);
   const [visibleModal, setVisibleModal] = useState(null);
+  const [addModal, setVisibleAddModal] = useState(null);
   const [currentInformation, setCurrentInformation] = useState(null);
-
+  const [selected, setSelected] = useState("");
+  const [region, setRegion] = useState({
+  
+  });
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -103,7 +105,6 @@ export default function Map() {
     setCurrentInformation({ ...data.data.rows[0].elements[0], ...data.data });
   };
 
-
   const renderModalContent = () => (
     <View style={styles.modalContent}>
       <Icon
@@ -154,10 +155,9 @@ export default function Map() {
             style={{
               marginRight: 10,
               fontSize: 40,
-
             }}
           />
-          <Text style={{ fontSize: 20 } }>
+          <Text style={{ fontSize: 20 }}>
             {currentInformation?.duration.text}
           </Text>
         </View>
@@ -166,17 +166,86 @@ export default function Map() {
         <Text
           style={{
             backgroundColor: "#93C572",
-            paddingTop: 15, 
+            paddingTop: 15,
             paddingBottom: 15,
-            paddingLeft: 80, 
+            paddingLeft: 80,
             paddingRight: 80,
-            borderRadius:40,
-            color:"white"
+            borderRadius: 40,
+            color: "white",
           }}
         >
           Press Me
         </Text>
       </TouchableOpacity>
+    </View>
+  );
+
+  const recyclableItems = [
+    "Aluminum Cans",
+    "Glass Bottles",
+    "Paper",
+    "Plastic Bottles",
+    "Cardboard Boxes",
+    "Steel Cans",
+  ];
+
+  const AddModalContent = () => (
+    <View style={styles.addModalContent}>
+      <Text style={{ fontSize: 30, color: "#93C572" }}>Add New Item</Text>
+      <View style={{ width: "100%", paddingTop: 20 }}>
+        <Text style={{ marginBottom: 10 ,paddingLeft:10}}>Add Category</Text>
+        <View
+          style={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "wrap",
+          }}
+        >
+          {recyclableItems.map((item) => {
+            return (
+              <TouchableOpacity
+                onPress={() => {
+                  setSelected(item);
+                }}
+              >
+                <Text
+                  style={
+                    selected === item
+                      ? {
+                          padding: 10,
+                          borderWidth: 1,
+                          margin: 3,
+                          borderRadius: 50,
+                          borderColor: "#93C572",
+                          color: "#93C572",
+                        }
+                      : {
+                          padding: 10,
+                          borderWidth: 1,
+                          margin: 3,
+                          borderRadius: 50,
+                        }
+                  }
+                >
+                  {item}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+           
+        </View>
+      </View>
+      <View style={{ width: "100%", paddingTop: 20 }}>
+      <Text >Select Location</Text>
+      {/* <GooglePlacesAutocomplete
+          
+        /> */}
+
+
+      </View>
+
+     
     </View>
   );
 
@@ -199,6 +268,15 @@ export default function Map() {
       borderTopLeftRadius: 50,
       borderTopRightRadius: 50,
     },
+    addModalContent: {
+      height: "90%",
+      backgroundColor: "white",
+      padding: 22,
+      justifyContent: "flex-start",
+      alignItems: "center",
+      borderTopLeftRadius: 50,
+      borderTopRightRadius: 50,
+    },
     modalText: {
       fontSize: 30,
       alignSelf: "center",
@@ -207,7 +285,22 @@ export default function Map() {
       justifyContent: "flex-end",
       margin: 0,
     },
+    addPost: {
+      position: "absolute",
+      bottom: 0,
+      right: 0,
+      width: 50,
+      height: 50,
+      justifyContent: "center",
+      alignItems: "center",
+
+      backgroundColor: "#93C572",
+      margin: 10,
+      borderRadius: 50,
+    },
   });
+
+
 
   return (
     <View style={styles.container}>
@@ -255,8 +348,23 @@ export default function Map() {
       >
         {renderModalContent()}
       </Modal>
-      <FloatingAction color='#93C572' />
-
+      <Modal
+        isVisible={addModal === 1}
+        style={styles.bottomModal}
+        onSwipeComplete={() => setVisibleAddModal(null)}
+        swipeDirection={"down"}
+        onBackdropPress={() => setVisibleAddModal(null)}
+      >
+        {AddModalContent()}
+      </Modal>
+      <TouchableOpacity
+        style={styles.addPost}
+        onPress={() => {
+          setVisibleAddModal(1);
+        }}
+      >
+        <Text style={{ color: "white", fontSize: 30 }}>+</Text>
+      </TouchableOpacity>
     </View>
   );
 }
