@@ -1,5 +1,5 @@
 import { Alert, StatusBar, View, TouchableOpacity, StyleSheet } from 'react-native';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faDumpster } from '@fortawesome/free-solid-svg-icons/faDumpster'
 import { faMotorcycle } from '@fortawesome/free-solid-svg-icons/faMotorcycle'
@@ -10,6 +10,16 @@ import Onboarding from 'react-native-onboarding-swiper';
 
 const WithCTA = () => {
     const [colQuestion, setColQuestion] = useState([null, null, null, null])
+    const onboardingRef = useRef(null)
+    const handleYesPress = () => {
+        setColQuestion(colQuestion => [...colQuestion, true])
+        onboardingRef.current?.goNext()
+    }
+
+    const handleNoPress = () => {
+        setColQuestion(colQuestion => [...colQuestion, false])
+        onboardingRef.current?.goNext()
+    }
     const styles = StyleSheet.create({
         subtitleMainView: {
             marginTop: 10,
@@ -42,6 +52,7 @@ const WithCTA = () => {
                 bottomBarColor={"#93c572"}
                 transitionAnimationDuration={700}
                 onSkip={() => Alert.alert('Skipped')}
+                ref={onboardingRef}
                 pages={[
                     {
                         title: 'Hey!',
@@ -55,11 +66,11 @@ const WithCTA = () => {
                                 <Text style={{ textAlign: 'center' }}>are you hate looking for a valuable wast on the trash ?</Text>
                                 <View style={styles.subtitleSecondView} >
                                     <TouchableOpacity style = { styles.touchableOpacityStyle}
-                                        onPress={() => setColQuestion[0]} // ti l7asilo lezm t5arrej array fih chjeweb si le5ra
+                                        onPress={()=>{handleYesPress()}}
                                     >
                                         <Text style={{ color: 'white' }} >yes</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle}>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleNoPress()}}>
                                         <Text style={{ color: 'white' }}>no</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -77,11 +88,11 @@ const WithCTA = () => {
                             <View style={styles.subtitleMainView}>
                                 <Text style={{ textAlign: 'center' }}>Do you own a motorcycle or any other vehicle suitable for waste collection ?</Text>
                                 <View style={styles.subtitleSecondView}>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle}>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleYesPress()}}>
                                         <Text style={{ color: 'white' }} >yes</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity style={styles.touchableOpacityStyle}>
-                                        <Text style={{ color: 'white' }} >no</Text>
+                                        <Text style={{ color: 'white' }} onPress={()=>{handleNoPress()}} >no</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -98,10 +109,10 @@ const WithCTA = () => {
                             <View style={styles.subtitleMainView}>
                                 <Text style={{ textAlign: 'center' }}>Do you have the necessary equipment for collecting waste, such as waste bins or bags ?</Text>
                                 <View style={styles.subtitleSecondView}>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle}>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleYesPress()}}>
                                         <Text style={{ color: 'white' }}>yes</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle}>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleNoPress()}}>
                                         <Text style={{ color: 'white' }} >no</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -119,10 +130,10 @@ const WithCTA = () => {
                             <View style={styles.subtitleMainView}>
                                 <Text style={{ textAlign: 'center' }}>Are you eco-conscious and interested in contributing to a cleaner environment ?</Text>
                                 <View style={styles.subtitleSecondView}>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle}>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleYesPress()}}>
                                         <Text style={{ color: 'white' }} >yes</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle}>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleNoPress()}}>
                                         <Text style={{ color: 'white' }} >no</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -138,7 +149,7 @@ const WithCTA = () => {
                                 style={{ backgroundColor: "#93c572", padding: 10, borderRadius: 5 }}
                                 textStyle={{ color: '#ffff' }}
                                 onPress={() => {
-                                    Alert.alert('done');
+                                    Alert.alert('done ' + colQuestion);
                                     StatusBar.setBarStyle('default');
                                 }}
                             ><Text style={{ color: 'white' }}>Get Started</Text></TouchableOpacity>
