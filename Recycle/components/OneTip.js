@@ -7,10 +7,12 @@ import { MaterialIcons } from '@expo/vector-icons';
 import React, { useState } from 'react'
 import { FIREBASE_AUTH, FIREBASE_DB } from '../firebaseConfig'
 import { doc, updateDoc } from 'firebase/firestore'
+import { useNavigation } from '@react-navigation/native';
 
 const OneTip = ({ tip }) => {
+    const navigation=useNavigation()
     // console.log(FIREBASE_AUTH.currentUser.uid);
-    
+
     const [isLiked, setIsliked] = useState(tip.isLiked.includes(FIREBASE_AUTH.currentUser.uid))
     const [isFavourite, setIsfavourite] = useState(tip.isFavourite.includes(FIREBASE_AUTH.currentUser.uid))
     const [visibleModal, setVisibleModal] = useState(false);
@@ -71,7 +73,10 @@ const OneTip = ({ tip }) => {
                     />
                     <Text style={{ fontWeight: 700 }}>{tip.numlikes}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
+                <TouchableOpacity
+                    onPress={() => { navigation.navigate("commentScreen") }}
+
+                    style={{ flexDirection: "row", gap: 5 }}>
                     <Icon
                         size={20}
                         name="comment-o"
