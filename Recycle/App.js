@@ -20,8 +20,11 @@ import ChooseScreen from "./screens/ChooseScreen";
 import CollectorScreen from "./screens/CollectorScreen";
 import AccumulatorScreen from "./screens/AccumulatorScreen";
 import ProfileCollector from "./screens/ProfileCollector";
-import AccOnboarding from "./components/AccOnboarding"
-import SecondOnBording from "./components/SecondOnBording"; 
+
+
+import AccOnboarding from "./components/AccOnboarding";
+import CommentsScreen from "./screens/CommentsScreen";
+
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator()
 export default function App() {
@@ -54,7 +57,7 @@ export default function App() {
   }, [])
   return (
     <NavigationContainer >
-      <Stack.Navigator initialRouteName={"ombording"} screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName={"App"} screenOptions={{ headerShown: false }}>
         <Stack.Screen name="ombording" component={OnboardingScreen} />
         <Stack.Screen name="auth" component={AuthStack} />
         <Stack.Screen name="App" component={RealApp} />
@@ -74,7 +77,7 @@ export const AuthStack = () => {
       <Stack.Screen name="profileCollector" component={ProfileCollector} />
 
 
-      
+
     </Stack.Navigator>)
 }
 export const RealApp = () => {
@@ -118,7 +121,7 @@ export const RealApp = () => {
             />
           )
         }}
-        name="Tips" component={TipsScreen} />
+        name="Tips" component={TipsStack} />
       <Tab.Screen
         options={{
           tabBarIcon: ({ focused, color, size }) => (
@@ -158,12 +161,25 @@ export const RealApp = () => {
     </Tab.Navigator>
   )
 }
+
 export const ProfileStack = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }} >
       <Stack.Screen name="mainprofile" component={Profile} />
       <Stack.Screen name="editprofile" component={EditProfileScreen} />
-
     </Stack.Navigator>
   )
+}
+
+export const TipsStack = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }} >
+      <Stack.Screen name="tipsMain" component={TipsScreen} />
+      <Stack.Screen name="commentScreen" component={CommentsScreen} options={{ 
+        headerTitleAlign: "center",
+        headerShown: true, 
+        title: "Comments",
+        }} />
+
+    </Stack.Navigator>)
 }
