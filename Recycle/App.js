@@ -20,7 +20,11 @@ import ChooseScreen from "./screens/ChooseScreen";
 import CollectorScreen from "./screens/CollectorScreen";
 import AccumulatorScreen from "./screens/AccumulatorScreen";
 import ProfileCollector from "./screens/ProfileCollector";
+
+
 import AccOnboarding from "./components/AccOnboarding";
+import CommentsScreen from "./screens/CommentsScreen";
+
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator()
 export default function App() {
@@ -66,8 +70,11 @@ export const AuthStack = () => {
       <Stack.Screen name="formAfterAuth" component={FormAfterAuth} />
       <Stack.Screen name="chooseScreen" component={ChooseScreen} />
       <Stack.Screen name="collector" component={CollectorScreen} />
-      <Stack.Screen name="accumulator" component={AccumulatorScreen}/>
-      <Stack.Screen name="profileCollector" component={ProfileCollector}/>
+      <Stack.Screen name="accumulator" component={AccumulatorScreen} />
+      <Stack.Screen name="profileCollector" component={ProfileCollector} />
+
+
+
     </Stack.Navigator>)
 }
 export const RealApp = () => {
@@ -111,7 +118,7 @@ export const RealApp = () => {
             />
           )
         }}
-        name="Tips" component={TipsScreen} />
+        name="Tips" component={TipsStack} />
       <Tab.Screen
         options={{
           tabBarIcon: ({ focused, color, size }) => (
@@ -151,12 +158,25 @@ export const RealApp = () => {
     </Tab.Navigator>
   )
 }
+
 export const ProfileStack = () => {
   return (
     <Stack.Navigator initialRouteName="mainprofile" screenOptions={{ headerShown: false }} >
       <Stack.Screen name="mainprofile" component={Profile} />
       <Stack.Screen name="editprofile" component={EditProfileScreen} />
-
     </Stack.Navigator>
   )
+}
+
+export const TipsStack = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }} >
+      <Stack.Screen name="tipsMain" component={TipsScreen} />
+      <Stack.Screen name="commentScreen" component={CommentsScreen} options={{ 
+        headerTitleAlign: "center",
+        headerShown: true, 
+        title: "Comments",
+        }} />
+
+    </Stack.Navigator>)
 }
