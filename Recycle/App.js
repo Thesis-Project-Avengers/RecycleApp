@@ -19,6 +19,7 @@ import FormAfterAuth from "./screens/FormAfterAuth"
 import ChooseScreen from "./screens/ChooseScreen";
 import CollectorScreen from "./screens/CollectorScreen";
 import AccumulatorScreen from "./screens/AccumulatorScreen";
+import ProfileCollector from "./screens/ProfileCollector";
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator()
 export default function App() {
@@ -61,13 +62,14 @@ export default function App() {
 }
 export const AuthStack = () => {
   return (
-    <Stack.Navigator initialRouteName="formAfterAuth" screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName="signIn" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="signIn" component={SignIn} />
       <Stack.Screen name="confirmCode" component={ConfirmCode} />
       <Stack.Screen name="formAfterAuth" component={FormAfterAuth} />
       <Stack.Screen name="chooseScreen" component={ChooseScreen} />
       <Stack.Screen name="collector" component={CollectorScreen} />
       <Stack.Screen name="accumulator" component={AccumulatorScreen} />
+      <Stack.Screen name="profileCollector" component={ProfileCollector} />
 
 
       
