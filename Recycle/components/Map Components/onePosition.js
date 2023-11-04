@@ -1,24 +1,35 @@
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity} from "react-native";
 import React from "react";
-import { Marker } from "react-native-maps";
+import { Marker, Callout } from "react-native-maps";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { useState } from "react";
 const OnePosition = ({
   loc,
   setselectedPos,
   setVisibleModal,
   getSelectedInformation,
+  handleAnimateToRegion,
+  key,
+  setShowWay
 }) => {
+  const [pressCount, setPressCount] = useState(0);
+
+  const handlePress = () => {
+    setPressCount((prevCount) => prevCount + 1);
+    if(pressCount === 0){
+      setselectedPos(loc);
+      getSelectedInformation(loc);
+      handleAnimateToRegion(loc);
+      setShowWay(0)
+    }
+    if (pressCount === 1) {
+       setVisibleModal(1);
+      setPressCount(0); // Reset press count
+    }
+  }
   return (
     <Marker
-      //   onPress={setselectedPos({
-      //     latitude: loc.location.latitude,
-      //     longitude: loc.location.longitude,
-      //   })}
-      onPress={() => {
-        setselectedPos(loc);
-        setVisibleModal(1);
-        getSelectedInformation(loc);
-      }}
+     onPress={handlePress}
       coordinate={{
         latitude: loc.location.latitude,
         longitude: loc.location.longitude,
