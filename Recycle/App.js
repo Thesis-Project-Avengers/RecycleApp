@@ -24,6 +24,7 @@ import ProfileCollector from "./screens/ProfileCollector";
 
 import AccOnboarding from "./components/AccOnboarding";
 import CommentsScreen from "./screens/CommentsScreen";
+import CollOmbording from "./components/SecondOnBording";
 
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator()
@@ -54,7 +55,7 @@ export default function App() {
   }, [])
   return (
     <NavigationContainer >
-      <Stack.Navigator initialRouteName={"App"} screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName={"auth"} screenOptions={{ headerShown: false }}>
         <Stack.Screen name="ombording" component={OnboardingScreen} />
         <Stack.Screen name="auth" component={AuthStack} />
         <Stack.Screen name="App" component={RealApp} />
@@ -64,7 +65,7 @@ export default function App() {
 }
 export const AuthStack = () => {
   return (
-    <Stack.Navigator initialRouteName="profileCollector" screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName="chooseScreen" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="signIn" component={SignIn} />
       <Stack.Screen name="confirmCode" component={ConfirmCode} />
       <Stack.Screen name="formAfterAuth" component={FormAfterAuth} />
@@ -72,6 +73,9 @@ export const AuthStack = () => {
       <Stack.Screen name="collector" component={CollectorScreen} />
       <Stack.Screen name="accumulator" component={AccumulatorScreen} />
       <Stack.Screen name="profileCollector" component={ProfileCollector} />
+      <Stack.Screen name="accQuestions"  component={AccOnboarding}/>
+      <Stack.Screen name="collQuestions"  component={CollOmbording}/>
+
     </Stack.Navigator>)
 }
 export const RealApp = () => {
