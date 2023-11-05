@@ -2,6 +2,7 @@ import React from "react";
 import {
   Text,
   View,
+  Image,
   TouchableOpacity,
   StyleSheet,
   ScrollView,
@@ -34,6 +35,7 @@ const Services = () => {
           </View>
         </TouchableOpacity>
       </View>
+      <Image style={styles.imageService}  source={require("../assets/cartoon-recycle.png")}/>
     </SafeAreaView>
   );
 };
@@ -60,4 +62,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#93C572",
     margin: 5,
   },
+  imageService : {
+    width: "100%",
+    height: "55%",
+    borderRadius: 15,
+  }
 });

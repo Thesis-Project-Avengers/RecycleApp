@@ -10,7 +10,7 @@ import { doc, updateDoc } from 'firebase/firestore'
 import { useNavigation } from '@react-navigation/native';
 
 const OneTip = ({ tip }) => {
-    const navigation=useNavigation()
+    const navigation = useNavigation()
     // console.log(FIREBASE_AUTH.currentUser.uid);
 
     const [isLiked, setIsliked] = useState(tip.isLiked.includes(FIREBASE_AUTH.currentUser.uid))
@@ -74,8 +74,7 @@ const OneTip = ({ tip }) => {
                     <Text style={{ fontWeight: 700 }}>{tip.numlikes}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={() => { navigation.navigate("commentScreen") }}
-
+                    onPress={() => { navigation.navigate("commentScreen", { postId: tip.id }) }}
                     style={{ flexDirection: "row", gap: 5 }}>
                     <Icon
                         size={20}
