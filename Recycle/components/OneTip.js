@@ -10,8 +10,6 @@ import { doc, updateDoc } from 'firebase/firestore'
 import { useNavigation } from '@react-navigation/native';
 
 const OneTip = ({ tip }) => {
-    console.log("from one-tip");
-    console.log(tip.createdAt.toDate().toString().slice(15, 18));
     const navigation = useNavigation()
     // console.log(FIREBASE_AUTH.currentUser.uid);
 
@@ -51,17 +49,17 @@ const OneTip = ({ tip }) => {
                 <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                     <Image borderRadius={50}
                         source={{
-                            uri: tip.user.pdpPhoto
+                            uri: tip.user?.pdpPhoto
                         }} width={50} height={50} />
-                    <Text style={{ fontSize: 16, fontWeight: 900 }}>{tip.user.name}</Text>
+                    <Text style={{ fontSize: 16, fontWeight: 900 }}>{tip.user?.name}</Text>
                 </View>
                 <Text>
-                    {tip.createdAt.toDate().toString().slice(15, 18) > 12 ? tip.createdAt.toDate().toString().slice(15, 21) + " PM" : tip.createdAt.toDate().toString().slice(15, 21) + " AM"}
+                    {tip.createdAt.toDate().toString().slice(15, 18) > 12 ? tip.createdAt?.toDate().toString().slice(15, 21) + " PM" : tip.createdAt.toDate().toString().slice(15, 21) + " AM"}
                 </Text>
             </View>
-            {tip.image &&
+            {tip?.image &&
                 <TouchableOpacity onPress={() => setVisibleModal(true)} >
-                    <Image style={{ flex: 1, objectFit: "cover" }} height={150} borderRadius={25} source={{ uri: tip.image }} />
+                    <Image style={{ flex: 1, objectFit: "cover" }} height={150} borderRadius={25} source={{ uri: tip?.image }} />
                 </TouchableOpacity>
             }
             <Text>{tip.content}</Text>

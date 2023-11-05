@@ -1,11 +1,8 @@
-import { View, Text, StyleSheet, ScrollView, Image, Touchable, TouchableOpacity, ActivityIndicator, TextInput, } from "react-native";
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
 import OneTipHome from "../components/OneTipHome";
-import * as ImagePicker from "expo-image-picker";
-import uuid from "uuid";
 import { FIREBASE_DB } from "../firebaseConfig";
-import { addDoc, collection, getDocs, orderBy, query } from "firebase/firestore";
+import {  collection, getDocs, orderBy, query } from "firebase/firestore";
 
 const TipsHome = () => {
   const [tips, setTips] = useState([]);
@@ -47,8 +44,7 @@ const TipsHome = () => {
     );
   } else {
     return (
-
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <View style={{ flex: 1, justifyContent: "flex-start", alignItems: "center" }}>
         <ActivityIndicator size="large" color="green" />
         <Text>Loading</Text>
       </View>

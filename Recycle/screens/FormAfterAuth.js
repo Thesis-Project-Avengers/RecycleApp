@@ -56,7 +56,6 @@ const FormAfterAuth = ({ navigation }) => {
     lastName: "",
     email: "",
   });
-  console.log("here", form);
 
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: "center" }}>
