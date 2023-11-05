@@ -24,6 +24,7 @@ import ProfileCollector from "./screens/ProfileCollector";
 
 import AccOnboarding from "./components/AccOnboarding";
 import CommentsScreen from "./screens/CommentsScreen";
+import AccSpendPoint from "./components/AccSpendPoint";
 
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator()
@@ -71,7 +72,7 @@ export const AuthStack = () => {
       <Stack.Screen name="chooseScreen" component={ChooseScreen} />
       <Stack.Screen name="collector" component={CollectorScreen} />
       <Stack.Screen name="accumulator" component={AccumulatorScreen} />
-      <Stack.Screen name="profileCollector" component={ProfileCollector} />
+      <Stack.Screen name="profileCollector" component={AccProfile} />
     </Stack.Navigator>)
 }
 export const RealApp = () => {
@@ -103,7 +104,7 @@ export const RealApp = () => {
             />
           )
         }}
-        name="Home" component={HomeScreen} />
+        name="Home" component={/*AccSpendPoint*/HomeScreen} />
       <Tab.Screen
         options={{
           tabBarIcon: ({ focused, color, size }) => (

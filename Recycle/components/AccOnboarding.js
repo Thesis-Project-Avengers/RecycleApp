@@ -34,14 +34,12 @@ const AccOnboarding = () => {
             justifyContent: 'center'
         }
     })
-  
     const [colQuestion, setColQuestion] = useState([null, null, null, null])
     const onboardingRef = useRef(null)
     const handleYesPress = () => {
         setColQuestion(colQuestion => [...colQuestion, true])
         onboardingRef.current?.goNext()
     }
-
     const handleNoPress = () => {
         setColQuestion(colQuestion => [...colQuestion, false])
         onboardingRef.current?.goNext()
