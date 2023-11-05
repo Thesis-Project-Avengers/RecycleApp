@@ -29,6 +29,7 @@ const OnePosition = ({
   }
   return (
     <Marker
+    key={key}
      onPress={handlePress}
       coordinate={{
         latitude: loc.location.latitude,

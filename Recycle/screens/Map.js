@@ -244,7 +244,7 @@ export default function Map() {
           pitchEnabled={true}
           rotateEnabled={true}
         >
-          {places.map((loc) => {
+          {places.map((loc,key) => {
             return (
               <OnePosition
                 loc={loc}
@@ -253,7 +253,7 @@ export default function Map() {
                 getSelectedInformation={getSelectedInformation}
                 handleAnimateToRegion={handleAnimateToRegion}
                 setShowWay={setShowWay}
-                key={loc.id}
+                key={key}
               />
             );
           })}
@@ -300,8 +300,6 @@ export default function Map() {
       <Modal
         isVisible={addModal === 1}
         style={styles.bottomModal}
-        onSwipeComplete={() => setVisibleAddModal(null)}
-        swipeDirection={"down"}
         onBackdropPress={() => setVisibleAddModal(null)}
       >
         {<AddModal recyclableItems={recyclableItems} />}
