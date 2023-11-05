@@ -34,7 +34,7 @@ export default function App() {
   const [first, setFirst] = useState(true);
   const fetch = async () => {
     const x = await AsyncStorage.getItem("first")
-    console.log(x);
+    // console.log(x);
     if (!x) {
       setFirst(false)
     } else {
@@ -55,7 +55,7 @@ export default function App() {
   }, [])
   return (
     <NavigationContainer >
-      <Stack.Navigator initialRouteName={"App"} screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName={"ombording"} screenOptions={{ headerShown: false }}>
         <Stack.Screen name="ombording" component={OnboardingScreen} />
         <Stack.Screen name="auth" component={AuthStack} />
         <Stack.Screen name="App" component={RealApp} />

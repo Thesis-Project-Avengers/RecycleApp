@@ -50,7 +50,6 @@ const ChooseScreen = ({ route, navigation }) => {
   }, []);
   const updateUser = async (id, data) => {
     // need small fix 
-    console.log(id, data);
     const docRef = doc(FIREBASE_DB, "users", id);
     await updateDoc(docRef, data);
   };

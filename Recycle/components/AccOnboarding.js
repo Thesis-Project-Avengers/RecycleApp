@@ -17,7 +17,6 @@ const AccOnboarding = () => {
         4:null,
     })
     const onboardingRef = useRef(null)
-    console.log(colQuestion);
     const handleYesPress = (index,value) => {
         setColQuestion({...colQuestion,[index]:value});
         onboardingRef.current?.goNext()

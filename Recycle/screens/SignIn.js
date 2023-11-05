@@ -42,7 +42,6 @@ navigation.navigate("confirmCode",{verificationId})
     } catch (error) {
       console.log("error from send verifs");
       console.log(error);
-      throw error;
     }
   };
  

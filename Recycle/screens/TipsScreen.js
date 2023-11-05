@@ -92,7 +92,6 @@ const TipsScreen = () => {
         }
     }
 
-    console.log(tips);
     useEffect(() => {
         const refrence = collection(FIREBASE_DB, "Tips")
         const q = query(refrence, orderBy("createdAt", "desc"));
