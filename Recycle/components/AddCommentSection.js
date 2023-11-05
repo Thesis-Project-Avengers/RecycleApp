@@ -1,6 +1,6 @@
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, FieldValue, serverTimestamp } from 'firebase/firestore';
 import { FIREBASE_AUTH, FIREBASE_DB } from '../firebaseConfig';
 
 const AddCommentSection = ({ postId, update, setUpdate }) => {
@@ -16,7 +16,7 @@ const AddCommentSection = ({ postId, update, setUpdate }) => {
                         displayName: FIREBASE_AUTH.currentUser.displayName,
                         photoURL: FIREBASE_AUTH.currentUser.photoURL
                     },
-                    createdAt: new Date()
+                    createdAt: serverTimestamp()
                 })
                 setUpdate(!update)
                 setContent("")
