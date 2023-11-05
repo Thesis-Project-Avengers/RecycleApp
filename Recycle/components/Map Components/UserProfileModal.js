@@ -36,7 +36,7 @@ const UserProfileModal = () => {
           uri: "https://scontent.ftun10-1.fna.fbcdn.net/v/t1.6435-9/106737994_1336993673160276_533858732439424999_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=be3454&_nc_ohc=Y_5Swwh80RoAX__zndg&_nc_ht=scontent.ftun10-1.fna&oh=00_AfDs3EXAfdbn9dwEadAhAYyduxloP5FY1jjWT_bEFdSrHw&oe=656ECC59",
         }}
       />
-      <Text style={{ padding: 5,fontSize:20,fontFamily:""}}>Jesser Ben Khiria</Text>
+      <Text style={{ padding: 5,fontSize:20,letterSpacing:2}}> Jesser Ben Khiria </Text>
       <View style={{ flexDirection: "row", marginVertical: 10 }}>
         {renderStars(4)}
       </View>
