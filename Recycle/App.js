@@ -34,7 +34,7 @@ export default function App() {
   const [first, setFirst] = useState(true);
   const fetch = async () => {
     const x = await AsyncStorage.getItem("first")
-    console.log(x);
+    // console.log(x);
     if (!x) {
       setFirst(false)
     } else {

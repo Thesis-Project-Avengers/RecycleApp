@@ -1,32 +1,8 @@
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
-import { addDoc, collection, FieldValue, serverTimestamp } from 'firebase/firestore';
-import { FIREBASE_AUTH, FIREBASE_DB } from '../firebaseConfig';
 
-const AddCommentSection = ({ postId, update, setUpdate }) => {
+const AddCommentSection = ({ handleAddComment }) => {
     const [content, setContent] = useState("")
-    const handleAddComment = async () => {
-        try {
-            if (content) {
-                const commentsRef = collection(FIREBASE_DB, 'comments');
-                await addDoc(commentsRef, {
-                    content,
-                    postId,
-                    user: {
-                        displayName: FIREBASE_AUTH.currentUser.displayName,
-                        photoURL: FIREBASE_AUTH.currentUser.photoURL
-                    },
-                    createdAt: serverTimestamp()
-                })
-                setUpdate(!update)
-                setContent("")
-            }
-        } catch (error) {
-            console.log("error adding comment");
-            console.log(error)
-
-        }
-    }
     return (
         <View style={styles.container}>
             <TextInput
@@ -39,7 +15,7 @@ const AddCommentSection = ({ postId, update, setUpdate }) => {
             />
             <TouchableOpacity style={styles.addButton}>
                 <Text style={{ color: "green" }}
-                    onPress={handleAddComment}
+                    onPress={() => {handleAddComment(content);setContent("");}}
                 >Add</Text>
             </TouchableOpacity>
         </View>

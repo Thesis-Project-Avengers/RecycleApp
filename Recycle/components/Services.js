@@ -17,7 +17,7 @@ const Services = () => {
       <View style={styles.categoryServices}>
         <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
           <View style={styles.oneService}>
-            <Icon name="wine-bottle" size={28} color="white" />
+            <Icon name="dollar-sign" size={28} color="white" />
             <Text style={{ fontSize: 15, color: "white" }}>Plastic</Text>
           </View>
         </TouchableOpacity>
@@ -30,7 +30,7 @@ const Services = () => {
         </TouchableOpacity>
         <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
           <View style={styles.oneService}>
-            <Icon name="glass" size={28} color="white" />
+            <Icon name="dollar-sign" size={28} color="white" />
             <Text style={{ fontSize: 15, color: "white" }}>Glass</Text>
           </View>
         </TouchableOpacity>
