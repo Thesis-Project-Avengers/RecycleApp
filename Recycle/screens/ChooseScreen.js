@@ -53,7 +53,6 @@ const ChooseScreen = ({ route, navigation }) => {
     console.log(id, data);
     const docRef = doc(FIREBASE_DB, "users", id);
     await updateDoc(docRef, data);
-    navigation.navigate("App");
   };
 
   return (
@@ -87,12 +86,15 @@ const ChooseScreen = ({ route, navigation }) => {
         }}
       >
         <TouchableOpacity
-          onPress={() =>
+          onPress={() => {
+
             updateUser(docId, {
               isCollector: true,
               isAccumulator: false,
               type: "collector",
             })
+            navigation.navigate("collQuestions")
+          }
           }
           style={styles.collectorContainer}
         >
@@ -104,12 +106,14 @@ const ChooseScreen = ({ route, navigation }) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() =>
+          onPress={() => {
             updateUser(docId, {
               isAccumulator: true,
               isCollector: false,
               type: "accumulator",
             })
+            navigation.navigate("accQuestions")
+          }
           }
           style={styles.collectorContainer}
         >
