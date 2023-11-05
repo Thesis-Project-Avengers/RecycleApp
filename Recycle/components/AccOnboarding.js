@@ -7,7 +7,9 @@ import { faHandsBubbles } from '@fortawesome/free-solid-svg-icons/faHandsBubbles
 import { faRecycle } from '@fortawesome/free-solid-svg-icons/faRecycle'
 import { Icon, Text } from 'react-native-elements';
 import Onboarding from 'react-native-onboarding-swiper';
+import { useNavigation } from '@react-navigation/native';
 const AccOnboarding = () => {
+    const navigation=useNavigation()
     const [colQuestion, setColQuestion] = useState({
         1:null,
         2:null,
@@ -125,7 +127,7 @@ const AccOnboarding = () => {
                                 textStyle={{ color: '#ffff' }}
                                 onPress={() => {
                                     Alert.alert('done');
-                                    // navigation && updtate the user 
+                                    navigation.navigate("App")                                    // navigation && updtate the user 
                                     StatusBar.setBarStyle('default');
                                 }}
                             ><Text style={{ color: 'white' }}>Get Started</Text></TouchableOpacity>

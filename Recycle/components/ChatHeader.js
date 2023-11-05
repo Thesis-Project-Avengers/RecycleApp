@@ -8,7 +8,6 @@ const ChatHeader = () => {
         <Icon name='menu' size={28} />
         <Text style={{fontSize:20 , fontWeight:900 }}> Recyclers </Text>
         <Icon name='search' size={28} />
-        
     </SafeAreaView>
   )
 }
