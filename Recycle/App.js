@@ -55,7 +55,7 @@ export default function App() {
   }, [])
   return (
     <NavigationContainer >
-      <Stack.Navigator initialRouteName={"auth"} screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName={"App"} screenOptions={{ headerShown: false }}>
         <Stack.Screen name="ombording" component={OnboardingScreen} />
         <Stack.Screen name="auth" component={AuthStack} />
         <Stack.Screen name="App" component={RealApp} />
@@ -65,7 +65,7 @@ export default function App() {
 }
 export const AuthStack = () => {
   return (
-    <Stack.Navigator initialRouteName="chooseScreen" screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName="signIn" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="signIn" component={SignIn} />
       <Stack.Screen name="confirmCode" component={ConfirmCode} />
       <Stack.Screen name="formAfterAuth" component={FormAfterAuth} />
