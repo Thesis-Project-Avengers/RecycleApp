@@ -10,6 +10,8 @@ import { doc, updateDoc } from 'firebase/firestore'
 import { useNavigation } from '@react-navigation/native';
 
 const OneTip = ({ tip }) => {
+    console.log("from one-tip");
+    console.log(tip.createdAt.toDate().toString().slice(15, 18));
     const navigation = useNavigation()
     // console.log(FIREBASE_AUTH.currentUser.uid);
 
@@ -53,9 +55,11 @@ const OneTip = ({ tip }) => {
                         }} width={50} height={50} />
                     <Text style={{ fontSize: 16, fontWeight: 900 }}>{tip.user.name}</Text>
                 </View>
-                <Text>{tip.createdAt}</Text>
+                <Text>
+                    {tip.createdAt.toDate().toString().slice(15, 18) > 12 ? tip.createdAt.toDate().toString().slice(15, 21) + " PM" : tip.createdAt.toDate().toString().slice(15, 21) + " AM"}
+                </Text>
             </View>
-            {true &&
+            {tip.image &&
                 <TouchableOpacity onPress={() => setVisibleModal(true)} >
                     <Image style={{ flex: 1, objectFit: "cover" }} height={150} borderRadius={25} source={{ uri: tip.image }} />
                 </TouchableOpacity>

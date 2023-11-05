@@ -10,7 +10,9 @@ const OneComment = ({ comment }) => {
                     <Image source={{ uri: comment.user.photoURL }} width={40} height={40} borderRadius={50} />
                     <Text>{comment.user.displayName}</Text>
                 </View>
-                <Text style={{ color: "green" }}>{"88"}PM</Text>
+                <Text style={{ color: "green" }}>
+                    {comment.createdAt.toDate().toString().slice(15, 18) > 12 ? comment.createdAt.toDate().toString().slice(15, 21) + " PM" : comment.createdAt.toDate().toString().slice(15, 21) + " AM"}
+                </Text>
             </View>
             <View style={styles.commentBody}>
                 <Text>{comment.content}</Text>
@@ -26,7 +28,6 @@ export const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: "#eee",
         borderRadius: 10,
-
     },
     commentHeader: {
         flexDirection: "row",
