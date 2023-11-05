@@ -4,16 +4,13 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
-  FlatList,
   ScrollView,
 } from "react-native";
 import { CheckBox } from "react-native-elements";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import React, { useState } from "react";
 import SearchedElement from "./SearchedElement";
 import axios from "axios";
 import Slider from "@react-native-community/slider";
-
 const AddModal = ({ recyclableItems }) => {
   const [selected, setSelected] = useState("");
   const [searchText, setSearchText] = useState("");
@@ -21,7 +18,8 @@ const AddModal = ({ recyclableItems }) => {
   const API_KEY = "AIzaSyCz7OmCHc00wzjQAp4KcZKzzNK8lHCGkgo";
   const [selectedLocation, setLocation] = useState({});
   const [isChecked, setIsChecked] = useState(false);
-const [quentite,setQuantite] = useState(1)
+  const [quentite, setQuantite] = useState(1);
+
   const toggleCheckbox = () => {
     setIsChecked(!isChecked);
   };
@@ -51,45 +49,17 @@ const [quentite,setQuantite] = useState(1)
         setLocation(response.data.results[0].geometry.location);
       });
   };
+
   const styles = StyleSheet.create({
-    modalContent: {
-      height: "50%",
-      backgroundColor: "white",
-      padding: 22,
-      justifyContent: "space-around",
-      alignItems: "center",
-      borderTopLeftRadius: 50,
-      borderTopRightRadius: 50,
-    },
+ 
     addModalContent: {
-      height: "90%",
+      height: "80%",
       backgroundColor: "white",
       padding: 22,
       justifyContent: "flex-start",
       alignItems: "center",
       borderTopLeftRadius: 50,
       borderTopRightRadius: 50,
-    },
-    modalText: {
-      fontSize: 30,
-      alignSelf: "center",
-    },
-    bottomModal: {
-      justifyContent: "flex-end",
-      margin: 0,
-    },
-    addPost: {
-      position: "absolute",
-      bottom: 0,
-      right: 0,
-      width: 50,
-      height: 50,
-      justifyContent: "center",
-      alignItems: "center",
-
-      backgroundColor: "#93C572",
-      margin: 10,
-      borderRadius: 50,
     },
     autocompleteContainer: {
       flex: 1,
@@ -130,8 +100,8 @@ const [quentite,setQuantite] = useState(1)
         alwaysBounceVertical={true}
         contentContainerStyle={{ flexGrow: 1 }}
       >
-        <View style={{ height: 1000 }}>
-          <Text style={{ fontSize: 30, color: "#93C572" }}>Add New Item</Text>
+        <View style={{ height: 500 }}>
+          <Text style={{ fontSize: 30, color: "#93C572",alignSelf:"center"}}>Add New Item</Text>
           <View style={{ width: "100%", paddingTop: 20 }}>
             <Text style={{ marginBottom: 10, paddingLeft: 10 }}>
               Add Category
@@ -183,12 +153,12 @@ const [quentite,setQuantite] = useState(1)
 
             <View style={styles.container}>
               <View>
-                <Text></Text>
+
                 <CheckBox
                   title="Current Location"
                   checked={isChecked}
                   onPress={toggleCheckbox}
-                  checkedColor="green"
+                  checkedColor="#93C572"
                   containerStyle={{
                     backgroundColor: "white",
                     width: "100%",
@@ -230,20 +200,48 @@ const [quentite,setQuantite] = useState(1)
               ) : null}
             </View>
           </View>
-          <View style={{flexDirection:"row",justifyContent:"space-between",paddingHorizontal:10}}>
-          <Text>Quentite</Text>
-          <Text>{Math.trunc(quentite)}</Text>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              paddingHorizontal: 10,
+            }}
+          >
+            <Text>Quentite</Text>
+            <Text>{Math.trunc(quentite)}</Text>
           </View>
           <Slider
-            style={{ width:"100%", height: 40 }}
+            style={{ width: "100%", height: 40 }}
             minimumValue={1}
             maximumValue={200}
-            minimumTrackTintColor="green"
+            minimumTrackTintColor="#93C572"
             maximumTrackTintColor="#000000"
             value={quentite}
-            thumbTintColor="green"
-            onValueChange={(value)=>{setQuantite(value);console.log(Math.trunc(quentite));}}
+            thumbTintColor="#93C572"
+            onValueChange={(value) => {
+              setQuantite(value);
+              console.log(Math.trunc(quentite));
+            }}
           />
+          <TouchableOpacity>
+            <Text
+              style={{
+                backgroundColor: "#93C572",
+                width: "70%",
+                alignSelf: "center",
+                textAlign: "center",
+                paddingVertical: 10,
+                borderRadius: 50,
+                fontSize:20,
+                position:"absolute",
+                top:30,
+                color:"white"
+              }}
+            >
+              {" "}
+              Add Item
+            </Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </View>
