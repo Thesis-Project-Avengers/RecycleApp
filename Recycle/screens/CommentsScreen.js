@@ -1,25 +1,42 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import AddCommentSection from '../components/AddCommentSection'
 import OneComment from '../components/OneComment'
+import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore'
+import { FIREBASE_DB } from '../firebaseConfig'
 
-const CommentsScreen = () => {
+const CommentsScreen = ({ route }) => {
+    const [comments, setComments] = useState([])
+    const [update,setUpdate]=useState(false)
+    console.log("this comments", comments);
+    console.log(route.params.postId);
+    useEffect(() => {
+        const fetch = async () => {
+            const commentsRef = collection(FIREBASE_DB, "comments");
+            const q = query(commentsRef, where("postId", "==", route.params.postId));
+            const data = []
+            onSnapshot(q, (snapShot) => {
+                snapShot.docs.map((doc) => {
+                    console.log(doc.data());
+                    data.push(doc.data());
+                });
+                setComments(data);
+            });
+        }
+        fetch();
+    }, [update])
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ gap: 20 }}>
-                <OneComment />
-                <OneComment />
-                <OneComment />
-                <OneComment />
-                <OneComment />
-                <OneComment />
-                <OneComment />
-                <OneComment />
+                {comments.map((comment, index) => <OneComment key={index} comment={comment} />)}
             </ScrollView>
-            <AddCommentSection />
+            <AddCommentSection 
+            update={update}
+            setUpdate={setUpdate}
+            postId={route.params.postId} />
         </SafeAreaView>
     )
 }
