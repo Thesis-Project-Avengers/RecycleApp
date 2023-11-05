@@ -151,6 +151,7 @@ export default AccOnboarding
 
 const styles = StyleSheet.create({
     subtitleMainView: {
+        padding:20,
         marginTop: 10,
         alignItems: 'center',
         flexDirection: 'column',
