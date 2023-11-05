@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import AddCommentSection from '../components/AddCommentSection'
 import OneComment from '../components/OneComment'
-import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore'
+import { collection, onSnapshot, orderBy, query, where,and } from 'firebase/firestore'
 import { FIREBASE_DB } from '../firebaseConfig'
 
 const CommentsScreen = ({ route }) => {

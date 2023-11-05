@@ -5,30 +5,28 @@ import OneTipHome from "../components/OneTipHome";
 import * as ImagePicker from "expo-image-picker";
 import uuid from "uuid";
 import { FIREBASE_DB } from "../firebaseConfig";
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import { addDoc, collection, getDocs, orderBy, query } from "firebase/firestore";
 
 const TipsHome = () => {
   const [tips, setTips] = useState([]);
-
-
-
-
   useEffect(() => {
-    const refrence = collection(FIREBASE_DB, "Tips");
-    getDocs(refrence).then((querySnapshot) => {
+    const refrence = collection(FIREBASE_DB, "Tips")
+    const q = query(refrence, orderBy("createdAt", "desc"));
+    getDocs(q).then((querySnapshot) => {
       const tipsData = [];
       querySnapshot.forEach((doc) => {
-        // console.log(doc.id);
-        const data = { id: doc.id, ...doc.data() };
-        tipsData.push(data);
+        if (doc.data().image) {
+          const data = { id: doc.id, ...doc.data() }
+          tipsData.push(data);
+        }
       });
       setTips(tipsData);
-    });
+    })
   }, []);
 
   if (tips.length > 0) {
     return (
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <View style={styles.textContainer}>
           <Text style={{ fontSize: 20, fontWeight: 700 }}>Tips</Text>
           <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
@@ -39,14 +37,13 @@ const TipsHome = () => {
           horizontal
           pagingEnabled
           showsHorizontalScrollIndicator={false}
-          style={{ gap: 20 }}
+          contentContainerStyle={{ gap: 20 }}
         >
-
           {tips.map((tip) => (
             <OneTipHome key={tip.id} tip={tip} />
           ))}
         </ScrollView>
-      </SafeAreaView>
+      </View>
     );
   } else {
     return (
@@ -65,7 +62,6 @@ export const styles = StyleSheet.create({
   container: {
     padding: 10,
     // backgroundColor: "green",
-    height: "100%",
   },
   input: {
     paddingVertical: 30,
