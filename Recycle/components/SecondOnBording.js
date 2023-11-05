@@ -7,26 +7,28 @@ import { faCartFlatbedSuitcase } from '@fortawesome/free-solid-svg-icons/faCartF
 import { faSeedling } from '@fortawesome/free-solid-svg-icons/faSeedling'
 import { Icon, Text } from 'react-native-elements';
 import Onboarding from 'react-native-onboarding-swiper';
+import { useNavigation } from '@react-navigation/native';
 
 const CollOmbording = () => {
+    const navigation = useNavigation()
     const [colQuestion, setColQuestion] = useState({
-        1:null,
-        2:null,
-        3:null,
-        4:null,
+        1: null,
+        2: null,
+        3: null,
+        4: null,
     })
     const onboardingRef = useRef(null)
     // console.log(colQuestion);
-    const handleYesPress = (index,value) => {
-        setColQuestion({...colQuestion,[index]:value})
+    const handleYesPress = (index, value) => {
+        setColQuestion({ ...colQuestion, [index]: value })
         onboardingRef.current?.goNext()
     }
 
-    const handleNoPress = (index,value) => {
-        setColQuestion({...colQuestion,[index]:value})
+    const handleNoPress = (index, value) => {
+        setColQuestion({ ...colQuestion, [index]: value })
         onboardingRef.current?.goNext()
     }
-  
+
     return (
         <View style={{ flex: 1, width: "100%" }}>
             <Onboarding
@@ -44,15 +46,15 @@ const CollOmbording = () => {
                             <FontAwesomeIcon size={100} icon={faDumpster} style={{ color: "#93c572" }} />
                         ),
                         subtitle: (
-                            <View style = {styles.subtitleMainView} >
+                            <View style={styles.subtitleMainView} >
                                 <Text style={{ textAlign: 'center' }}>Are you hate looking for a valuable wast on the trash ?</Text>
                                 <View style={styles.subtitleSecondView} >
-                                    <TouchableOpacity style = { styles.touchableOpacityStyle}
-                                        onPress={()=>{handleYesPress(1,true)}}
+                                    <TouchableOpacity style={styles.touchableOpacityStyle}
+                                        onPress={() => { handleYesPress(1, true) }}
                                     >
                                         <Text style={{ color: 'white' }} >Yes</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleNoPress(1,false)}}>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={() => { handleNoPress(1, false) }}>
                                         <Text style={{ color: 'white' }}>No</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -70,11 +72,11 @@ const CollOmbording = () => {
                             <View style={styles.subtitleMainView}>
                                 <Text style={{ textAlign: 'center' }}>Do you own a motorcycle or any other vehicle suitable for waste collection ?</Text>
                                 <View style={styles.subtitleSecondView}>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleYesPress(2,true)}}>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={() => { handleYesPress(2, true) }}>
                                         <Text style={{ color: 'white' }} >Yes</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity style={styles.touchableOpacityStyle}>
-                                        <Text style={{ color: 'white' }} onPress={()=>{handleNoPress(2,false)}} >No</Text>
+                                        <Text style={{ color: 'white' }} onPress={() => { handleNoPress(2, false) }} >No</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -91,10 +93,10 @@ const CollOmbording = () => {
                             <View style={styles.subtitleMainView}>
                                 <Text style={{ textAlign: 'center' }}>Do you have the necessary equipment for collecting waste, such as waste bins or bags ?</Text>
                                 <View style={styles.subtitleSecondView}>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleYesPress(3,true)}}>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={() => { handleYesPress(3, true) }}>
                                         <Text style={{ color: 'white' }}>Yes</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleNoPress(3,false)}}>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={() => { handleNoPress(3, false) }}>
                                         <Text style={{ color: 'white' }} >No</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -112,10 +114,10 @@ const CollOmbording = () => {
                             <View style={styles.subtitleMainView}>
                                 <Text style={{ textAlign: 'center' }}>Are you eco-conscious and interested in contributing to a cleaner environment ?</Text>
                                 <View style={styles.subtitleSecondView}>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleYesPress(4,true)}}>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={() => { handleYesPress(4, true) }}>
                                         <Text style={{ color: 'white' }} >Yes</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleNoPress(4,false)}}>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={() => { handleNoPress(4, false) }}>
                                         <Text style={{ color: 'white' }} >No</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -132,6 +134,7 @@ const CollOmbording = () => {
                                 textStyle={{ color: '#ffff' }}
                                 onPress={() => {
                                     Alert.alert('done ' + colQuestion);
+                                    navigation.navigate("App")                                    // navigation && updtate the user 
                                     // navigation to the app  && updtae the user 
                                     StatusBar.setBarStyle('default');
                                 }}
@@ -154,7 +157,7 @@ export default CollOmbording;
 
 const styles = StyleSheet.create({
     subtitleMainView: {
-        padding:15,
+        padding: 15,
         marginTop: 10,
         alignItems: 'center',
         flexDirection: 'column',

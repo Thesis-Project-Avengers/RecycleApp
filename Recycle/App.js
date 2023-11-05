@@ -55,7 +55,7 @@ export default function App() {
   }, [])
   return (
     <NavigationContainer >
-      <Stack.Navigator initialRouteName={"App"} screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName={"ombording"} screenOptions={{ headerShown: false }}>
         <Stack.Screen name="ombording" component={OnboardingScreen} />
         <Stack.Screen name="auth" component={AuthStack} />
         <Stack.Screen name="App" component={RealApp} />
@@ -75,7 +75,6 @@ export const AuthStack = () => {
       <Stack.Screen name="profileCollector" component={ProfileCollector} />
       <Stack.Screen name="accQuestions"  component={AccOnboarding}/>
       <Stack.Screen name="collQuestions"  component={CollOmbording}/>
-
     </Stack.Navigator>)
 }
 export const RealApp = () => {
