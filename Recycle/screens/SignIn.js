@@ -50,11 +50,14 @@ export default function SignIn({ navigation }) {
 <View style={{height:300,alignItems:"center",justifyContent:"center",width:"90%"}} >
 <Image source={require("../assets/phonebg.png")} style={{width:"100%",height:300}} />
 </View>
-<View style={{padding:30,alignItems:"center",width:"100%"}}>
+<View style={{ padding: 20, marginTop: 50 }}>
+  <View style={{backgroundColor:"red",width:"100%"}}>
       <FirebaseRecaptchaVerifierModal
         ref={recaptchaVerifier}
         firebaseConfig={firebaseConfig}
+        
       />
+      </View>
       <PhoneInput
         style={styles.phoneInput}
         containerStyle={{ width: "100%",borderWidth:1,borderColor:"#eee" }}
@@ -102,7 +105,7 @@ const styles = StyleSheet.create({
 
   sendVerification: {
     padding: 17,
-    backgroundColor: "green",
+    backgroundColor: "#93C572",
     borderRadius: 10,
     width: "100%",
     marginTop:20
