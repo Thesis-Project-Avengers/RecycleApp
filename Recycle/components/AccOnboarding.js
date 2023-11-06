@@ -7,45 +7,26 @@ import { faHandsBubbles } from '@fortawesome/free-solid-svg-icons/faHandsBubbles
 import { faRecycle } from '@fortawesome/free-solid-svg-icons/faRecycle'
 import { Icon, Text } from 'react-native-elements';
 import Onboarding from 'react-native-onboarding-swiper';
+import { useNavigation } from '@react-navigation/native';
 const AccOnboarding = () => {
-    
-    const styles = StyleSheet.create({
-        subtitleMainView: {
-            marginTop: 10,
-            alignItems: 'center',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            width: "100%"
-        },
-        subtitleSecondView: {
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-around',
-            width: "100%",
-            marginTop: 50,
-        },
-        touchableOpacityStyle: {
-            backgroundColor: "#93c572",
-            padding: 10,
-            borderRadius: 10,
-            width: 100,
-            height: 50,
-            alignItems: 'center',
-            justifyContent: 'center'
-        }
+    const navigation=useNavigation()
+    const [colQuestion, setColQuestion] = useState({
+        1:null,
+        2:null,
+        3:null,
+        4:null,
     })
-  
-    const [colQuestion, setColQuestion] = useState([null, null, null, null])
     const onboardingRef = useRef(null)
-    const handleYesPress = () => {
-        setColQuestion(colQuestion => [...colQuestion, true])
+    const handleYesPress = (index,value) => {
+        setColQuestion({...colQuestion,[index]:value});
         onboardingRef.current?.goNext()
     }
 
-    const handleNoPress = () => {
-        setColQuestion(colQuestion => [...colQuestion, false])
+    const handleNoPress = (index,value) => {
+        setColQuestion({...colQuestion,[index]:value});
         onboardingRef.current?.goNext()
     }
+
     return (
         <View style={{ flex: 1, width: "100%" }}>
             <Onboarding
@@ -62,11 +43,11 @@ const AccOnboarding = () => {
                             <View style={styles.subtitleMainView}>
                                 <Text style={{ textAlign: 'center' }}>Do you have a significant amount of waste in your house that you need to dispose of ?</Text>
                                 <View style={styles.subtitleSecondView}>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleYesPress()}}>
-                                        <Text style={{ color: 'white' }} >YES</Text>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleYesPress(1,true)}}>
+                                        <Text style={{ color: 'white' }}>YES</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleNoPress()}}>
-                                        <Text style={{ color: 'white' }} >NO</Text>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleNoPress(1,false)}}>
+                                        <Text style={{ color: 'white' }}>NO</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -83,10 +64,10 @@ const AccOnboarding = () => {
                             <View style={styles.subtitleMainView}>
                                 <Text style={{ textAlign: 'center' }}>"Do you commit to sorting your waste and putting recyclable materials in the correct recycling bins?"</Text>
                                 <View style={styles.subtitleSecondView}>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleYesPress()}}>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleYesPress(2,true)}}>
                                         <Text style={{ color: 'white' }} >YES</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleNoPress()}}> 
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleNoPress(2,false)}}> 
                                         <Text style={{ color: 'white' }} >NO</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -104,10 +85,10 @@ const AccOnboarding = () => {
                             <View style={styles.subtitleMainView}>
                                 <Text style={{ textAlign: 'center' }}>Do you like interacting and sharing articles with other app users ?</Text>
                                 <View style={styles.subtitleSecondView}>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleYesPress()}}>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleYesPress(3,true)}}>
                                         <Text style={{ color: 'white' }} >YES</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleNoPress()}}>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleNoPress(3,false)}}>
                                         <Text style={{ color: 'white' }} >NO</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -125,10 +106,10 @@ const AccOnboarding = () => {
                             <View style={styles.subtitleMainView}>
                                 <Text style={{ textAlign: 'center' }}>Would you like to be part of our initiative to make the world greener by planting a tree for every significant waste contribution you make ?</Text>
                                 <View style={styles.subtitleSecondView}>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleYesPress()}}>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleYesPress(4,true)}}>
                                         <Text style={{ color: 'white' }} >YES</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleNoPress()}}>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleNoPress(4,false)}}>
                                         <Text style={{ color: 'white' }} >NO</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -145,6 +126,7 @@ const AccOnboarding = () => {
                                 textStyle={{ color: '#ffff' }}
                                 onPress={() => {
                                     Alert.alert('done');
+                                    navigation.navigate("App")                                    // navigation && updtate the user 
                                     StatusBar.setBarStyle('default');
                                 }}
                             ><Text style={{ color: 'white' }}>Get Started</Text></TouchableOpacity>
@@ -166,3 +148,31 @@ const AccOnboarding = () => {
 }
 
 export default AccOnboarding
+
+
+const styles = StyleSheet.create({
+    subtitleMainView: {
+        padding:20,
+        marginTop: 10,
+        alignItems: 'center',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        width: "100%"
+    },
+    subtitleSecondView: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        width: "100%",
+        marginTop: 50,
+    },
+    touchableOpacityStyle: {
+        backgroundColor: "#93c572",
+        padding: 10,
+        borderRadius: 10,
+        width: 100,
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
+})

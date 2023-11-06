@@ -7,44 +7,28 @@ import { faCartFlatbedSuitcase } from '@fortawesome/free-solid-svg-icons/faCartF
 import { faSeedling } from '@fortawesome/free-solid-svg-icons/faSeedling'
 import { Icon, Text } from 'react-native-elements';
 import Onboarding from 'react-native-onboarding-swiper';
+import { useNavigation } from '@react-navigation/native';
 
-const WithCTA = () => {
-    const [colQuestion, setColQuestion] = useState([null, null, null, null])
-    const onboardingRef = useRef(null)
-    const handleYesPress = () => {
-        setColQuestion(colQuestion => [...colQuestion, true])
-        onboardingRef.current?.goNext()
-    }
-
-    const handleNoPress = () => {
-        setColQuestion(colQuestion => [...colQuestion, false])
-        onboardingRef.current?.goNext()
-    }
-    const styles = StyleSheet.create({
-        subtitleMainView: {
-            marginTop: 10,
-            alignItems: 'center',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            width: "100%"
-        },
-        subtitleSecondView: {
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-around',
-            width: "100%",
-            marginTop: 50,
-        },
-        touchableOpacityStyle: {
-            backgroundColor: "#93c572",
-            padding: 10,
-            borderRadius: 10,
-            width: 100,
-            height: 50,
-            alignItems: 'center',
-            justifyContent: 'center'
-        }
+const CollOmbording = () => {
+    const navigation = useNavigation()
+    const [colQuestion, setColQuestion] = useState({
+        1: null,
+        2: null,
+        3: null,
+        4: null,
     })
+    const onboardingRef = useRef(null)
+    // console.log(colQuestion);
+    const handleYesPress = (index, value) => {
+        setColQuestion({ ...colQuestion, [index]: value })
+        onboardingRef.current?.goNext()
+    }
+
+    const handleNoPress = (index, value) => {
+        setColQuestion({ ...colQuestion, [index]: value })
+        onboardingRef.current?.goNext()
+    }
+
     return (
         <View style={{ flex: 1, width: "100%" }}>
             <Onboarding
@@ -62,16 +46,16 @@ const WithCTA = () => {
                             <FontAwesomeIcon size={100} icon={faDumpster} style={{ color: "#93c572" }} />
                         ),
                         subtitle: (
-                            <View style = {styles.subtitleMainView} >
-                                <Text style={{ textAlign: 'center' }}>are you hate looking for a valuable wast on the trash ?</Text>
+                            <View style={styles.subtitleMainView} >
+                                <Text style={{ textAlign: 'center' }}>Are you hate looking for a valuable wast on the trash ?</Text>
                                 <View style={styles.subtitleSecondView} >
-                                    <TouchableOpacity style = { styles.touchableOpacityStyle}
-                                        onPress={()=>{handleYesPress()}}
+                                    <TouchableOpacity style={styles.touchableOpacityStyle}
+                                        onPress={() => { handleYesPress(1, true) }}
                                     >
-                                        <Text style={{ color: 'white' }} >yes</Text>
+                                        <Text style={{ color: 'white' }} >Yes</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleNoPress()}}>
-                                        <Text style={{ color: 'white' }}>no</Text>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={() => { handleNoPress(1, false) }}>
+                                        <Text style={{ color: 'white' }}>No</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -88,11 +72,11 @@ const WithCTA = () => {
                             <View style={styles.subtitleMainView}>
                                 <Text style={{ textAlign: 'center' }}>Do you own a motorcycle or any other vehicle suitable for waste collection ?</Text>
                                 <View style={styles.subtitleSecondView}>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleYesPress()}}>
-                                        <Text style={{ color: 'white' }} >yes</Text>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={() => { handleYesPress(2, true) }}>
+                                        <Text style={{ color: 'white' }} >Yes</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity style={styles.touchableOpacityStyle}>
-                                        <Text style={{ color: 'white' }} onPress={()=>{handleNoPress()}} >no</Text>
+                                        <Text style={{ color: 'white' }} onPress={() => { handleNoPress(2, false) }} >No</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -109,11 +93,11 @@ const WithCTA = () => {
                             <View style={styles.subtitleMainView}>
                                 <Text style={{ textAlign: 'center' }}>Do you have the necessary equipment for collecting waste, such as waste bins or bags ?</Text>
                                 <View style={styles.subtitleSecondView}>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleYesPress()}}>
-                                        <Text style={{ color: 'white' }}>yes</Text>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={() => { handleYesPress(3, true) }}>
+                                        <Text style={{ color: 'white' }}>Yes</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleNoPress()}}>
-                                        <Text style={{ color: 'white' }} >no</Text>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={() => { handleNoPress(3, false) }}>
+                                        <Text style={{ color: 'white' }} >No</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -130,11 +114,11 @@ const WithCTA = () => {
                             <View style={styles.subtitleMainView}>
                                 <Text style={{ textAlign: 'center' }}>Are you eco-conscious and interested in contributing to a cleaner environment ?</Text>
                                 <View style={styles.subtitleSecondView}>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleYesPress()}}>
-                                        <Text style={{ color: 'white' }} >yes</Text>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={() => { handleYesPress(4, true) }}>
+                                        <Text style={{ color: 'white' }} >Yes</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>{handleNoPress()}}>
-                                        <Text style={{ color: 'white' }} >no</Text>
+                                    <TouchableOpacity style={styles.touchableOpacityStyle} onPress={() => { handleNoPress(4, false) }}>
+                                        <Text style={{ color: 'white' }} >No</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -150,6 +134,8 @@ const WithCTA = () => {
                                 textStyle={{ color: '#ffff' }}
                                 onPress={() => {
                                     Alert.alert('done ' + colQuestion);
+                                    navigation.navigate("App")                                    // navigation && updtate the user 
+                                    // navigation to the app  && updtae the user 
                                     StatusBar.setBarStyle('default');
                                 }}
                             ><Text style={{ color: 'white' }}>Get Started</Text></TouchableOpacity>
@@ -165,4 +151,33 @@ const WithCTA = () => {
     )
 };
 
-export default WithCTA;
+export default CollOmbording;
+
+
+
+const styles = StyleSheet.create({
+    subtitleMainView: {
+        padding: 15,
+        marginTop: 10,
+        alignItems: 'center',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        width: "100%"
+    },
+    subtitleSecondView: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        width: "100%",
+        marginTop: 50,
+    },
+    touchableOpacityStyle: {
+        backgroundColor: "#93c572",
+        padding: 10,
+        borderRadius: 10,
+        width: 100,
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
+})

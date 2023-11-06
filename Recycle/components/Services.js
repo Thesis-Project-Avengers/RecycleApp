@@ -2,6 +2,7 @@ import React from "react";
 import {
   Text,
   View,
+  Image,
   TouchableOpacity,
   StyleSheet,
   ScrollView,
@@ -11,12 +12,12 @@ import Icon from "react-native-vector-icons/Feather";
 
 const Services = () => {
   return (
-    <SafeAreaView style={styles.containerServices}>
-      <Text style={{ fontSize: 17,color:"gray",marginLeft:10 }}>What would you like to recycle Today?</Text>
+    <View style={styles.containerServices}>
+      <Text style={{ fontSize: 17, color: "gray", marginLeft: 10 }}>What would you like to recycle Today?</Text>
       <View style={styles.categoryServices}>
         <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
           <View style={styles.oneService}>
-            <Icon name="wine-bottle" size={28} color="white" />
+            <Icon name="dollar-sign" size={28} color="white" />
             <Text style={{ fontSize: 15, color: "white" }}>Plastic</Text>
           </View>
         </TouchableOpacity>
@@ -29,12 +30,15 @@ const Services = () => {
         </TouchableOpacity>
         <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
           <View style={styles.oneService}>
-            <Icon name="glass" size={28} color="white" />
+            <Icon name="dollar-sign" size={28} color="white" />
             <Text style={{ fontSize: 15, color: "white" }}>Glass</Text>
           </View>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+      <View style={{ padding: 10, height: 220 }}>
+        <Image style={styles.imageService} source={require("../assets/cartoon-recycle.png")} />
+      </View>
+    </View>
   );
 };
 
@@ -42,7 +46,7 @@ export default Services;
 const styles = StyleSheet.create({
   containerServices: {
     flexDirection: "column",
-   gap:10,
+    gap: 10,
     display: "flex",
     // padding:4
     // backgroundColor:"red"
@@ -60,4 +64,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#93C572",
     margin: 5,
   },
+  imageService: {
+    width: "100%",
+    height: "100%",
+    borderRadius: 15,
+  }
 });

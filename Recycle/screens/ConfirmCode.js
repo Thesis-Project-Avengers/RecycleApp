@@ -11,7 +11,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ConfirmCode = ({route,navigation}) => {
     const {verificationId} = route.params
-    console.log(verificationId);
  
   const [code, setCode] = useState("");
   const auth = FIREBASE_AUTH;
