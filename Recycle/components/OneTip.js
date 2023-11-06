@@ -10,7 +10,7 @@ import { doc, updateDoc } from 'firebase/firestore'
 import { useNavigation } from '@react-navigation/native';
 
 const OneTip = ({ tip }) => {
-    const navigation=useNavigation()
+    const navigation = useNavigation()
     // console.log(FIREBASE_AUTH.currentUser.uid);
 
     const [isLiked, setIsliked] = useState(tip.isLiked.includes(FIREBASE_AUTH.currentUser.uid))
@@ -49,15 +49,17 @@ const OneTip = ({ tip }) => {
                 <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                     <Image borderRadius={50}
                         source={{
-                            uri: tip.user.pdpPhoto
+                            uri: tip.user?.pdpPhoto
                         }} width={50} height={50} />
-                    <Text style={{ fontSize: 16, fontWeight: 900 }}>{tip.user.name}</Text>
+                    <Text style={{ fontSize: 16, fontWeight: 900 }}>{tip.user?.name}</Text>
                 </View>
-                <Text>{tip.createdAt}</Text>
+                <Text>
+                    {tip.createdAt.toDate().toString().slice(15, 18) > 12 ? tip.createdAt?.toDate().toString().slice(15, 21) + " PM" : tip.createdAt.toDate().toString().slice(15, 21) + " AM"}
+                </Text>
             </View>
-            {true &&
+            {tip?.image &&
                 <TouchableOpacity onPress={() => setVisibleModal(true)} >
-                    <Image style={{ flex: 1, objectFit: "cover" }} height={150} borderRadius={25} source={{ uri: tip.image }} />
+                    <Image style={{ flex: 1, objectFit: "cover" }} height={150} borderRadius={25} source={{ uri: tip?.image }} />
                 </TouchableOpacity>
             }
             <Text>{tip.content}</Text>
@@ -74,8 +76,7 @@ const OneTip = ({ tip }) => {
                     <Text style={{ fontWeight: 700 }}>{tip.numlikes}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={() => { navigation.navigate("commentScreen") }}
-
+                    onPress={() => { navigation.navigate("commentScreen", { postId: tip.id }) }}
                     style={{ flexDirection: "row", gap: 5 }}>
                     <Icon
                         size={20}
