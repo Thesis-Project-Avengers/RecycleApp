@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   container:{
     padding: 8,
 
-  
+    gap: 2,
   },
   button: {
     alignItems: "center",
