@@ -4,20 +4,18 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Feather";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
 import { doc, updateDoc } from "firebase/firestore";
-const HomeHeader = ({ image }) => {
-  const userName = FIREBASE_AUTH.currentUser.displayName;
-  console.log(FIREBASE_AUTH.currentUser.photoURL);
+const HomeHeader = () => {
   return (
     <SafeAreaView style={styles.headerContainerHome}>
       <View style={styles.ImageName}>
         <Image source={{
-          uri: FIREBASE_AUTH.currentUser.photoURL
+          uri: FIREBASE_AUTH.currentUser?.photoURL
         }} style={styles.oneImage} />
         <View style={styles.text}>
           <Text style={{ fontSize: 20, fontWeight: 900, color: "gray" }}>
             Hi, </Text>
           <Text style={{ fontSize: 20, fontWeight: 900, color: "#93C572" }}>
-            {userName.length > 10 ? userName.slice(0, 10) + "..." : userName}{" "}
+            {FIREBASE_AUTH.currentUser?.displayName?.length > 10 ? FIREBASE_AUTH.currentUser?.displayName?.slice(0, 10) + "..." : FIREBASE_AUTH.currentUser?.displayName}{" "}
           </Text>
           {/* <Text style={{ fontSize: 15, color: "black" }}>
           Let's Contribute to our earth
