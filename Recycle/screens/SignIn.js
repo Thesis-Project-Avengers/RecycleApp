@@ -55,7 +55,6 @@ export default function SignIn({ navigation }) {
       <FirebaseRecaptchaVerifierModal
         ref={recaptchaVerifier}
         firebaseConfig={firebaseConfig}
-        
       />
       </View>
       <PhoneInput
