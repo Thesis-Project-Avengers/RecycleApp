@@ -3,8 +3,10 @@ import React from "react";
 import HomeHeader from "../components/HomeHeader";
 import TipsHome from "./TipsHome";
 import Services from "../components/Services";
+import { FIREBASE_AUTH } from "../firebaseConfig";
 
 const HomeScreen = ({ navigation }) => {
+  console.log(FIREBASE_AUTH.currentUser);
   //use navigation to navigate to another screen
   return (
     <SafeAreaView style={styles.container}>

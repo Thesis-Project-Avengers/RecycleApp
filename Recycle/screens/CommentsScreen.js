@@ -14,7 +14,7 @@ const CommentsScreen = ({ route }) => {
         try {
             const commentsRef = collection(FIREBASE_DB, "comments");
             const q = query(commentsRef,
-                where("postId", "==", route.params.postId),
+                where("tipId", "==", route.params.tipId),
                 // orderBy("createdAt", "desc"),
 
             )
@@ -35,14 +35,14 @@ const CommentsScreen = ({ route }) => {
         try {
             if (content) {
                 setLoading(true)
-                let postId = route.params.postId
+                let tipId = route.params.tipId
                 const commentsRef = collection(FIREBASE_DB, 'comments');
                 await addDoc(commentsRef, {
                     content,
-                    postId,
+                    tipId,
                     user: {
-                        displayName: FIREBASE_AUTH.currentUser.displayName,
-                        photoURL: FIREBASE_AUTH.currentUser.photoURL
+                        displayName: FIREBASE_AUTH.currentUser?.displayName,
+                        photoURL: FIREBASE_AUTH.currentUser?.photoURL
                     },
                     createdAt: serverTimestamp()
                 })
@@ -91,6 +91,6 @@ export const styles = StyleSheet.create({
         backgroundColor: "white",
         height: "100%",
         gap: 10,
-        paddingHorizontal: 20
+        padding: 20,
     }
 })

@@ -55,7 +55,7 @@ export default function App() {
   }, [])
   return (
     <NavigationContainer >
-      <Stack.Navigator initialRouteName={"App"} screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName={"ombording"} screenOptions={{ headerShown: false }}>
         <Stack.Screen name="ombording" component={OnboardingScreen} />
         <Stack.Screen name="auth" component={AuthStack} />
         <Stack.Screen name="App" component={RealApp} />
@@ -93,9 +93,7 @@ export const RealApp = () => {
       }}
     >
       <Tab.Screen
-
         options={{
-
           tabBarIcon: ({ focused, color, size }) => (
             <Icon
               name="home"

@@ -6,7 +6,7 @@ import Modal from "react-native-modal";
 import * as ImagePicker from 'expo-image-picker';
 import uuid from "uuid"
 import OneTip from '../components/OneTip'
-import { FIREBASE_DB, FIREBASE_STORAGE } from '../firebaseConfig'
+import { FIREBASE_AUTH, FIREBASE_DB, FIREBASE_STORAGE } from '../firebaseConfig'
 import { addDoc, collection, getDocs, orderBy, query, serverTimestamp } from 'firebase/firestore'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
@@ -70,8 +70,8 @@ const TipsScreen = () => {
             const tipData = {
                 ...tipForm,
                 user: {
-                    name: "bellhasen",
-                    pdpPhoto: "https://scontent.ftun1-2.fna.fbcdn.net/v/t39.30808-6/347389791_1387274348784480_3857632196740571851_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=5f2048&_nc_ohc=VXy6Q4cz-c0AX_la_Rd&_nc_ht=scontent.ftun1-2.fna&oh=00_AfC-WqNkWPVdtat6t0VSWdax0D_ObqvrYYyeB_ujS3wWeA&oe=6547ADD3"
+                    displayName: FIREBASE_AUTH.currentUser?.displayName,
+                    photoURL: FIREBASE_AUTH.currentUser?.photoURL
                 },
                 createdAt: serverTimestamp(),
                 isLiked: [],
