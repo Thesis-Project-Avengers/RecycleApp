@@ -1,13 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Image, ActivityIndicator,TouchableOpacity } from "react-native";
-import MapView , {GooglePlacesAutocomplete} from "react-native-maps";
+import React, { useEffect, useState, useRef } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ActivityIndicator,
+  TouchableOpacity,
+} from "react-native";
+import MapView, { GooglePlacesAutocomplete } from "react-native-maps";
 import * as Location from "expo-location";
 import MapViewDirections from "react-native-maps-directions";
 import customMapStyleJSON from "../mapStyle";
-import OnePosition from "../components/onePosition";
+import OnePosition from "../components/Map Components/onePosition";
 import Modal from "react-native-modal";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+
 import axios from "axios";
+import InfoModal from "../components/Map Components/InfoModal";
+import AddModal from "../components/Map Components/AddModal";
+import Filtrel from "../components/Map Components/Filtrel";
+import { SafeAreaView } from "react-native";
 export default function Map() {
   const API_KEY = "AIzaSyCz7OmCHc00wzjQAp4KcZKzzNK8lHCGkgo";
   const [currentRegion, setCurrentRegion] = useState(null);
@@ -15,10 +25,10 @@ export default function Map() {
   const [visibleModal, setVisibleModal] = useState(null);
   const [addModal, setVisibleAddModal] = useState(null);
   const [currentInformation, setCurrentInformation] = useState(null);
-  const [selected, setSelected] = useState("");
-  const [region, setRegion] = useState({
-  
-  });
+  const [showWay, setShowWay] = useState(0);
+  const [mode, setMode] = useState("driving");
+  const mapRef = useRef(null);
+
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -33,8 +43,8 @@ export default function Map() {
       setCurrentRegion({
         latitude,
         longitude,
-        latitudeDelta: 0.0922, // Adjust as needed
-        longitudeDelta: 0.0421, // Adjust as needed
+        latitudeDelta: 0.02,
+        longitudeDelta: 0.02, // Adjust as needed
       });
     })();
   }, []);
@@ -98,87 +108,68 @@ export default function Map() {
     },
   ];
 
-  const getSelectedInformation = async (info) => {
+  const handleAnimateToRegion = (loc) => {
+    const newRegion = {
+      ...loc.location,
+      latitudeDelta: 0.1,
+      longitudeDelta: 0,
+    };
+    const newCameraSettings = {
+      center: {
+        ...loc.location,
+      },
+      heading: 0, // Set the bearing (rotation) to 90 degrees
+      pitch: 60,
+      tilt: 45, // Set the viewing angle (tilt) to 45 degrees
+      zoom: 15, // Set the zoom level
+    };
+    mapRef.current.animateToRegion(newRegion, 1000);
+    mapRef.current.animateCamera(newCameraSettings, { duration: 2000 });
+  };
+
+  const calculateBearing = (start, end) => {
+    const startLat = start.latitude * (Math.PI / 180);
+    const startLng = start.longitude * (Math.PI / 180);
+    const endLat = end.latitude * (Math.PI / 180);
+    const endLng = end.longitude * (Math.PI / 180);
+
+    const dLng = endLng - startLng;
+
+    const y = Math.sin(dLng) * Math.cos(endLat);
+    const x =
+      Math.cos(startLat) * Math.sin(endLat) -
+      Math.sin(startLat) * Math.cos(endLat) * Math.cos(dLng);
+
+    const bearing = Math.atan2(y, x) * (180 / Math.PI);
+
+    return (bearing + 360) % 360;
+  };
+
+  const handleAnimate = (loc) => {
+    const newRegion = {
+      ...loc,
+      latitudeDelta: 0.01,
+      longitudeDelta: 0.01,
+    };
+    const newCameraSettings = {
+      center: {
+        ...loc,
+      },
+      heading: calculateBearing(loc, selectedPos.location), // Set the bearing (rotation) to 90 degrees
+      pitch: 60,
+      tilt: 45, // Set the viewing angle (tilt) to 45 degrees
+      zoom: 15, // Set the zoom level
+    };
+    mapRef.current.animateToRegion(newRegion, 2000);
+    mapRef.current.animateCamera(newCameraSettings, { duration: 2000 });
+  };
+
+  const getSelectedInformation = async (info,theMode) => {
     const data = await axios.post(
-      `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${currentRegion.latitude},${currentRegion.longitude}&destinations=${info.location.latitude},${info.location.longitude}&key=${API_KEY}`
+      `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${currentRegion.latitude},${currentRegion.longitude}&destinations=${info.location.latitude},${info.location.longitude}&mode=${theMode}&key=${API_KEY}`
     );
     setCurrentInformation({ ...data.data.rows[0].elements[0], ...data.data });
   };
-
-  const renderModalContent = () => (
-    <View style={styles.modalContent}>
-      <Icon
-        name="bottle-wine-outline"
-        size={30}
-        color={"#93C572"}
-        style={{
-          alignSelf: "center",
-          fontSize: 70,
-          borderRadius: 50,
-          borderWidth: 1,
-          borderStyle: "solid",
-          borderColor: "#93C572",
-          padding: 1,
-        }}
-      />
-      <Text style={styles.modalText}>
-        {currentInformation?.destination_addresses[0]}
-      </Text>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-around",
-          width: "100%",
-          marginTop: 10,
-        }}
-      >
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Icon
-            name="map-marker-distance"
-            size={30}
-            color={"#93C572"}
-            style={{
-              marginRight: 10,
-              fontSize: 40,
-            }}
-          />
-          <Text style={{ fontSize: 20 }}>
-            {currentInformation?.distance.text}
-          </Text>
-        </View>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Icon
-            name="timer-outline"
-            size={30}
-            color={"#93C572"}
-            style={{
-              marginRight: 10,
-              fontSize: 40,
-            }}
-          />
-          <Text style={{ fontSize: 20 }}>
-            {currentInformation?.duration.text}
-          </Text>
-        </View>
-      </View>
-      <TouchableOpacity>
-        <Text
-          style={{
-            backgroundColor: "#93C572",
-            paddingTop: 15,
-            paddingBottom: 15,
-            paddingLeft: 80,
-            paddingRight: 80,
-            borderRadius: 40,
-            color: "white",
-          }}
-        >
-          Press Me
-        </Text>
-      </TouchableOpacity>
-    </View>
-  );
 
   const recyclableItems = [
     "Aluminum Cans",
@@ -188,66 +179,6 @@ export default function Map() {
     "Cardboard Boxes",
     "Steel Cans",
   ];
-
-  const AddModalContent = () => (
-    <View style={styles.addModalContent}>
-      <Text style={{ fontSize: 30, color: "#93C572" }}>Add New Item</Text>
-      <View style={{ width: "100%", paddingTop: 20 }}>
-        <Text style={{ marginBottom: 10 ,paddingLeft:10}}>Add Category</Text>
-        <View
-          style={{
-            width: "100%",
-            display: "flex",
-            flexDirection: "row",
-            flexWrap: "wrap",
-          }}
-        >
-          {recyclableItems.map((item) => {
-            return (
-              <TouchableOpacity
-                onPress={() => {
-                  setSelected(item);
-                }}
-              >
-                <Text
-                  style={
-                    selected === item
-                      ? {
-                          padding: 10,
-                          borderWidth: 1,
-                          margin: 3,
-                          borderRadius: 50,
-                          borderColor: "#93C572",
-                          color: "#93C572",
-                        }
-                      : {
-                          padding: 10,
-                          borderWidth: 1,
-                          margin: 3,
-                          borderRadius: 50,
-                        }
-                  }
-                >
-                  {item}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
-           
-        </View>
-      </View>
-      <View style={{ width: "100%", paddingTop: 20 }}>
-      <Text >Select Location</Text>
-      {/* <GooglePlacesAutocomplete
-          
-        /> */}
-
-
-      </View>
-
-     
-    </View>
-  );
 
   const styles = StyleSheet.create({
     container: {
@@ -300,36 +231,41 @@ export default function Map() {
     },
   });
 
-
-
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {currentRegion ? (
         <MapView
-          showsMyLocationButton={true}
+          ref={mapRef}
+          showsMyLocationButton={false}
           customMapStyle={customMapStyleJSON}
           style={styles.map}
           initialRegion={currentRegion}
           showsUserLocation
+          pitchEnabled={true}
+          rotateEnabled={true}
         >
-          {places.map((loc) => {
+          {places.map((loc,key) => {
             return (
               <OnePosition
                 loc={loc}
-                key={loc.id}
                 setselectedPos={setselectedPos}
                 setVisibleModal={setVisibleModal}
                 getSelectedInformation={getSelectedInformation}
+                handleAnimateToRegion={handleAnimateToRegion}
+                setShowWay={setShowWay}
+                key={key}
               />
             );
           })}
-          {selectedPos ? (
+          {showWay ? (
             <MapViewDirections
               origin={currentRegion}
               destination={selectedPos.location}
               apikey={API_KEY}
               strokeWidth={6}
-              strokeColor="#186F65"
+              strokeColor="#93C572"
+              mode={mode.toUpperCase()}
+              resetOnChange={true}
             />
           ) : null}
         </MapView>
@@ -346,17 +282,31 @@ export default function Map() {
         swipeDirection={"down"}
         onBackdropPress={() => setVisibleModal(null)}
       >
-        {renderModalContent()}
+        {
+          <InfoModal
+            currentInformation={currentInformation}
+            currentRegion={currentRegion}
+            handleAnimate={handleAnimate}
+            setShowWay={setShowWay}
+            setVisibleModal={setVisibleModal}
+            setMode={setMode}
+            mode={mode}
+            getSelectedInformation={getSelectedInformation}
+            selectedPos={selectedPos}
+          />
+        }
       </Modal>
+
       <Modal
         isVisible={addModal === 1}
         style={styles.bottomModal}
-        onSwipeComplete={() => setVisibleAddModal(null)}
-        swipeDirection={"down"}
         onBackdropPress={() => setVisibleAddModal(null)}
       >
-        {AddModalContent()}
+        {<AddModal recyclableItems={recyclableItems} />}
       </Modal>
+
+      <Filtrel recyclableItems={recyclableItems} />
+
       <TouchableOpacity
         style={styles.addPost}
         onPress={() => {
@@ -365,6 +315,6 @@ export default function Map() {
       >
         <Text style={{ color: "white", fontSize: 30 }}>+</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 }

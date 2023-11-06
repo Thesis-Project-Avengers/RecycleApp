@@ -1,7 +1,7 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet } from "react-native";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, updateProfile } from "firebase/auth";
 import React, { useState, useEffect } from "react";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
 import {
@@ -17,41 +17,16 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ChooseScreen = ({ route, navigation }) => {
-  const [uid, setUid] = useState(null);
-  const [docId, setDocId] = useState(null);
+  const [user, setUser] = useState(null);
   useEffect(() => {
-    const fetch = async () => {
-      const uid = await AsyncStorage.getItem("uid");
-      setUid(uid);
-    };
-    fetch();
-  }, []);
-  // const [user, setUser] = useState(route.params?.user);
-
-  // console.log(user);
-  // useEffect(() => {
-  //   onAuthStateChanged(FIREBASE_AUTH, (user) => {
-  //     const { photoURL, displayName, phoneNumber, uid } = user;
-  //     setUser({ photoURL, displayName, phoneNumber, uid });
-  //   });
-  //   // await
-  // }, []);
-  useEffect(() => {
-    const userCollectionRef = collection(FIREBASE_DB, "users");
-    const q = query(userCollectionRef, where("uid", "==", uid));
-
-    onSnapshot(q, (snapShot) => {
-      snapShot.docs.map((doc) => {
-        setDocId(doc.id);
-      });
+    onAuthStateChanged(FIREBASE_AUTH, (user) => {
+      setUser(user);
     });
-
-    //
   }, []);
-  const updateUser = async (id, data) => {
-    // need small fix 
-    console.log(id, data);
-    const docRef = doc(FIREBASE_DB, "users", id);
+
+  const updateUser = async (data) => {
+    updateProfile(FIREBASE_AUTH.currentUser, data);
+    const docRef = doc(FIREBASE_DB, "users", FIREBASE_AUTH.currentUser.uid);
     await updateDoc(docRef, data);
   };
 
@@ -87,15 +62,13 @@ const ChooseScreen = ({ route, navigation }) => {
       >
         <TouchableOpacity
           onPress={() => {
-
-            updateUser(docId, {
+            updateUser({
               isCollector: true,
               isAccumulator: false,
               type: "collector",
-            })
-            navigation.navigate("collQuestions")
-          }
-          }
+            });
+            navigation.navigate("collQuestions");
+          }}
           style={styles.collectorContainer}
         >
           <Image
@@ -107,14 +80,13 @@ const ChooseScreen = ({ route, navigation }) => {
 
         <TouchableOpacity
           onPress={() => {
-            updateUser(docId, {
+            updateUser({
               isAccumulator: true,
               isCollector: false,
               type: "accumulator",
-            })
-            navigation.navigate("accQuestions")
-          }
-          }
+            });
+            navigation.navigate("accQuestions");
+          }}
           style={styles.collectorContainer}
         >
           <Image

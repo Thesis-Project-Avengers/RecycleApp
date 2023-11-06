@@ -1,4 +1,4 @@
-import { View, Text,TextInput,TouchableOpacity , StyleSheet,Alert} from 'react-native'
+import { View, Text,TextInput,TouchableOpacity , StyleSheet,Alert,Image} from 'react-native'
 import React , {useState }from 'react'
 import {
     PhoneAuthProvider,
@@ -7,11 +7,11 @@ import {
   } from "firebase/auth";
 import { FIREBASE_AUTH } from '../firebaseConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import OTPTextView from 'react-native-otp-textinput';
 
 
 const ConfirmCode = ({route,navigation}) => {
     const {verificationId} = route.params
-    console.log(verificationId);
  
   const [code, setCode] = useState("");
   const auth = FIREBASE_AUTH;
@@ -34,12 +34,10 @@ const ConfirmCode = ({route,navigation}) => {
   };
   return (
     <View style={styles.container}>
-         <TextInput 
-        placeholder="confirm"
-        onChangeText={setCode}
-        keyboardType="number-pad"
-        style={styles.textInput}
-      />
+      <View style={{height:200,alignItems:"center",justifyContent:"center",width:"90%"}} >
+<Image source={require("../assets/confirme.png")} style={{width:"100%",height:300}} />
+</View>
+      <OTPTextView inputCount={"6"} width={"10%"} handleTextChange={setCode} tintColor={"#93C572"} />
       <TouchableOpacity style={styles.sendCode} onPress={confirmCode}>
         <Text style={styles.buttonText}>Confirm verification</Text>
       </TouchableOpacity>
@@ -65,7 +63,7 @@ const styles = StyleSheet.create({
     },
     sendCode: {
       padding: 17,
-      backgroundColor: "green",
+      backgroundColor: "#93C572",
       borderRadius: 20,
     },
     buttonText: {

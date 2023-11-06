@@ -8,6 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
+  Image
 } from "react-native";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
 import React, { useState, useRef, useEffect } from "react";
@@ -17,8 +18,8 @@ import {
   signInAnonymously,
   signInWithCredential,
 } from "firebase/auth";
-import {FIREBASE_AUTH, firebaseConfig} from "../firebaseConfig"
-export default function SignIn({navigation}) {
+import { FIREBASE_AUTH, firebaseConfig } from "../firebaseConfig";
+export default function SignIn({ navigation }) {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [formattedValue, setFormattedValue] = useState("");
 
@@ -38,38 +39,28 @@ export default function SignIn({navigation}) {
       // get the verification id
       setVerificationId(verificationId);
       setPhoneNumber("");
-navigation.navigate("confirmCode",{verificationId})
+      navigation.navigate("confirmCode", { verificationId });
     } catch (error) {
       console.log("error from send verifs");
       console.log(error);
-      throw error;
     }
   };
- 
-
-  // const confirmCode = async () => {
-  //   try {
-  //     const credential = PhoneAuthProvider.credential(verificationId, code);
-  //     // from here u create the credential object
-  //     console.log("creeee", credential);
-  //     const res = await signInWithCredential(auth, credential);
-  //     // added to ther firebase
-  //     setCode("");
-  //     Alert.alert("login successfully");
-  //   } catch (error) {
-  //     throw error;
-  //   }
-  // };
   return (
     <View style={styles.container}>
-    
+<View style={{height:300,alignItems:"center",justifyContent:"center",width:"90%"}} >
+<Image source={require("../assets/phonebg.png")} style={{width:"100%",height:300}} />
+</View>
+<View style={{ padding: 20, marginTop: 50 }}>
+  <View style={{backgroundColor:"red",width:"100%"}}>
       <FirebaseRecaptchaVerifierModal
         ref={recaptchaVerifier}
         firebaseConfig={firebaseConfig}
+        
       />
-    
+      </View>
       <PhoneInput
-        containerStyle={{ width: "100%" }}
+        style={styles.phoneInput}
+        containerStyle={{ width: "100%",borderWidth:1,borderColor:"#eee" }}
         // textContainerStyle={{ flex: 1, backgroundColor: "red" }}
         // textInputStyle={{ fontSize: "20%", color: "white" }}
         // codeTextStyle={{ flex: 0, color: "white" }}
@@ -77,7 +68,7 @@ navigation.navigate("confirmCode",{verificationId})
         // countryPickerButtonStyle={{ color: "green" }}
         ref={phoneInput}
         // defaultValue={value}
-        defaultCode="FR"
+        defaultCode="TN"
         layout="first"
         onChangeFormattedText={(text) => {
           setFormattedValue(text);
@@ -85,7 +76,6 @@ navigation.navigate("confirmCode",{verificationId})
         }}
         autoFocus
       />
-
       <TouchableOpacity
         style={styles.sendVerification}
         onPress={() => {
@@ -100,31 +90,44 @@ navigation.navigate("confirmCode",{verificationId})
         <Text style={styles.buttonText}>Continue</Text>
       </TouchableOpacity>
     </View>
-   
+    </View>
   );
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems:"center",
-    gap:  40},
+    // justifyContent: "center",
+    alignItems: "center",
+    justifyContent:"center",
+    backgroundColor:"white"
+    // backgroundColor: "red",
+  },
+
   sendVerification: {
     padding: 17,
-    backgroundColor: "green",
-    borderRadius: 20,
+    backgroundColor: "#93C572",
+    borderRadius: 10,
+    width: "100%",
+    marginTop:20
+   
   },
   buttonText: {
     textAlign: "center",
     color: "#fff",
     fontSize: 17,
-    width:100
-  },
-  // optText: {
-  //   fontSize: 10,
-  //   color: "#fff",
-  //   margin: 20,
-  //   fontWeight: "bold",
-  // },
+    width: "100%",
+    textAlign: "center",
+    alignSelf: "center",
 
+  },
+  optText: {
+    fontSize: 10,
+    color: "#fff",
+    margin: 20,
+    fontWeight: "bold",
+  },
+
+  // phoneInput:{
+  //   borderRadius:10
+  // }
 });
