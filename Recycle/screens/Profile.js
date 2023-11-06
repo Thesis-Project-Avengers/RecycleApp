@@ -1,14 +1,13 @@
-import { SafeAreaView, StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from "react-native";
+import { SafeAreaView, StyleSheet,Text, View,Image,ScrollView,TouchableOpacity} from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon2 from "react-native-vector-icons/FontAwesome5";
 import Icon3 from "react-native-vector-icons/FontAwesome5";
 import Icon4 from "react-native-vector-icons/Entypo";
 import Icon5 from "react-native-vector-icons/AntDesign";
-
-const Profile = () => {
+const Profile = ({navigation}) => {
   return (
-    <SafeAreaView  style={{ padding: "40%" }}>
+    <SafeAreaView>
     <ScrollView showsVerticalScrollIndicator={false} style={styles.scroll} >
       <View style={styles.returnPoints}>
         <View style={styles.return}>
@@ -18,8 +17,8 @@ const Profile = () => {
           /> */}
         </View>
         <View style={styles.points}>
-          <Text style={{ textAlign: "center", color: "white", fontSize: "16" }}>
-            points : 100
+          <Text style={{ textAlign: "center", color: "white", fontSize: 16 }}>
+             : 100
           </Text>
         </View>
       </View>
@@ -51,23 +50,25 @@ const Profile = () => {
         {/* <ScrollView style={styles.scroll}> */}
           <View style={{marginBottom:25}}>
           <View style={styles.oneButton}>
-          <Icon4 name="back-in-time" size={40} color={"#93C572"} />
+          <Icon4 name="back-in-time" size={20} color={"#93C572"} />
           <TouchableOpacity><Text style={{fontSize:17}}>My Payments</Text></TouchableOpacity>
           </View>
           <View  style={styles.oneButton}>
-            <Icon5 name="qrcode" size={40} color={"#93C572"} />
+            <Icon5 name="qrcode" size={20} color={"#93C572"} />
           <TouchableOpacity><Text style={{fontSize:17}}>My Qr Code</Text></TouchableOpacity>
           </View>
-          <View  style={styles.oneButton}>
-          <Icon5 name="edit" size={40} color={"#93C572"}/>
-          <TouchableOpacity><Text style={{fontSize:17}}>Edit Profile</Text></TouchableOpacity>
+          <TouchableOpacity onPress={()=>{navigation.navigate("editprofile")}} >
+          <View  style={styles.oneButton}  >
+          <Icon5 name="edit" size={20} color={"#93C572"}/>
+          <Text style={{fontSize:17}}>Edit Profile</Text>
           </View>
+          </TouchableOpacity>
           <View  style={styles.oneButton}>
-          <Icon name="logout" size={40} color={"#93C572"} />
+          <Icon name="logout" size={20} color={"#93C572"} />
           <TouchableOpacity><Text style={{fontSize:17}}>Log Out</Text></TouchableOpacity>
           </View>
           <View  style={styles.oneButton}>
-          <Icon name="logout" size={40} color={"#93C572"} />
+          <Icon name="logout" size={20} color={"#93C572"} />
           <TouchableOpacity><Text style={{fontSize:17}}>Delete Account</Text></TouchableOpacity>
           </View>
           </View>
@@ -88,7 +89,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#93C572",
     borderRadius: 20,
     padding: 5,
-    width: 150,
+    width: 90,
     textAlign: "center",
   },
   return: {
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
   },
   textName: {
     alignSelf: "center",
-    fontSize: "18",
+    fontSize: 18 ,
   },
   statContainer: {
     flexDirection: "row",
@@ -129,17 +130,19 @@ const styles = StyleSheet.create({
 height:"100%"
   },
   scroll:{
-    padding:5,
-    height:"100%"
+    padding:20,
+    // height:"100%"
     // backgroundColor:"red",
     // gap:30
   },
   oneButton:{
     // backgroundColor:"green",
     width:"100%", 
-    padding:30,
+    padding:20,
     flexDirection:"row",
     alignItems:"center",
-    gap:25
+    gap:25,
+    borderBottomWidth:1, 
+    borderBottomColor:"#e1e1e1"
   }
 });

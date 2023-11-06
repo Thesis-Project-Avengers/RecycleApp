@@ -76,7 +76,7 @@ navigation.navigate("confirmCode",{verificationId})
         // countryPickerButtonStyle={{ color: "green" }}
         ref={phoneInput}
         // defaultValue={value}
-        defaultCode="FR"
+        defaultCode="TN"
         layout="first"
         onChangeFormattedText={(text) => {
           setFormattedValue(text);
