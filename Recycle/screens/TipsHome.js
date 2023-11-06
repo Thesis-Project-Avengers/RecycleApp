@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator
 import React, { useEffect, useState } from "react";
 import OneTipHome from "../components/OneTipHome";
 import { FIREBASE_DB } from "../firebaseConfig";
-import {  collection, getDocs, orderBy, query } from "firebase/firestore";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
 
 const TipsHome = () => {
   const [tips, setTips] = useState([]);
@@ -20,8 +20,10 @@ const TipsHome = () => {
       setTips(tipsData);
     })
   }, []);
-
-  if (tips.length > 0) {
+  if (tips.length === 0) {
+    return null;
+  }
+  else if (tips.length > 0) {
     return (
       <View style={styles.container}>
         <View style={styles.textContainer}>
