@@ -93,9 +93,7 @@ export const RealApp = () => {
       }}
     >
       <Tab.Screen
-
         options={{
-
           tabBarIcon: ({ focused, color, size }) => (
             <Icon
               name="home"
