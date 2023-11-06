@@ -1,14 +1,13 @@
-import { SafeAreaView, StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from "react-native";
+import { SafeAreaView, StyleSheet,Text, View,Image,ScrollView,TouchableOpacity} from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon2 from "react-native-vector-icons/FontAwesome5";
 import Icon3 from "react-native-vector-icons/FontAwesome5";
 import Icon4 from "react-native-vector-icons/Entypo";
 import Icon5 from "react-native-vector-icons/AntDesign";
-
-const Profile = () => {
+const Profile = ({navigation}) => {
   return (
-    <SafeAreaView  style={{ padding: "40%" }}>
+    <SafeAreaView>
     <ScrollView showsVerticalScrollIndicator={false} style={styles.scroll} >
       <View style={styles.returnPoints}>
         <View style={styles.return}>
@@ -18,7 +17,7 @@ const Profile = () => {
           /> */}
         </View>
         <View style={styles.points}>
-          <Text style={{ textAlign: "center", color: "white", fontSize: "16" }}>
+          <Text style={{ textAlign: "center", color: "white", fontSize: 16 }}>
             points : 100
           </Text>
         </View>
@@ -58,9 +57,9 @@ const Profile = () => {
             <Icon5 name="qrcode" size={40} color={"#93C572"} />
           <TouchableOpacity><Text style={{fontSize:17}}>My Qr Code</Text></TouchableOpacity>
           </View>
-          <View  style={styles.oneButton}>
+          <View  style={styles.oneButton}  >
           <Icon5 name="edit" size={40} color={"#93C572"}/>
-          <TouchableOpacity><Text style={{fontSize:17}}>Edit Profile</Text></TouchableOpacity>
+          <TouchableOpacity ><Text style={{fontSize:17}}>Edit Profile</Text></TouchableOpacity>
           </View>
           <View  style={styles.oneButton}>
           <Icon name="logout" size={40} color={"#93C572"} />
@@ -108,7 +107,7 @@ const styles = StyleSheet.create({
   },
   textName: {
     alignSelf: "center",
-    fontSize: "18",
+    fontSize: 18 ,
   },
   statContainer: {
     flexDirection: "row",
@@ -130,7 +129,7 @@ height:"100%"
   },
   scroll:{
     padding:5,
-    height:"100%"
+    // height:"100%"
     // backgroundColor:"red",
     // gap:30
   },
