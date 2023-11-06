@@ -70,8 +70,8 @@ const TipsScreen = () => {
             const tipData = {
                 ...tipForm,
                 user: {
-                    displayName: FIREBASE_AUTH.currentUser.displayName,
-                    photoURL: FIREBASE_AUTH.currentUser.photoURL
+                    displayName: FIREBASE_AUTH.currentUser?.displayName,
+                    photoURL: FIREBASE_AUTH.currentUser?.photoURL
                 },
                 createdAt: serverTimestamp(),
                 isLiked: [],
