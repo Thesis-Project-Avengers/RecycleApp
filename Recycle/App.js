@@ -21,7 +21,7 @@ import CollectorScreen from "./screens/CollectorScreen";
 import AccumulatorScreen from "./screens/AccumulatorScreen";
 import ProfileCollector from "./screens/ProfileCollector";
 
-
+import CollOmbording from "./components/CollOmbording";
 import AccOnboarding from "./components/AccOnboarding";
 import CommentsScreen from "./screens/CommentsScreen";
 
@@ -174,6 +174,5 @@ export const TipsStack = () => {
         headerShown: true, 
         title: "Comments",
         }} />
-
     </Stack.Navigator>)
 }
