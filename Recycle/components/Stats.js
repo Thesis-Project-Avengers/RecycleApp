@@ -4,23 +4,30 @@ import React from "react";
 const Stats = () => {
   // const data = [{ value: 30 }, { value: 80 }, { value: 90 }];
   const images = [
-    require("../assets/accumulator.png"),
-    require("../assets/accumulator.png"),
-    require("../assets/accumulator.png"),
+    require("../assets/balha.jpg"),
+    require("../assets/khalil.jpg"),
+    require("../assets/bango.jpg"),
     require("../assets/accumulator.png"),
     require("../assets/accumulator.png"),
   ];
   const val = 50
   return (
     <View style={{ width: "100%",padding:20 }}>
+        <View style={{marginBottom:20}}>
+        <Text>Collector Stats</Text>
+        </View>
       <View style={styles.containerr}>
+        <View key={1} style={styles.barContainer}>
+          <View style={[styles.bar, { height: 30, width: 230 }]} />
+          <Image source={images[1]} style={styles.image} />
+        </View>
         <View key={0} style={styles.barContainer}>
           <View style={[styles.bar, { height: 30, width: val*3 }]} />
           <Image source={images[0]} style={styles.image} />
         </View>
-        <View key={1} style={styles.barContainer}>
-          <View style={[styles.bar, { height: 30, width: 50 }]} />
-          <Image source={images[1]} style={styles.image} />
+        <View key={2} style={styles.barContainer}>
+          <View style={[styles.bar, { height: 30, width: 100 }]} />
+          <Image source={images[2]} style={styles.image} />
         </View>
         <View key={3} style={styles.barContainer}>
           <View style={[styles.bar, { height: 30, width: 100 }]} />
@@ -37,11 +44,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#eee",
     flexDirection: "column",
     alignItems: "flex-end",
+    gap:15
+    // height:100
   },
   barContainer: {
     flexDirection: "row",
     width: "100%",
     alignItems: "center",
+    gap:20,
     // justifyContent: "space-between",
 
     marginRight: 10, // Spacing between bars
@@ -50,12 +60,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#93C572", // Bar color
     // width: 300, // Bar width,
     // flexDirection:"row",
-    borderRadius: 5, // Optional: Adds rounded corners to the bar
-  },
+    // borderRadius: 10,
+    borderTopRightRadius:15, // Optional: Adds rounded corners to the bar
+    borderBottomRightRadius:15
+},
   image: {
-    width: 50, // Image width
-    height: 50, // Image height
+    width: 30, // Image width
+    height: 30, // Image height
     resizeMode: "contain", // Adjust the image content mode as needed
     marginBottom: 5, // Optional: Adds spacing between the image and the bar
+    borderRadius:50
   },
 });

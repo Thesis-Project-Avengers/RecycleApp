@@ -27,7 +27,7 @@ const HomeScreen = ({ navigation }) => {
       <HomeHeader />
       <ScrollView
         // then i will remove the height of the the scroll view
-        contentContainerStyle={{ height: 1000 }}
+        contentContainerStyle={{ height: 1500 }}
         showsVerticalScrollIndicator={false}
       >
         <Services />
