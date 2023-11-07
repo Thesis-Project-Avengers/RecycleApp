@@ -147,6 +147,7 @@ const InfoOfModal = ({
           style={mode === "driving" ? styles.selectedIcon : styles.icon}
         />
       </View>
+
       <Text>{yesma3}</Text>
       <TouchableOpacity style={{ marginVertical: 20 }}>
         <Text
