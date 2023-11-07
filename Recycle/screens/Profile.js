@@ -27,8 +27,9 @@ const Profile = ({ navigation }) => {
           </View>
           <View style={styles.points}>
             <Text style={{ textAlign: "center", color: "white", fontSize: 16 }}>
-              : 100
+              100
             </Text>
+            <Image source={require("../assets/coin.png")} style={styles.imageCoin}  />
           </View>
         </View>
         <View style={styles.imageTextName}>
@@ -97,6 +98,10 @@ const Profile = ({ navigation }) => {
 };
 export default Profile;
 const styles = StyleSheet.create({
+  imageCoin:{
+    width:20,
+    height:20
+  },
   returnPoints: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -110,6 +115,10 @@ const styles = StyleSheet.create({
     padding: 5,
     width: 90,
     textAlign: "center",
+    flexDirection:"row",
+    gap:5,
+    justifyContent:"center",
+    alignItems:"center"
   },
   return: {
     padding: 15,

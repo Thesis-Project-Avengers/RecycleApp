@@ -24,7 +24,9 @@ const HomeHeader = () => {
       </View>
       <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
         <View style={styles.point}>
-          <Text style={{ fontSize: 15, color: "#fff" }}>Points 100</Text>
+          <Text style={{ fontSize: 15, color: "#fff" }}>100</Text>
+          <Image source={require("../assets/coin.png")} style={styles.imageCoin}  />
+
         </View>
       </TouchableOpacity>
     </SafeAreaView>
@@ -68,5 +70,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#93C572",
     position: "relative",
     zIndex: -1,
+    flexDirection:"row",
+    gap:5
+  },
+  imageCoin:{
+    width:20,
+    height:20
   },
 });
