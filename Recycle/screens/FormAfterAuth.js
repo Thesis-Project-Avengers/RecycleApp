@@ -28,13 +28,10 @@ import {
   setDoc,
   where,
 } from "firebase/firestore";
-// import image from "../assets/formPictureAuth.png"
 const FormAfterAuth = ({ navigation }) => {
   const [user, setUser] = useState(null);
-  // console.log(user);
   useEffect(() => {
     onAuthStateChanged(FIREBASE_AUTH, (user) => {
-      console.log(user);
       const { photoURL, displayName, phoneNumber, uid } = user;
       setUser({ photoURL, displayName, phoneNumber, uid });
     });
@@ -46,40 +43,19 @@ const FormAfterAuth = ({ navigation }) => {
   const handleNextPress = async () => {
     try {
       if (form.email && form.firstName && form.lastName) {
-        const userCollectionRef = collection(FIREBASE_DB, "users");
         const userData = {
           ...user,
           ...form,
         };
-        // updates in the user object of firebase
         await updateProfile(FIREBASE_AUTH.currentUser, {
           displayName: form.firstName + " " + form.lastName,
           photoURL:
             "https://imebehavioralhealth.com/wp-content/uploads/2021/10/user-icon-placeholder-1.png",
         });
-        // chechk the exsistence of the user in the collection to remoove duplicates
-        const existsUser = async () => {
-          const userCollectionRef = collection(FIREBASE_DB, "users");
-          const q = query(
-            userCollectionRef,
-            where("uid", "==", FIREBASE_AUTH.currentUser.uid)
-          );
-          let res;
-          await getDocs(q).then((sanphot) => {
-            if (sanphot.docs.length === 1) {
-              res = true;
-            } else {
-              res = false;
-            }
-          });
-          return res;
-        };
-        if (!(await existsUser())) {
-          await setDoc(
-            doc(FIREBASE_DB, "users", FIREBASE_AUTH.currentUser.uid),
-            userData
-          );
-        }
+        await setDoc(
+          doc(FIREBASE_DB, "users", FIREBASE_AUTH.currentUser.uid),
+          userData
+        );
         navigation.navigate("chooseScreen");
       } else {
         Alert.alert("Verify Inforamtion");

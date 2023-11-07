@@ -8,9 +8,10 @@ const Filtrel = ({recyclableItems}) => {
     <FlatList
     style={{ position: "absolute", top: "5%", padding:"5%" }}
     data={recyclableItems}
-    renderItem={({ item }) => {
+    renderItem={({ item,key}) => {
       return (
         <TouchableOpacity
+        key={key}
           onPress={() => {
             setCata(item);
           }}

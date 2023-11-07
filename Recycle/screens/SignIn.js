@@ -61,18 +61,11 @@ export default function SignIn({ navigation }) {
       <PhoneInput
         style={styles.phoneInput}
         containerStyle={{ width: "100%",borderWidth:1,borderColor:"#eee" }}
-        // textContainerStyle={{ flex: 1, backgroundColor: "red" }}
-        // textInputStyle={{ fontSize: "20%", color: "white" }}
-        // codeTextStyle={{ flex: 0, color: "white" }}
-        // flagButtonStyle={{ flex: 0, color: "green" }}
-        // countryPickerButtonStyle={{ color: "green" }}
         ref={phoneInput}
-        // defaultValue={value}
         defaultCode="TN"
         layout="first"
         onChangeFormattedText={(text) => {
           setFormattedValue(text);
-          // console.log(text);
         }}
         autoFocus
       />
@@ -107,8 +100,9 @@ const styles = StyleSheet.create({
     padding: 17,
     backgroundColor: "#93C572",
     borderRadius: 10,
-    width: "100%",
-    marginTop:20
+    width:200,
+    marginTop:20,
+    alignSelf:"center"
    
   },
   buttonText: {
