@@ -11,14 +11,35 @@ import React, { useState } from "react";
 import SearchedElement from "./SearchedElement";
 import axios from "axios";
 import Slider from "@react-native-community/slider";
-const AddModal = ({ recyclableItems }) => {
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { FIREBASE_AUTH, FIREBASE_DB } from "../../firebaseConfig";
+const AddModal = ({ recyclableItems, currentRegion, setVisibleAddModal }) => {
   const [selected, setSelected] = useState("");
   const [searchText, setSearchText] = useState("");
   const [places, setPlaces] = useState([]);
   const API_KEY = "AIzaSyCz7OmCHc00wzjQAp4KcZKzzNK8lHCGkgo";
   const [selectedLocation, setLocation] = useState({});
   const [isChecked, setIsChecked] = useState(false);
-  const [quentite, setQuantite] = useState(1);
+  const [quantity, setQuantite] = useState(1);
+
+  const handleAddItem = async () => {
+    try {
+      const markerCollectionRef = collection(FIREBASE_DB, "markers");
+      await addDoc(markerCollectionRef, {
+        location: isChecked
+          ? { ...currentRegion }
+          : { latitude: selectedLocation.lat, longitude: selectedLocation.lng },
+        ownerId: FIREBASE_AUTH.currentUser?.uid,
+        quantity: Math.trunc(quantity),
+        category: selected,
+        completed: false,
+        createdAt: serverTimestamp(),
+      });
+      setVisibleAddModal(0);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const toggleCheckbox = () => {
     setIsChecked(!isChecked);
@@ -50,49 +71,6 @@ const AddModal = ({ recyclableItems }) => {
       });
   };
 
-  const styles = StyleSheet.create({
- 
-    addModalContent: {
-      height: "80%",
-      backgroundColor: "white",
-      padding: 22,
-      justifyContent: "flex-start",
-      alignItems: "center",
-      borderTopLeftRadius: 50,
-      borderTopRightRadius: 50,
-    },
-    autocompleteContainer: {
-      flex: 1,
-      padding: 10,
-      backgroundColor: "#fff",
-    },
-    selectedPlaceText: {
-      marginTop: 10,
-      fontSize: 16,
-      fontWeight: "bold",
-    },
-    container: {
-      padding: 10,
-      position: "relative",
-    },
-    searchInput: {
-      height: 40,
-      borderColor: "#ccc",
-      borderWidth: 1,
-      padding: 10,
-      marginBottom: 10,
-    },
-    predictionsList: {
-      maxHeight: 150,
-      borderWidth: 1,
-      borderColor: "#ccc",
-      padding: 10,
-    },
-    predictionItem: {
-      padding: 10,
-    },
-  });
-
   return (
     <View style={styles.addModalContent}>
       <ScrollView
@@ -101,7 +79,9 @@ const AddModal = ({ recyclableItems }) => {
         contentContainerStyle={{ flexGrow: 1 }}
       >
         <View style={{ height: 500 }}>
-          <Text style={{ fontSize: 30, color: "#93C572",alignSelf:"center"}}>Add New Item</Text>
+          <Text style={{ fontSize: 30, color: "#93C572", alignSelf: "center" }}>
+            Add New Item
+          </Text>
           <View style={{ width: "100%", paddingTop: 20 }}>
             <Text style={{ marginBottom: 10, paddingLeft: 10 }}>
               Add Category
@@ -153,7 +133,6 @@ const AddModal = ({ recyclableItems }) => {
 
             <View style={styles.container}>
               <View>
-
                 <CheckBox
                   title="Current Location"
                   checked={isChecked}
@@ -207,8 +186,8 @@ const AddModal = ({ recyclableItems }) => {
               paddingHorizontal: 10,
             }}
           >
-            <Text>Quentite</Text>
-            <Text>{Math.trunc(quentite)}</Text>
+            <Text>quantity</Text>
+            <Text>{Math.trunc(quantity)}</Text>
           </View>
           <Slider
             style={{ width: "100%", height: 40 }}
@@ -216,15 +195,19 @@ const AddModal = ({ recyclableItems }) => {
             maximumValue={200}
             minimumTrackTintColor="#93C572"
             maximumTrackTintColor="#000000"
-            value={quentite}
+            value={quantity}
             thumbTintColor="#93C572"
             onValueChange={(value) => {
               setQuantite(value);
-              console.log(Math.trunc(quentite));
+              console.log(Math.trunc(quantity));
             }}
           />
           <TouchableOpacity>
             <Text
+              onPress={() => {
+                handleAddItem();
+                console.log("here");
+              }}
               style={{
                 backgroundColor: "#93C572",
                 width: "70%",
@@ -232,10 +215,10 @@ const AddModal = ({ recyclableItems }) => {
                 textAlign: "center",
                 paddingVertical: 10,
                 borderRadius: 50,
-                fontSize:20,
-                position:"absolute",
-                top:30,
-                color:"white"
+                fontSize: 20,
+                position: "absolute",
+                top: 30,
+                color: "white",
               }}
             >
               {" "}
@@ -249,3 +232,44 @@ const AddModal = ({ recyclableItems }) => {
 };
 
 export default AddModal;
+const styles = StyleSheet.create({
+  addModalContent: {
+    height: "80%",
+    backgroundColor: "white",
+    padding: 22,
+    justifyContent: "flex-start",
+    alignItems: "center",
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
+  },
+  autocompleteContainer: {
+    flex: 1,
+    padding: 10,
+    backgroundColor: "#fff",
+  },
+  selectedPlaceText: {
+    marginTop: 10,
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  container: {
+    padding: 10,
+    position: "relative",
+  },
+  searchInput: {
+    height: 40,
+    borderColor: "#ccc",
+    borderWidth: 1,
+    padding: 10,
+    marginBottom: 10,
+  },
+  predictionsList: {
+    maxHeight: 150,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    padding: 10,
+  },
+  predictionItem: {
+    padding: 10,
+  },
+});
