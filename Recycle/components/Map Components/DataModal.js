@@ -1,15 +1,17 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useMemo } from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Icons from "react-native-vector-icons/FontAwesome5";
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
-import { set, ref, onChildChanged } from "firebase/database";
+import { set, ref, onChildChanged, onChildAdded, off } from "firebase/database";
 import {
   FIREBASE_AUTH,
   FIREBASE_DB,
   FIREBASE_REALTIME_DB,
 } from "../../firebaseConfig";
 import { useState } from "react";
+import { ActivityIndicator } from "react-native";
+import { useEffect } from "react";
 
 const InfoOfModal = ({
   currentInformation,
@@ -22,15 +24,22 @@ const InfoOfModal = ({
   selectedPos,
   mode,
 }) => {
-  const [yesma3, setyesma3] = useState("");
-  // console.log(yesma3);
-
-  const requestsRef = ref(FIREBASE_REALTIME_DB, "requests");
+  const [collectingLoading, setCollectingLoanding] = useState(null);
+  const [listening, setListening] = useState(true);
+  const memoizedCollectingLoading = useMemo(() => {
+    return collectingLoading;
+  }, [collectingLoading]);
+  const requestsRef = ref(
+    FIREBASE_REALTIME_DB,
+    "requests/" + currentInformation?.id + "/" + FIREBASE_AUTH.currentUser?.uid
+  );
   onChildChanged(requestsRef, (snapshot) => {
-    const requestData = snapshot.val();
-    setyesma3(requestData.status);
+    const data = snapshot.val();
+    console.log("is listeneing");
+    setCollectingLoanding(data);
   });
-  // save in the storage
+
+
   const handleRequest = async () => {
     try {
       const requestsCollRef = collection(FIREBASE_DB, "requests");
@@ -47,9 +56,7 @@ const InfoOfModal = ({
   };
   const handelcollect = async () => {
     try {
-      // const requestsCollRef = collection(FIREBASE_DB, "requests");
-
-      set(
+      await set(
         ref(
           FIREBASE_REALTIME_DB,
           "requests/" +
@@ -64,6 +71,23 @@ const InfoOfModal = ({
           markerId: currentInformation?.id,
         }
       );
+
+      const requestsRef = ref(
+        FIREBASE_REALTIME_DB,
+        "requests/" +
+          currentInformation?.id +
+          "/" +
+          FIREBASE_AUTH.currentUser?.uid
+      );
+      onChildAdded(requestsRef, (snapshot) => {
+        const data = snapshot.val();
+        console.log("is listeneing inside addd ");
+        setCollectingLoanding(data);
+        // setCollectingLoanding()
+
+        // console.log(requestData);
+        // setCollectingLoanding(data);
+      });
     } catch (error) {
       console.log(error);
     }
@@ -156,32 +180,43 @@ const InfoOfModal = ({
         />
       </View>
 
-      <Text>{yesma3}</Text>
       <TouchableOpacity style={{ marginVertical: 20 }}>
-        <Text
-          onPress={() => {
-            handleRequest();
-            handelcollect();
-            // accepteRealtime();
-            // setShowWay(1);
-            // setVisibleModal(0);
-            // handleAnimate(currentRegion);
-          }}
-          style={{
-            backgroundColor: "#93C572",
-            width: 200,
-            alignSelf: "center",
-            textAlign: "center",
-            paddingHorizontal: 40,
-            paddingVertical: 15,
-            fontSize: 15,
-            color: "white",
-            borderRadius: 50,
-            letterSpacing: 2,
-          }}
-        >
-          Collect
-        </Text>
+        {!collectingLoading ? (
+          <Text
+            onPress={() => {
+              handleRequest();
+              handelcollect();
+              // accepteRealtime();
+              // setShowWay(1);
+              // setVisibleModal(0);
+              // handleAnimate(currentRegion);
+            }}
+            style={{
+              backgroundColor: "#93C572",
+              width: 200,
+              alignSelf: "center",
+              textAlign: "center",
+              paddingHorizontal: 40,
+              paddingVertical: 15,
+              fontSize: 15,
+              color: "white",
+              borderRadius: 50,
+              letterSpacing: 2,
+            }}
+          >
+            Collect
+          </Text>
+        ) : collectingLoading === "done" ? (
+          <View style={{ flexDirection: "row", gap: 10 }}>
+            {/* <ActivityIndicator size="small" color="green" /> */}
+            <Text>Accepted</Text>
+          </View>
+        ) : (
+          <View style={{ flexDirection: "row", gap: 10 }}>
+            <ActivityIndicator size="small" color="green" />
+            <Text>Waiting For Accepting </Text>
+          </View>
+        )}
       </TouchableOpacity>
     </View>
   );
