@@ -1,4 +1,12 @@
-import { SafeAreaView, StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon2 from "react-native-vector-icons/FontAwesome5";
@@ -9,7 +17,7 @@ import { FIREBASE_AUTH } from "../firebaseConfig";
 const Profile = ({ navigation }) => {
   return (
     <SafeAreaView>
-      <ScrollView showsVerticalScrollIndicator={false} style={styles.scroll} >
+      <ScrollView showsVerticalScrollIndicator={false} style={styles.scroll}>
         <View style={styles.returnPoints}>
           <View style={styles.return}>
             {/* <Icon name="arrow-return-left" 
@@ -29,7 +37,9 @@ const Profile = ({ navigation }) => {
             source={{ uri: FIREBASE_AUTH.currentUser?.photoURL }}
             style={styles.imageProfile}
           />
-          <Text style={styles.textName}>{FIREBASE_AUTH.currentUser?.displayName}</Text>
+          <Text style={styles.textName}>
+            {FIREBASE_AUTH.currentUser?.displayName}
+          </Text>
         </View>
         <View style={styles.statContainer}>
           <View style={styles.oneRec}>
@@ -37,15 +47,11 @@ const Profile = ({ navigation }) => {
             <Text>20</Text>
           </View>
           <View style={styles.oneRec}>
-            <Icon2
-              name="people-arrows" size={40} color={"#93C572"}
-            />
+            <Icon2 name="people-arrows" size={40} color={"#93C572"} />
             <Text>35</Text>
           </View>
           <View style={styles.oneRec}>
-            <Icon3
-              name="money-bill-wave" size={40} color={"#93C572"}
-            />
+            <Icon3 name="money-bill-wave" size={40} color={"#93C572"} />
             <Text>100</Text>
           </View>
         </View>
@@ -53,25 +59,37 @@ const Profile = ({ navigation }) => {
         <View style={{ marginBottom: 25 }}>
           <View style={styles.oneButton}>
             <Icon4 name="back-in-time" size={20} color={"#93C572"} />
-            <TouchableOpacity><Text style={{ fontSize: 17 }}>My Payments</Text></TouchableOpacity>
+            <TouchableOpacity  onPress={() => { navigation.navigate("transaction") }} >
+              <Text style={{ fontSize: 17 }}>My Transactions</Text>
+            </TouchableOpacity>
           </View>
           <View style={styles.oneButton}>
             <Icon5 name="qrcode" size={20} color={"#93C572"} />
-            <TouchableOpacity><Text style={{ fontSize: 17 }}>My Qr Code</Text></TouchableOpacity>
+            <TouchableOpacity>
+              <Text style={{ fontSize: 17 }}>My Qr Code</Text>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity onPress={() => { navigation.navigate("editprofile") }} >
-            <View style={styles.oneButton}  >
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("editprofile");
+            }}
+          >
+            <View style={styles.oneButton}>
               <Icon5 name="edit" size={20} color={"#93C572"} />
               <Text style={{ fontSize: 17 }}>Edit Profile</Text>
             </View>
           </TouchableOpacity>
           <View style={styles.oneButton}>
             <Icon name="logout" size={20} color={"#93C572"} />
-            <TouchableOpacity><Text style={{ fontSize: 17 }}>Log Out</Text></TouchableOpacity>
+            <TouchableOpacity>
+              <Text style={{ fontSize: 17 }}>Log Out</Text>
+            </TouchableOpacity>
           </View>
           <View style={styles.oneButton}>
             <Icon name="logout" size={20} color={"#93C572"} />
-            <TouchableOpacity><Text style={{ fontSize: 17 }}>Delete Account</Text></TouchableOpacity>
+            <TouchableOpacity>
+              <Text style={{ fontSize: 17 }}>Delete Account</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
@@ -137,7 +155,7 @@ const styles = StyleSheet.create({
     // backgroundColor: "green",
     padding: 15,
     gap: 10,
-    height: "100%"
+    height: "100%",
   },
   scroll: {
     padding: 20,
@@ -153,6 +171,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 25,
     borderBottomWidth: 1,
-    borderBottomColor: "#e1e1e1"
-  }
+    borderBottomColor: "#e1e1e1",
+  },
 });

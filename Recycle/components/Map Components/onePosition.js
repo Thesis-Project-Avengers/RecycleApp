@@ -1,39 +1,42 @@
-import { View, Text, StyleSheet, TouchableOpacity} from "react-native";
-import React from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import React, { useState } from "react";
 import { Marker, Callout } from "react-native-maps";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { useState } from "react";
 const OnePosition = ({
   loc,
+  user,
   setselectedPos,
   setVisibleModal,
   getSelectedInformation,
   handleAnimateToRegion,
-  key,
-  setShowWay
+  setShowWay,
 }) => {
   const [pressCount, setPressCount] = useState(0);
-
   const handlePress = () => {
+
     setPressCount((prevCount) => prevCount + 1);
-    if(pressCount === 0){
+    if (pressCount === 0) {
       setselectedPos(loc);
-      getSelectedInformation(loc);
+      // getSelectedInformation(loc);
       handleAnimateToRegion(loc);
-      setShowWay(0)
+      setShowWay(0);
     }
+
     if (pressCount === 1) {
-       setVisibleModal(1);
+      if (user?.type === "accumulator") {
+        Alert.alert("Switch to  collector")
+      } else {
+        setVisibleModal(1);
+      }
       setPressCount(0); // Reset press count
     }
-  }
+  };
   return (
     <Marker
-    key={key}
-     onPress={handlePress}
+      onPress={handlePress}
       coordinate={{
-        latitude: loc.location.latitude,
-        longitude: loc.location.longitude,
+        latitude: loc.location?.latitude,
+        longitude: loc.location?.longitude,
       }}
       pinColor={"black"}
     >
