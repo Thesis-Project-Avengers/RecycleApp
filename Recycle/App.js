@@ -20,10 +20,10 @@ import ChooseScreen from "./screens/ChooseScreen";
 import CollectorScreen from "./screens/CollectorScreen";
 import AccumulatorScreen from "./screens/AccumulatorScreen";
 import ProfileCollector from "./screens/ProfileCollector";
-
+import AccSpendPoint from "./components/AccSpendPoint";
 import AccOnboarding from "./components/AccOnboarding";
 import CommentsScreen from "./screens/CommentsScreen";
-import CollOmbording from "./components/SecondOnBording";
+import CollOmbording from "./components/CollOmbording";
 import TransactionScreen from "./screens/TransactionScreen";
 
 const Stack = createNativeStackNavigator();
@@ -112,7 +112,7 @@ export const RealApp = () => {
           ),
         }}
         name="Home"
-        component={HomeScreen}
+        component={AccSpendPoint}
       />
       <Tab.Screen
         options={{
