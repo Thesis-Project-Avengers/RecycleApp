@@ -35,9 +35,7 @@ const Services = () => {
           </View>
         </TouchableOpacity>
       </View>
-      <View style={{ padding: 10, height: 220 }}>
-        <Image style={styles.imageService} source={require("../assets/cartoon-recycle.png")} />
-      </View>
+      
     </View>
   );
 };
