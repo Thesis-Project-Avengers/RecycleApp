@@ -33,7 +33,6 @@ const InfoOfModal = ({
   const handleRequest = async () => {
     try {
       // const requestsCollRef = collection(FIREBASE_DB, "requests");
-
       await setDoc(doc(FIREBASE_DB, "requests", currentInformation?.id), {
         senderId: FIREBASE_AUTH.currentUser?.uid,
         receiverId: currentInformation?.ownerId,
@@ -101,7 +100,7 @@ const InfoOfModal = ({
             }}
           />
           <Text style={{ fontSize: 20 }}>
-            {currentInformation?.distance.text}
+            {currentInformation?.distance?.text}
           </Text>
         </View>
         <View style={{ flexDirection: "column", alignItems: "center" }}>
