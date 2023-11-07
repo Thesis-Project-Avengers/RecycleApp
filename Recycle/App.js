@@ -140,6 +140,7 @@ export const RealApp = () => {
           ),
         }}
         name="Map"
+        
         component={Map}
       />
       <Tab.Screen

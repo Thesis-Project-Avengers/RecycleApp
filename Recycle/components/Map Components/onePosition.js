@@ -17,7 +17,7 @@ const OnePosition = ({
     setPressCount((prevCount) => prevCount + 1);
     if (pressCount === 0) {
       setselectedPos(loc);
-      // getSelectedInformation(loc);
+      getSelectedInformation(loc);
       handleAnimateToRegion(loc);
       setShowWay(0);
     }

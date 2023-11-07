@@ -23,23 +23,25 @@ const InfoOfModal = ({
   mode,
 }) => {
   const [yesma3, setyesma3] = useState("");
-  console.log(yesma3);
+  // console.log(yesma3);
 
   const requestsRef = ref(FIREBASE_REALTIME_DB, "requests");
   onChildChanged(requestsRef, (snapshot) => {
     const requestData = snapshot.val();
     setyesma3(requestData.status);
   });
+  // save in the storage
   const handleRequest = async () => {
     try {
-      // const requestsCollRef = collection(FIREBASE_DB, "requests");
-      await setDoc(doc(FIREBASE_DB, "requests", currentInformation?.id), {
+      const requestsCollRef = collection(FIREBASE_DB, "requests");
+      await addDoc(requestsCollRef, {
         senderId: FIREBASE_AUTH.currentUser?.uid,
         receiverId: currentInformation?.ownerId,
         status: "pending",
         markerId: currentInformation?.id,
       });
     } catch (error) {
+      console.log("in handleRequest ");
       console.log(error);
     }
   };
@@ -47,18 +49,25 @@ const InfoOfModal = ({
     try {
       // const requestsCollRef = collection(FIREBASE_DB, "requests");
 
-      set(ref(FIREBASE_REALTIME_DB, "requests/" + currentInformation?.id), {
-        senderId: FIREBASE_AUTH.currentUser?.uid,
-        receiverId: currentInformation?.ownerId,
-        status: "pending",
-        markerId: currentInformation?.id,
-      });
-     
+      set(
+        ref(
+          FIREBASE_REALTIME_DB,
+          "requests/" +
+            currentInformation?.id +
+            "/" +
+            FIREBASE_AUTH.currentUser?.uid
+        ),
+        {
+          senderId: FIREBASE_AUTH.currentUser?.uid,
+          receiverId: currentInformation?.ownerId,
+          status: "pending",
+          markerId: currentInformation?.id,
+        }
+      );
     } catch (error) {
       console.log(error);
     }
   };
-
 
   return (
     <View style={styles.Content}>
@@ -151,7 +160,7 @@ const InfoOfModal = ({
       <TouchableOpacity style={{ marginVertical: 20 }}>
         <Text
           onPress={() => {
-            // handleRequest();
+            handleRequest();
             handelcollect();
             // accepteRealtime();
             // setShowWay(1);
