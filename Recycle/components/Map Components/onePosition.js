@@ -1,9 +1,10 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import React, { useState } from "react";
 import { Marker, Callout } from "react-native-maps";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 const OnePosition = ({
   loc,
+  user,
   setselectedPos,
   setVisibleModal,
   getSelectedInformation,
@@ -12,15 +13,21 @@ const OnePosition = ({
 }) => {
   const [pressCount, setPressCount] = useState(0);
   const handlePress = () => {
+
     setPressCount((prevCount) => prevCount + 1);
     if (pressCount === 0) {
       setselectedPos(loc);
-      getSelectedInformation(loc);
+      // getSelectedInformation(loc);
       handleAnimateToRegion(loc);
       setShowWay(0);
     }
+
     if (pressCount === 1) {
-      setVisibleModal(1);
+      if (user?.type === "accumulator") {
+        Alert.alert("Switch to  collector")
+      } else {
+        setVisibleModal(1);
+      }
       setPressCount(0); // Reset press count
     }
   };
