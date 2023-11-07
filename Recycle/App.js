@@ -185,8 +185,10 @@ export const ProfileStack = () => {
       <Stack.Screen name="editprofile" component={EditProfileScreen} />
       <Stack.Screen name="transaction" component={TransactionScreen} options={{headerShown:true,title:"My Transaction"}} />
     </Stack.Navigator>
+
   );
 };
+
 
 export const TipsStack = () => {
   return (

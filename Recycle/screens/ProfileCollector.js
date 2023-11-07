@@ -4,7 +4,7 @@ import React from 'react'
 const ProfileCollector = () => {
   return (
     <View>
-      <Text>Here the profile collector</Text>
+      <Text>here also a collector</Text>
     </View>
   )
 }
