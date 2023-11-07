@@ -18,9 +18,10 @@ import InfoModal from "../components/Map Components/InfoModal";
 import AddModal from "../components/Map Components/AddModal";
 import Filtrel from "../components/Map Components/Filtrel";
 import { SafeAreaView } from "react-native";
-import { collection, onSnapshot } from "firebase/firestore";
-import { FIREBASE_DB } from "../firebaseConfig";
+import { collection, onSnapshot, doc, getDoc } from "firebase/firestore";
+import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
 export default function Map() {
+  const [user, setUser] = useState({})
   const API_KEY = "AIzaSyCz7OmCHc00wzjQAp4KcZKzzNK8lHCGkgo";
   const [loading, setLoding] = useState(false);
   const [currentRegion, setCurrentRegion] = useState(null);
@@ -32,6 +33,13 @@ export default function Map() {
   const [mode, setMode] = useState("driving");
   const [markers, setMarkers] = useState([]);
   const mapRef = useRef(null);
+
+  useEffect(() => {
+    const docUserref = doc(FIREBASE_DB, "users", FIREBASE_AUTH.currentUser?.uid)
+    getDoc(docUserref).then((snapshot) => {
+      setUser({ ...snapshot.data() })
+    })
+  }, [])
 
   useEffect(() => {
     (async () => {
@@ -68,13 +76,13 @@ export default function Map() {
 
   const handleAnimateToRegion = (loc) => {
     const newRegion = {
-      ...loc.location,
+      ...loc?.location,
       latitudeDelta: 0.1,
       longitudeDelta: 0,
     };
     const newCameraSettings = {
       center: {
-        ...loc.location,
+        ...loc?.location,
       },
       heading: 0, // Set the bearing (rotation) to 90 degrees
       pitch: 60,
@@ -122,11 +130,11 @@ export default function Map() {
     mapRef.current.animateCamera(newCameraSettings, { duration: 2000 });
   };
 
-  const getSelectedInformation = async (info, theMode) => {
+  const getSelectedInformation = async (info, theMode) => { 
     const data = await axios.post(
-      `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${currentRegion.latitude},${currentRegion.longitude}&destinations=${info.location.latitude},${info.location.longitude}&mode=${theMode}&key=${API_KEY}`
+      `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${currentRegion?.latitude},${currentRegion?.longitude}&destinations=${info.location?.latitude},${info.location?.longitude}&mode=${theMode}&key=${API_KEY}`
     );
-    setCurrentInformation({ ...data.data.rows[0].elements[0], ...data.data,...info });
+    setCurrentInformation({ ...data.data.rows[0].elements[0], ...data.data, ...info });
   };
 
   const recyclableItems = [
@@ -154,6 +162,8 @@ export default function Map() {
           {markers?.map((loc, key) => {
             return (
               <OnePosition
+                user={user}
+
                 loc={loc}
                 setselectedPos={setselectedPos}
                 setVisibleModal={setVisibleModal}
@@ -167,7 +177,7 @@ export default function Map() {
           {showWay ? (
             <MapViewDirections
               origin={currentRegion}
-              destination={selectedPos.location}
+              destination={selectedPos?.location}
               apikey={API_KEY}
               strokeWidth={6}
               strokeColor="#93C572"
@@ -220,14 +230,17 @@ export default function Map() {
 
       {/* <Filtrel recyclableItems={recyclableItems} /> */}
 
-      <TouchableOpacity
-        style={styles.addPost}
-        onPress={() => {
-          setVisibleAddModal(1);
-        }}
-      >
-        <Text style={{ color: "white", fontSize: 30 }}>+</Text>
-      </TouchableOpacity>
+      {user?.type === "accumulator" &&
+        <TouchableOpacity
+          style={styles.addPost}
+          onPress={() => {
+            setVisibleAddModal(1);
+          }}
+        >
+          <Text style={{ color: "white", fontSize: 30 }}>+</Text>
+        </TouchableOpacity>
+
+      }
     </SafeAreaView>
   );
 }
