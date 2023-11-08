@@ -29,6 +29,8 @@ import TransactionScreen from "./screens/TransactionScreen";
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator();
 export default function App() {
+ 
+  // console.log(FIREBASE_AUTH.currentUser?.displayName);
   //Onboarding
   // const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState(true)
   const [first, setFirst] = useState(true);

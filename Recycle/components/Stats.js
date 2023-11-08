@@ -146,7 +146,7 @@ const Stats = () => {
               ]}
             />
           </View>
-          <View key={2} style={styles.barContainer}>
+          <View key={3} style={styles.barContainer}>
             <Animated.View
               style={[
                 styles.bar,

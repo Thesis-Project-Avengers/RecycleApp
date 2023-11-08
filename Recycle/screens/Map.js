@@ -44,15 +44,17 @@ export default function Map() {
           console.error("Permission to access location was denied");
           return;
         }
-        let location = await Location.getCurrentPositionAsync({});
-        const { latitude, longitude } = location.coords;
-        const object = {
-          latitude,
-          longitude,
-          latitudeDelta: 0.02,
-          longitudeDelta: 0.02,
+        const locationSubscription = await Location.watchPositionAsync(
+          { accuracy: Location.Accuracy.High, timeInterval: 1000, distanceInterval: 10 }, // You can adjust the update frequency and distance threshold here
+          (newLocation) => {
+            setCurrentRegion({latitude:newLocation.coords.latitude,longitude:newLocation.coords.longitude,});
+          }
+        );
+        return () => {
+          if (locationSubscription) {
+            locationSubscription.remove();
+          }
         };
-        setCurrentRegion({ ...object });
       })();
       fetchUser();
       fetch();
@@ -139,6 +141,7 @@ export default function Map() {
     mapRef.current.animateCamera(newCameraSettings, { duration: 2000 });
   };
 
+ 
   const getSelectedInformation = async (info, theMode) => {
     try {
       const data = await axios.post(

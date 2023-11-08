@@ -12,9 +12,8 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useState } from "react";
-const OneTransaction = ({ request }) => {
+const OneTransaction = ({ request ,handleAccept,handleRefuse}) => {
   const [senderInfo, setSenderInfo] = useState({});
-  console.log("from one trasnaction ", request);
 
   useFocusEffect(
     useCallback(() => {
@@ -28,30 +27,6 @@ const OneTransaction = ({ request }) => {
     }, [])
   );
 
-  const handleAccept = async () => {
-    try {
-      // in the real time 
-      set(
-        ref(
-          FIREBASE_REALTIME_DB,
-          "requests/" + request?.markerId + "/" + request?.senderId
-        ),
-        {
-          // senderId: request?.senderId,
-          // receiverId: "aWeowr1HM6ObgHZYv8ik",
-          status: "done",
-          // markerId: "aWeowr1HM6ObgHZYv8ik",
-        }
-      );
-      // update the doc in the back firestore 
-      const docref=doc(FIREBASE_DB,"requests",request?.id);
-      await updateDoc(docref,{
-        status:"done"
-      })
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <View
@@ -77,12 +52,16 @@ const OneTransaction = ({ request }) => {
       {/* time of creatio  of the request  */}
       <TouchableOpacity
         onPress={() => {
-          handleAccept();
+          handleAccept(request);
         }}
       >
         <Icon name="check-circle-outline" size={30} color={"green"} />
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          handleRefuse(request);
+        }}
+      >
         <Icon name="do-not-disturb-alt" size={30} color={"red"} />
       </TouchableOpacity>
     </View>

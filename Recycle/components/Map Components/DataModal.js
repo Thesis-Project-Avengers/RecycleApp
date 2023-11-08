@@ -35,10 +35,8 @@ const InfoOfModal = ({
   );
   onChildChanged(requestsRef, (snapshot) => {
     const data = snapshot.val();
-    console.log("is listeneing");
     setCollectingLoanding(data);
   });
-
 
   const handleRequest = async () => {
     try {
@@ -186,10 +184,6 @@ const InfoOfModal = ({
             onPress={() => {
               handleRequest();
               handelcollect();
-              // accepteRealtime();
-              // setShowWay(1);
-              // setVisibleModal(0);
-              // handleAnimate(currentRegion);
             }}
             style={{
               backgroundColor: "#93C572",
@@ -207,9 +201,57 @@ const InfoOfModal = ({
             Collect
           </Text>
         ) : collectingLoading === "done" ? (
-          <View style={{ flexDirection: "row", gap: 10 }}>
-            {/* <ActivityIndicator size="small" color="green" /> */}
+          <View
+            style={{
+              flexDirection: "column",
+              gap: 10,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <Text>Accepted</Text>
+            <View
+              style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+            >
+              <TouchableOpacity
+                onPress={() => {
+                  setShowWay(1);
+                  setVisibleModal(0);
+                  handleAnimate(currentRegion);
+                }}
+              >
+                <Text
+                  style={{
+                    backgroundColor: "green",
+                    padding: 10,
+                    borderRadius: 50,
+                    width: 100,
+                    textAlign: "center",
+                    color: "white",
+                  }}
+                >
+                  Start
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Text
+                  style={{
+                    backgroundColor: "red",
+                    padding: 10,
+                    borderRadius: 50,
+                    width: 100,
+                    textAlign: "center",
+                    color: "white",
+                  }}
+                >
+                  Cancel
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        ) : collectingLoading === "rejected" ? (
+          <View style={{ flexDirection: "row", gap: 10 }}>
+            <Text>rejected</Text>
           </View>
         ) : (
           <View style={{ flexDirection: "row", gap: 10 }}>

@@ -39,7 +39,7 @@ const UserProfileModal = ({user}) => {
       />
       <Text style={{ padding: 5,fontSize:20,letterSpacing:2}}> { user?.displayName}</Text>
       <View style={{ flexDirection: "row", marginVertical: 10 }}>
-        {renderStars(user?.rating || 1)}
+        {renderStars(user?.rating/5 || 1)}
       </View>
       <Text
         style={{
