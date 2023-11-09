@@ -6,24 +6,24 @@ import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
 import { doc, updateDoc } from "firebase/firestore";
 import { useFocusEffect } from "@react-navigation/native";
 const HomeHeader = () => {
-const [user,setUser] = useState({})
- useFocusEffect(useCallback(()=>{
-  FIREBASE_AUTH.onAuthStateChanged(user => {
-    if (user) {
-      // User is signed in
-      setUser(user);
-    } else {
-      // No user is signed in
-      console.log('No user is signed in');
-    }
-  })
- },[]))
+  const [user, setUser] = useState({})
+  useFocusEffect(useCallback(() => {
+    FIREBASE_AUTH.onAuthStateChanged(user => {
+      if (user) {
+        // User is signed in
+        setUser(user);
+      } else {
+        // No user is signed in
+        console.log('No user is signed in');
+      }
+    })
+  }, []))
 
   return (
     <SafeAreaView style={styles.headerContainerHome}>
       <View style={styles.ImageName}>
         <Image source={{
-          uri:user?.photoURL
+          uri: user?.photoURL
         }} style={styles.oneImage} />
         <View style={styles.text}>
           <Text style={{ fontSize: 20, fontWeight: 900, color: "gray" }}>
@@ -39,7 +39,7 @@ const [user,setUser] = useState({})
       <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
         <View style={styles.point}>
           <Text style={{ fontSize: 15, color: "#fff" }}>100</Text>
-          <Image source={require("../assets/coin.png")} style={styles.imageCoin}  />
+          <Image source={require("../assets/coin.png")} style={styles.imageCoin} />
 
         </View>
       </TouchableOpacity>
@@ -84,11 +84,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#93C572",
     position: "relative",
     zIndex: -1,
-    flexDirection:"row",
-    gap:5
+    flexDirection: "row",
+    gap: 5
   },
-  imageCoin:{
-    width:20,
-    height:20
+  imageCoin: {
+    width: 20,
+    height: 20
   },
 });

@@ -29,7 +29,7 @@ import TransactionScreen from "./screens/TransactionScreen";
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator();
 export default function App() {
- 
+
   // console.log(FIREBASE_AUTH.currentUser?.displayName);
   //Onboarding
   // const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState(true)
@@ -109,7 +109,7 @@ export const RealApp = () => {
               size={size ? size : 24}
               color={focused ? color : "#222222"}
               focused={focused}
-              // color={color}
+            // color={color}
             />
           ),
         }}
@@ -142,7 +142,7 @@ export const RealApp = () => {
           ),
         }}
         name="Map"
-        
+
         component={Map}
       />
       <Tab.Screen
@@ -185,7 +185,7 @@ export const ProfileStack = () => {
     >
       <Stack.Screen name="mainprofile" component={Profile} />
       <Stack.Screen name="editprofile" component={EditProfileScreen} />
-      <Stack.Screen name="transaction" component={TransactionScreen} options={{headerShown:true,title:"My Transaction"}} />
+      <Stack.Screen name="transaction" component={TransactionScreen} options={{ headerShown: true, title: "My Transaction" }} />
     </Stack.Navigator>
 
   );
