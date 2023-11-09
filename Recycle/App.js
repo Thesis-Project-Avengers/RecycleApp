@@ -25,6 +25,7 @@ import AccOnboarding from "./components/AccOnboarding";
 import CommentsScreen from "./screens/CommentsScreen";
 import CollOmbording from "./components/CollOmbording";
 import TransactionScreen from "./screens/TransactionScreen";
+import TreeShop from "./components/TreeShop";
 
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator();
@@ -112,7 +113,7 @@ export const RealApp = () => {
           ),
         }}
         name="Home"
-        component={AccSpendPoint}
+        component={TreeShop}
       />
       <Tab.Screen
         options={{

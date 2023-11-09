@@ -35,6 +35,7 @@
     "react-native-floating-action": "^1.22.0",
     "react-native-gesture-handler": "~2.12.0",
     "react-native-google-places-autocomplete": "^2.5.6",
+    "react-native-linear-gradient": "^2.8.3",
     "react-native-maps": "1.7.1",
     "react-native-maps-directions": "^1.9.0",
     "react-native-modal": "^13.0.1",
@@ -49,7 +50,9 @@
     "react-native-slider": "^0.11.0",
     "react-native-swiper": "^1.6.0",
     "react-native-vector-icons": "^10.0.1",
-    "react-native-webview": "13.2.2"
+    "react-native-webview": "13.2.2",
+    "expo-linear-gradient": "~12.3.0",
+    "react-native-reanimated": "~3.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

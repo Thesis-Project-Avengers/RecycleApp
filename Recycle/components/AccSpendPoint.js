@@ -1,51 +1,105 @@
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faAngleLeft, faAngleRight, faCommentsDollar, faHandshakeAngle, faShieldDog, faTree } from "@fortawesome/free-solid-svg-icons"
+import { LinearGradient } from 'expo-linear-gradient';
 
-const items = [
-  'Item 1 qzfzafqs segqsqdvdbs qege',
-  'Item 2 qzfzafqs segq sqdvdbs ',
-  'Item 3 qzfzafqs segq sqdvdbs q',
-  'Item 4 egfzrshrhendjdrtdn',
-];
+
 const AccSpendPoint = () => {
+  const [index, setIndex] = useState(0)
+  const items=[
+    ['Item 1 qzfzafqs segqsqdkjnnknkl',
+      'Item 2 qzfzafqs segq sqdvdbs,l',
+      'Item 3 qzfzafqs segq sqdvdbs q',
+      'Item 4 egfzrshrhendjdrtdnnklln'],
+    [
+      "Item 1 thenya jdnaoqlskcqslnkkk",
+      "Item 2 thenya adzlnqcsknizalcsq",
+      "item 3dazkl,qslc,cmqls,oazùqcs;",
+      "Item 4 denjlqscnazknsqcliza;qkm"
+    ],
+    [
+      "Item 1 theltha jdnaoqlfezazfnj",
+      "Item 2 theltha adqdsfqdslcsq",
+      "item 3 dazkl,qslc,cmdqsqdsoazù",
+      "Item 4 denjlqscnazknsqcliza;q"
+    ],
+    [
+      "item 1 rab3a cnsqlkn;qslmq",
+      "Item 2 rab3a adqdsfqdslcsq",
+      "item 3 dazkl,qslc,cmdqsqdsoaz",
+      "Item 4 denjlqscnazknsqcliza;q "
+    ]
+  ]
+  const titles = [
+    "Make your forest",
+    "Spend you points",
+    "Save Street dogs",
+    "Cooperate with us"
+
+  ];
+  const logos = [
+    <FontAwesomeIcon size={50} icon={faTree} style={{ color: "#000000", }} />,
+    <FontAwesomeIcon size={50} icon={faCommentsDollar} style={{ color: "#000000", }} />,
+    <FontAwesomeIcon size={50} icon={faShieldDog} style={{ color: "#000000", }} />,
+    <FontAwesomeIcon size={50} icon={faHandshakeAngle} style={{ color: "#000000", }} />
+  ]
+  const handelSuiv = () => {
+    if (index === 3) {
+      setIndex(0)
+    }
+    else {
+      setIndex(index + 1)
+    }
+  }
+  const handelPrec = () => {
+    if(index === 0){
+      setIndex(3)
+    }
+    else {
+      setIndex(index - 1)
+    }
+  }
   return (
     <View style={styles.god}>
       <View style={styles.mainViewContainer}>
         <View style={{ height: '45%' }}>
           <View style={styles.parent}>
-            <View style={styles.children}>
+            <TouchableOpacity style={styles.children}>
               <FontAwesomeIcon size={50} icon={faTree} style={{ color: "#000000", }} />
               <Text style={styles.textDecor}>Make your forest</Text>
-            </View>
-            <View style={styles.children}>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.children}>
               <FontAwesomeIcon size={50} icon={faCommentsDollar} style={{ color: "#000000", }} />
               <Text style={styles.textDecor}>Spend you points</Text>
-            </View>
+            </TouchableOpacity>
           </View>
           <View style={styles.parent}>
-            <View style={styles.children}>
+            <TouchableOpacity style={styles.children}>
               <FontAwesomeIcon size={50} icon={faShieldDog} style={{ color: "#000000", }} />
               <Text style={styles.textDecor} >Save Street dogs</Text>
-            </View>
-            <View style={styles.children}>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.children}>
               <FontAwesomeIcon size={50} icon={faHandshakeAngle} style={{ color: "#000000", }} />
               <Text style={styles.textDecor}>Cooperate with us</Text>
-            </View>
+            </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.mainCard}>
-          <TouchableOpacity style={{ width: "10%", marginHorizontal: 5 }}><FontAwesomeIcon size={36} icon={faAngleLeft} /></TouchableOpacity>
-          <View style={{ justifyContent: "center", alignItems: "center" }}>
-            <FontAwesomeIcon icon={faTree} color='black' size={45} />
-            <Text style={{ fontWeight: 'bold', marginVertical: 5 }}>yassine ya rjouliiiii</Text>
+        <LinearGradient
+          colors={['#00ff00', '#008000']} // Adjust colors as needed
+          style={styles.mainCard}
+        >
+          <TouchableOpacity onPress={() => { handelPrec() }} style={{ width: "10%", marginHorizontal: 5 }}><FontAwesomeIcon size={36} icon={faAngleLeft} /></TouchableOpacity>
+          <View style={{ justifyContent: "center", alignItems: "center", width: "72%" }}>
+            {logos[index]}
+            <Text style={{ fontWeight: 'bold', marginVertical: 5 }}>{titles[index]}</Text>
             <View style={{ padding: 15 }}>
-              <UnorderedList items={items} />
+              <UnorderedList items={items[index]} />
             </View>
           </View>
-          <TouchableOpacity ><FontAwesomeIcon size={36} icon={faAngleRight} /></TouchableOpacity>
-        </View>
+          <TouchableOpacity onPress={() => { handelSuiv() }} style={{ width: "10%", marginHorizontal: 5 }} ><FontAwesomeIcon size={36} icon={faAngleRight} /></TouchableOpacity>
+        </LinearGradient>
+       
       </View>
     </View>
   );
@@ -80,7 +134,8 @@ const styles = StyleSheet.create({
     height: '100%',
     display: 'flex',
     alignItems: 'center',
-    justifyContent:'center'
+    justifyContent: 'center',
+    // backgroundColor: ''
   },
   mainViewContainer: {
     flexDirection: 'column',
@@ -88,7 +143,7 @@ const styles = StyleSheet.create({
     height: '90%',
     width: '90%',
     // gap: 5,
-    backgroundColor: "yellow",
+    // backgroundColor: "yellow",
   },
   parent: {
     padding: 2.5,
@@ -102,7 +157,7 @@ const styles = StyleSheet.create({
   children: {
     width: '50%',
     height: "100%",
-    backgroundColor: 'pink',
+    backgroundColor: '#93c572',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -112,19 +167,20 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   mainCard: {
+    
     flexDirection: "row",
-    backgroundColor: "green",
+    backgroundColor: "orange",
     width: "100%",
     alignItems: "center",
     borderRadius: 10,
     paddingTop: 10,
-    height:"37%" 
+    height: "37%"
   },
 
   listItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 5,
+    marginBottom: 8,
   },
   bullet: {
     width: 10, // Adjust the size of the bullet point as needed
