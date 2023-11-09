@@ -8,18 +8,53 @@ import {
   Image,
 } from "react-native";
 
-import React from "react";
+import React, { useCallback, useState } from "react";
 import HomeHeader from "../components/HomeHeader";
 import TipsHome from "./TipsHome";
 import Services from "../components/Services";
-import { FIREBASE_AUTH } from "../firebaseConfig";
+import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
 import { faL } from "@fortawesome/free-solid-svg-icons";
 import { color } from "react-native-elements/dist/helpers";
 import Stats from "../components/Stats";
+import { useFocusEffect } from "@react-navigation/native";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
 // import Stats from "../components/Stats";r
 
 const HomeScreen = ({ navigation }) => {
-  console.log(FIREBASE_AUTH.currentUser);
+  const [collectorsUsers, setCollectorsUsers] = useState([]);
+  const [accumulatorsUsers, setAccumulatorUsers] = useState([]);
+
+  // console.log(FIREBASE_AUTH.currentUser);
+  useFocusEffect(
+    useCallback(() => {
+      const fetchUsers = async () => {
+        try {
+          const usersReference = collection(FIREBASE_DB, "users");
+          const q = query(usersReference, orderBy("rating", "desc"));
+          let collector = [];
+          let accumulator = [];
+          await getDocs(q).then((snapshot) => {
+            snapshot.docs.forEach((doc, index) => {
+              if (index < 3) {
+                if (doc.data()?.type === "collector") {
+                  collector.push({ ...doc.data(), id: doc.id });
+                }
+                if (doc.data()?.type === "accumulator") {
+                  accumulator.push({ ...doc.data(), id: doc.id });
+                }
+              }
+            });
+            setCollectorsUsers(collector);
+            setAccumulatorUsers(accumulator);
+          });
+        } catch (error) {
+
+          console.log(error);
+        }
+      };
+      fetchUsers();
+    }, [])
+  );
 
   //use navigation to navigate to another screen
   return (
@@ -31,9 +66,9 @@ const HomeScreen = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
       >
         <Services />
-        <Stats />
+        <Stats users={collectorsUsers} />
         <TipsHome />
-        <Stats />
+        {/* <Stats users={accumulatorsUsers} /> */}
       </ScrollView>
 
       {/* <Text>444</Text>

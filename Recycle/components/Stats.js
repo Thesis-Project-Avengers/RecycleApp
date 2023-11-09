@@ -72,26 +72,32 @@
 //     borderRadius:50
 //   },
 // });
-import React, { useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { View, Text, StyleSheet, Image, Animated } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
+import { collection, getDocs, orderBy } from "firebase/firestore";
+import { FIREBASE_DB } from "../firebaseConfig";
+import { query } from "firebase/database";
 
-const Stats = () => {
-    const val =20
-  const images = [
-    require("../assets/balha.jpg"),
-    require("../assets/khalil.jpg"),
-    require("../assets/bango.jpg"),
-    // require("../assets/accumulator.png"),
-    // require("../assets/accumulator.png"),
-  ];
+const Stats = ({ users }) => {
+  // const [images, setImages] = useState([]);
 
-  const animatedValues = useRef(images.map(() => new Animated.Value(0))).current;
+  const val = 20;
+
+  const images = [users[0]?.photoURL, users[1]?.photoURL, users[2]?.photoURL];
+
+  const animatedValues = useRef(
+    images.map(() => {
+      return new Animated.Value(0);
+    })
+  ).current;
+  console.log("thisanimated values  ", animatedValues);
 
   useEffect(() => {
     const animations = animatedValues.map((value, index) =>
       Animated.timing(value, {
         toValue: 1,
-        duration: 2300, // Animation duration in milliseconds
+        duration: 5500, // Animation duration in milliseconds
         useNativeDriver: false,
       })
     );
@@ -105,69 +111,34 @@ const Stats = () => {
         <Text>Collector Stats</Text>
       </View>
       <View style={styles.container}>
-     
-          <View key={0} style={styles.barContainer}>
-            <Animated.View
-              style={[
-                styles.bar,
-                { height: 30, width: animatedValues[0].interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [0, 230],
-                  })},
-              ]}
-            />
-            <Animated.Image
-              source={images[0]}
-              style={[
-                styles.image,
-                {
-                  opacity: animatedValues[0],
-                },
-              ]}
-            />
-          </View>
-          <View key={2} style={styles.barContainer}>
-            <Animated.View
-              style={[
-                styles.bar,
-                { height: 30,width: animatedValues[2].interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [0, 150],
-                  })},
-              ]}
-            />
-            <Animated.Image
-              source={images[1]}
-              style={[
-                styles.image,
-                {
-                  opacity: animatedValues[1],
-                },
-              ]}
-            />
-          </View>
-          <View key={2} style={styles.barContainer}>
-            <Animated.View
-              style={[
-                styles.bar,
-                { height: 30, width: animatedValues[2].interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [0, 90],
-                  })},
-              ]}
-            />
-            <Animated.Image
-              source={images[2]}
-              style={[
-                styles.image,
-                {
-                  opacity: animatedValues[2],
-                },
-              ]}
-            />
-          </View>
-          
-    
+        {users.map((user, index) => {
+          let score = (((user?.rating / (user?.nbrRaters * 5)) * 100)*230)/100
+          return (
+            <View key={index} style={styles.barContainer}>
+              <Animated.View
+                style={[
+                  styles.bar,
+                  {
+                    height: 30,
+                    width: animatedValues[index]?.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [0, score],
+                    }),
+                  },
+                ]}
+              />
+              <Animated.Image
+                source={{ uri: images[index] }}
+                style={[
+                  styles.image,
+                  {
+                    opacity: animatedValues[index],
+                  },
+                ]}
+              />
+            </View>
+          );
+        })}
       </View>
     </View>
   );
