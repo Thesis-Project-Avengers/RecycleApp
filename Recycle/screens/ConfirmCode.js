@@ -60,10 +60,12 @@ const ConfirmCode = ({ route, navigation }) => {
     }
   };
   return (
-    <ScrollView >
+
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={{justifyContent:"center",alignItems:"center",gap:40}} > 
       <View
         style={{
-          height: 200,
+          // height: "100%",
           alignItems: "center",
           justifyContent: "center",
           width: "90%",
@@ -83,6 +85,7 @@ const ConfirmCode = ({ route, navigation }) => {
       <TouchableOpacity style={styles.sendCode} onPress={confirmCode}>
         <Text style={styles.buttonText}>Confirm verification</Text>
       </TouchableOpacity>
+      </View>
     </ScrollView>
   );
 };
@@ -90,9 +93,7 @@ const ConfirmCode = ({ route, navigation }) => {
 export default ConfirmCode;
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // justifyContent: "center",
-    // alignItems: "center",
+  // height:"100%",
     // gap: 40,
   },
   textInput: {

@@ -10,7 +10,6 @@ const OneTipHome = ({ tip }) => {
     useFocusEffect(useCallback(() => {
         const userdocRef = doc(FIREBASE_DB, "users", tip?.posterId)
         getDoc(userdocRef).then((doc) => {
-            console.log("insisde use foucs effect for doc: " + doc.data());
             setPosterInfo(doc.data())
         })
     }, []))
