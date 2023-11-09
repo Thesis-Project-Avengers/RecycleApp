@@ -10,7 +10,7 @@ import uuid from "uuid";
 import { FIREBASE_AUTH, FIREBASE_DB, FIREBASE_STORAGE } from '../firebaseConfig';
 import { useFocusEffect } from '@react-navigation/native';
 import { query } from 'firebase/database';
-import { collection, onSnapshot, orderBy } from 'firebase/firestore';
+import { addDoc, collection, onSnapshot, orderBy } from 'firebase/firestore';
 
 
 const SpecificChatScreen = () => {
@@ -28,7 +28,7 @@ const SpecificChatScreen = () => {
                             _id: doc.id,
                             text: doc.data().text,
                             createdAt: doc.data().createdAt.toDate(),
-                            user: doc.data().user,
+                            user: doc.data().sender,
                             image: doc.data().image
                         }
                     )
@@ -89,12 +89,12 @@ const SpecificChatScreen = () => {
         setMessages(previousMessages =>
             GiftedChat.append(previousMessages, messages),
         )
-        // const { _id, createdAt, text, user } = messages[0]
+        const { _id, createdAt, text, user } = messages[0]
         // console.log("before add ");
         // console.log(image);
-        // await addDoc(collection(FIREBASE_DB, "chats"), {
-        //   _id, createdAt, text, user, image
-        // })
+        await addDoc(collection(FIREBASE_DB, "chats"), {
+            _id, createdAt, text, sender: user, image
+        })
 
         // setImage(null)
 
