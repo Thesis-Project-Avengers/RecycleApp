@@ -56,7 +56,7 @@ const HomeScreen = ({ navigation }) => {
     }, [])
   );
 
-  //use navigation to navigate to another screen
+
   return (
     <SafeAreaView style={styles.container}>
       <HomeHeader />
@@ -70,14 +70,6 @@ const HomeScreen = ({ navigation }) => {
         <TipsHome />
         {/* <Stats users={accumulatorsUsers} /> */}
       </ScrollView>
-
-      {/* <Text>444</Text>
-        <Text>444</Text>
-        <Text>444</Text>
-        <Text>444</Text>
-        <Text>444</Text>
-        <Text>444</Text>
-      <Text>444</Text> */}
     </SafeAreaView>
   );
 };
