@@ -22,6 +22,7 @@ import Filtrel from "../components/Map Components/Filtrel";
 import { SafeAreaView } from "react-native";
 import { collection, onSnapshot, doc, getDoc } from "firebase/firestore";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
+import WayModal from "../components/Map Components/WayModal";
 export default function Map() {
   const [user, setUser] = useState({});
   const API_KEY = "AIzaSyCz7OmCHc00wzjQAp4KcZKzzNK8lHCGkgo";
@@ -30,6 +31,7 @@ export default function Map() {
   const [selectedPos, setselectedPos] = useState(null);
   const [visibleModal, setVisibleModal] = useState(null);
   const [addModal, setVisibleAddModal] = useState(null);
+  const [wayModal, setWayModal] = useState(null);
   const [currentInformation, setCurrentInformation] = useState(null);
   const [showWay, setShowWay] = useState(0);
   const [mode, setMode] = useState("driving");
@@ -63,6 +65,13 @@ export default function Map() {
       console.log("Screen is focused! Refreshing...");
     }, [])
   );
+
+useEffect(()=>{
+  getSelectedInformation(selectedPos,mode)
+},[currentRegion])
+
+
+
   // called insisede usefoucs
   const fetchUser = () => {
     const docUserref = doc(
@@ -228,6 +237,7 @@ export default function Map() {
       >
         {
           <InfoModal
+          setWayModal={setWayModal}
             currentInformation={currentInformation}
             currentRegion={currentRegion}
             handleAnimate={handleAnimate}
@@ -267,6 +277,20 @@ export default function Map() {
           <Text style={{ color: "white", fontSize: 30 }}>+</Text>
         </TouchableOpacity>
       )}
+   
+      <Modal
+        isVisible={wayModal === 1}
+        hasBackdrop = {false}
+        coverScreen={false}
+        onBackdropPress={() => setWayModal(null)}
+      >
+        { 
+          <WayModal
+          currentInformation={currentInformation}
+          />
+        }
+      </Modal>
+  
     </SafeAreaView>
   );
 }

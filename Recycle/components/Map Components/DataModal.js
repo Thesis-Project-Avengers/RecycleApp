@@ -31,9 +31,10 @@ const InfoOfModal = ({
   getSelectedInformation,
   selectedPos,
   mode,
+  setWayModal,
 }) => {
   const [collectingLoading, setCollectingLoanding] = useState(null);
-  const [listening, setListening] = useState(true);
+
   const memoizedCollectingLoading = useMemo(() => {
     return collectingLoading;
   }, [collectingLoading]);
@@ -102,10 +103,13 @@ const InfoOfModal = ({
 
   const handleAccept = async () => {
     try {
-      const docref = doc(FIREBASE_DB, "markers",currentInformation?.id);
+      const docref = doc(FIREBASE_DB, "markers", currentInformation?.id);
       await updateDoc(docref, {
-        visibility:false,
-        visibleBy:[FIREBASE_AUTH.currentUser?.uid,currentInformation?.ownerId]
+        visibility: false,
+        visibleBy: [
+          FIREBASE_AUTH.currentUser?.uid,
+          currentInformation?.ownerId,
+        ],
       });
     } catch (error) {
       console.log("in handleRequest ");
@@ -130,34 +134,47 @@ const InfoOfModal = ({
 
   return (
     <View style={styles.Content}>
-      <View style={{flexDirection:"column",alignItems:"center",width:"100%",justifyContent:"center"}}>
-        <View style={{flexDirection:"row",alignItems:"center",justifyContent:"center",gap:10}}>
-      <Text style={{fontSize:25}}>{currentInformation.quantity}</Text>
-      <FontAwesomeIcon
-        icon={generateIcon(currentInformation.category)}
-        size={40}
-        color={"#93C572"}
+      <View
         style={{
-           
-          fontSize: 70,
-          borderRadius: 50,
-          borderWidth: 1,
-          borderStyle: "solid",
-          borderColor: "#93C572",
-          padding: 1,
+          flexDirection: "column",
+          alignItems: "center",
+          width: "100%",
+          justifyContent: "center",
         }}
-      />
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 10,
+          }}
+        >
+          <Text style={{ fontSize: 25 }}>{currentInformation.quantity}</Text>
+          <FontAwesomeIcon
+            icon={generateIcon(currentInformation.category)}
+            size={40}
+            color={"#93C572"}
+            style={{
+              fontSize: 70,
+              borderRadius: 50,
+              borderWidth: 1,
+              borderStyle: "solid",
+              borderColor: "#93C572",
+              padding: 1,
+            }}
+          />
+        </View>
+        <Text style={{ fontSize: 25 }}>{currentInformation.category}</Text>
       </View>
-       <Text style={{fontSize:25}}>{currentInformation.category}</Text>
-      </View>
-     
+
       <View
         style={{
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "space-around",
           width: "100%",
-          marginVertical:5,
+          marginVertical: 5,
         }}
       >
         <View style={{ flexDirection: "column", alignItems: "center" }}>
@@ -261,7 +278,8 @@ const InfoOfModal = ({
                   setShowWay(1);
                   setVisibleModal(0);
                   handleAnimate(currentRegion);
-                  handleAccept()
+                  handleAccept();
+                  setWayModal(1);
                 }}
               >
                 <Text
@@ -325,12 +343,12 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: 5,
     justifyContent: "centre",
-    gap:5,
-    alignItems:"center"
+    gap: 5,
+    alignItems: "center",
   },
   modalText: {
     fontSize: 20,
-    marginVertical:10
+    marginVertical: 10,
   },
   bottomModal: {
     justifyContent: "flex-end",
