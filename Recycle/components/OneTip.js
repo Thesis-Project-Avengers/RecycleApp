@@ -6,12 +6,21 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 import React, { useState } from 'react'
 import { FIREBASE_AUTH, FIREBASE_DB } from '../firebaseConfig'
-import { doc, updateDoc } from 'firebase/firestore'
-import { useNavigation } from '@react-navigation/native';
+import { doc, getDoc, updateDoc } from 'firebase/firestore'
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useCallback } from 'react';
 
 const OneTip = ({ tip }) => {
     const navigation = useNavigation()
-    // console.log(FIREBASE_AUTH.currentUser.uid);
+    const [posterInfo, setPosterInfo] = useState({})
+    useFocusEffect(useCallback(() => {
+
+        const userdocRef = doc(FIREBASE_DB, "users", tip?.posterId)
+        getDoc(userdocRef).then((doc) => {
+            console.log("insisde use foucs effect for doc: " + doc.data());
+            setPosterInfo(doc.data())
+        })
+    }, []))
 
     const [isLiked, setIsliked] = useState(tip.isLiked.includes(FIREBASE_AUTH.currentUser.uid))
     const [isFavourite, setIsfavourite] = useState(tip.isFavourite.includes(FIREBASE_AUTH.currentUser.uid))
@@ -49,9 +58,9 @@ const OneTip = ({ tip }) => {
                 <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                     <Image borderRadius={50}
                         source={{
-                            uri: tip.user?.photoURL
+                            uri: posterInfo?.photoURL
                         }} width={50} height={50} />
-                    <Text style={{ fontSize: 16, fontWeight: 900 }}>{tip.user?.displayName}</Text>
+                    <Text style={{ fontSize: 16, fontWeight: 900 }}>{posterInfo?.displayName}</Text>
                 </View>
                 <Text>
                     {tip.createdAt.toDate().toString().slice(15, 18) > 12 ? tip.createdAt?.toDate().toString().slice(15, 21) + " PM" : tip.createdAt.toDate().toString().slice(15, 21) + " AM"}

@@ -1,4 +1,6 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+
 import {
   View,
   Text,
@@ -10,7 +12,7 @@ import MapView, { GooglePlacesAutocomplete } from "react-native-maps";
 import * as Location from "expo-location";
 import MapViewDirections from "react-native-maps-directions";
 import customMapStyleJSON from "../mapStyle";
-import OnePosition from "../components/Map Components/onePosition";
+import OnePosition from "../components/Map Components/OnePosition";
 import Modal from "react-native-modal";
 
 import axios from "axios";
@@ -18,43 +20,70 @@ import InfoModal from "../components/Map Components/InfoModal";
 import AddModal from "../components/Map Components/AddModal";
 import Filtrel from "../components/Map Components/Filtrel";
 import { SafeAreaView } from "react-native";
-import { collection, onSnapshot } from "firebase/firestore";
-import { FIREBASE_DB } from "../firebaseConfig";
+import { collection, onSnapshot, doc, getDoc } from "firebase/firestore";
+import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
+import WayModal from "../components/Map Components/WayModal";
 export default function Map() {
+  const [user, setUser] = useState({});
   const API_KEY = "AIzaSyCz7OmCHc00wzjQAp4KcZKzzNK8lHCGkgo";
   const [loading, setLoding] = useState(false);
   const [currentRegion, setCurrentRegion] = useState(null);
   const [selectedPos, setselectedPos] = useState(null);
   const [visibleModal, setVisibleModal] = useState(null);
   const [addModal, setVisibleAddModal] = useState(null);
+  const [wayModal, setWayModal] = useState(null);
   const [currentInformation, setCurrentInformation] = useState(null);
   const [showWay, setShowWay] = useState(0);
   const [mode, setMode] = useState("driving");
   const [markers, setMarkers] = useState([]);
   const mapRef = useRef(null);
 
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        console.error("Permission to access location was denied");
-        return;
-      }
-      let location = await Location.getCurrentPositionAsync({});
-      const { latitude, longitude } = location.coords;
-      const object = {
-        latitude,
-        longitude,
-        latitudeDelta: 0.02,
-        longitudeDelta: 0.02,
-      };
-      setCurrentRegion({ ...object });
-    })();
+  useFocusEffect(
+    useCallback(() => {
+      (async () => {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== "granted") {
+          console.error("Permission to access location was denied");
+          return;
+        }
+        const locationSubscription = await Location.watchPositionAsync(
+          { accuracy: Location.Accuracy.High, timeInterval: 1000, distanceInterval: 10 }, // You can adjust the update frequency and distance threshold here
+          (newLocation) => {
+            setCurrentRegion({latitude:newLocation.coords.latitude,longitude:newLocation.coords.longitude,latitudeDelta: 0.01,
+              longitudeDelta: 0.01});
+          }
+        );
+        return () => {
+          if (locationSubscription) {
+            locationSubscription.remove();
+          }
+        };
+      })();
+      fetchUser();
+      fetch();
+      if (markers.length || currentRegion) setLoding(false);
+      console.log("Screen is focused! Refreshing...");
+    }, [])
+  );
 
-    fetch();
-    if (markers.length || currentRegion) setLoding(false);
-  }, []);
+useEffect(()=>{
+  getSelectedInformation(selectedPos,mode)
+},[currentRegion])
 
+
+
+  // called insisede usefoucs
+  const fetchUser = () => {
+    const docUserref = doc(
+      FIREBASE_DB,
+      "users",
+      FIREBASE_AUTH.currentUser?.uid
+    );
+    getDoc(docUserref).then((snapshot) => {
+      setUser({ ...snapshot.data() });
+    });
+  };
+  // called insisede usefoucs
   const fetch = () => {
     const markersCollectionRef = collection(FIREBASE_DB, "markers");
     let data = [];
@@ -68,13 +97,13 @@ export default function Map() {
 
   const handleAnimateToRegion = (loc) => {
     const newRegion = {
-      ...loc.location,
+      ...loc?.location,
       latitudeDelta: 0.1,
       longitudeDelta: 0,
     };
     const newCameraSettings = {
       center: {
-        ...loc.location,
+        ...loc?.location,
       },
       heading: 0, // Set the bearing (rotation) to 90 degrees
       pitch: 60,
@@ -122,20 +151,35 @@ export default function Map() {
     mapRef.current.animateCamera(newCameraSettings, { duration: 2000 });
   };
 
+ 
   const getSelectedInformation = async (info, theMode) => {
-    const data = await axios.post(
-      `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${currentRegion.latitude},${currentRegion.longitude}&destinations=${info.location.latitude},${info.location.longitude}&mode=${theMode}&key=${API_KEY}`
-    );
-    setCurrentInformation({ ...data.data.rows[0].elements[0], ...data.data,...info });
+    try {
+      const data = await axios.post(
+        `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${
+          currentRegion?.latitude
+        },${currentRegion?.longitude}&destinations=${info.location?.latitude},${
+          info.location?.longitude
+        }&mode=${theMode || mode}&key=${API_KEY}`
+      );
+
+      setCurrentInformation({
+        ...data.data.rows[0].elements[0],
+        ...data.data,
+        ...info,
+      });
+    } catch (error) {
+      console.log("google api fetching errror");
+      console.log(error);
+    }
   };
 
   const recyclableItems = [
-    "Aluminum Cans",
-    "Glass Bottles",
-    "Paper",
-    "Plastic Bottles",
-    "Cardboard Boxes",
-    "Steel Cans",
+    {id:1,type:"Aluminum Cans"},
+    {id:2,type:"Glass Bottles"},
+    {id:3,type:"Paper"},
+    {id:4,type:"Plastic Bottles"},
+    {id:5,type:"Cardboard Boxes"},
+    {id:6,type:"Steel Cans"},
   ];
 
   return (
@@ -152,8 +196,10 @@ export default function Map() {
           rotateEnabled={true}
         >
           {markers?.map((loc, key) => {
+            if(!loc.completed)
             return (
               <OnePosition
+                user={user}
                 loc={loc}
                 setselectedPos={setselectedPos}
                 setVisibleModal={setVisibleModal}
@@ -167,7 +213,7 @@ export default function Map() {
           {showWay ? (
             <MapViewDirections
               origin={currentRegion}
-              destination={selectedPos.location}
+              destination={selectedPos?.location}
               apikey={API_KEY}
               strokeWidth={6}
               strokeColor="#93C572"
@@ -191,6 +237,7 @@ export default function Map() {
       >
         {
           <InfoModal
+          setWayModal={setWayModal}
             currentInformation={currentInformation}
             currentRegion={currentRegion}
             handleAnimate={handleAnimate}
@@ -218,16 +265,32 @@ export default function Map() {
         }
       </Modal>
 
-      {/* <Filtrel recyclableItems={recyclableItems} /> */}
+      <Filtrel recyclableItems={recyclableItems} />
 
-      <TouchableOpacity
-        style={styles.addPost}
-        onPress={() => {
-          setVisibleAddModal(1);
-        }}
+      {user?.type === "accumulator" && (
+        <TouchableOpacity
+          style={styles.addPost}
+          onPress={() => {
+            setVisibleAddModal(1);
+          }}
+        >
+          <Text style={{ color: "white", fontSize: 30 }}>+</Text>
+        </TouchableOpacity>
+      )}
+   
+      <Modal
+        isVisible={wayModal === 1}
+        hasBackdrop = {false}
+        coverScreen={false}
+        onBackdropPress={() => setWayModal(null)}
       >
-        <Text style={{ color: "white", fontSize: 30 }}>+</Text>
-      </TouchableOpacity>
+        { 
+          <WayModal
+          currentInformation={currentInformation}
+          />
+        }
+      </Modal>
+  
     </SafeAreaView>
   );
 }

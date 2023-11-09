@@ -30,6 +30,8 @@ import TreeShop from "./components/TreeShop";
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator();
 export default function App() {
+
+  // console.log(FIREBASE_AUTH.currentUser?.displayName);
   //Onboarding
   // const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState(true)
   const [first, setFirst] = useState(true);
@@ -54,6 +56,8 @@ export default function App() {
   React.useEffect(() => {
     fetch();
   }, []);
+
+  
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -108,7 +112,7 @@ export const RealApp = () => {
               size={size ? size : 24}
               color={focused ? color : "#222222"}
               focused={focused}
-              // color={color}
+            // color={color}
             />
           ),
         }}
@@ -141,6 +145,7 @@ export const RealApp = () => {
           ),
         }}
         name="Map"
+
         component={Map}
       />
       <Tab.Screen
@@ -155,7 +160,7 @@ export const RealApp = () => {
           ),
         }}
         name="Chat"
-        component={ChatScreen}
+        component={ChatStack}
       />
       <Tab.Screen
         options={{
@@ -183,10 +188,13 @@ export const ProfileStack = () => {
     >
       <Stack.Screen name="mainprofile" component={Profile} />
       <Stack.Screen name="editprofile" component={EditProfileScreen} />
-      <Stack.Screen name="transaction" component={TransactionScreen} options={{headerShown:true,title:"My Transaction"}} />
+      <Stack.Screen name="transaction" component={TransactionScreen} options={{ headerShown: true, title: "My Transaction" }} />
     </Stack.Navigator>
+
   );
 };
+
+
 
 export const TipsStack = () => {
   return (
@@ -204,3 +212,14 @@ export const TipsStack = () => {
     </Stack.Navigator>
   );
 };
+
+
+export const ChatStack = () => {
+  return (
+    <Stack.Navigator initialRouteName="specificChat" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="allchats" component={ChatScreen} />
+      <Stack.Screen name="specificChat" component={SpecificChatScreen} />
+    </Stack.Navigator>
+  )
+
+}
