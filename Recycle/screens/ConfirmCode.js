@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Alert,
   Image,
+  ScrollView,
 } from "react-native";
 import React, { useState } from "react";
 import {
@@ -59,7 +60,7 @@ const ConfirmCode = ({ route, navigation }) => {
     }
   };
   return (
-    <View style={styles.container}>
+    <ScrollView >
       <View
         style={{
           height: 200,
@@ -82,17 +83,17 @@ const ConfirmCode = ({ route, navigation }) => {
       <TouchableOpacity style={styles.sendCode} onPress={confirmCode}>
         <Text style={styles.buttonText}>Confirm verification</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 };
 
 export default ConfirmCode;
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    gap: 40,
+    // flex: 1,
+    // justifyContent: "center",
+    // alignItems: "center",
+    // gap: 40,
   },
   textInput: {
     fontSize: 24,

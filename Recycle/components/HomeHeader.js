@@ -1,21 +1,35 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Feather";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
 import { doc, updateDoc } from "firebase/firestore";
+import { useFocusEffect } from "@react-navigation/native";
 const HomeHeader = () => {
+const [user,setUser] = useState({})
+ useFocusEffect(useCallback(()=>{
+  FIREBASE_AUTH.onAuthStateChanged(user => {
+    if (user) {
+      // User is signed in
+      setUser(user);
+    } else {
+      // No user is signed in
+      console.log('No user is signed in');
+    }
+  })
+ },[]))
+
   return (
     <SafeAreaView style={styles.headerContainerHome}>
       <View style={styles.ImageName}>
         <Image source={{
-          uri: FIREBASE_AUTH.currentUser?.photoURL
+          uri:user?.photoURL
         }} style={styles.oneImage} />
         <View style={styles.text}>
           <Text style={{ fontSize: 20, fontWeight: 900, color: "gray" }}>
             Hi, </Text>
           <Text style={{ fontSize: 20, fontWeight: 900, color: "#93C572" }}>
-            {FIREBASE_AUTH.currentUser?.displayName?.length > 10 ? FIREBASE_AUTH.currentUser?.displayName?.slice(0, 10) + "..." : FIREBASE_AUTH.currentUser?.displayName}{" "}
+            {user.displayName?.length > 10 ? user.displayName?.slice(0, 10) + "..." : user.displayName}{" "}
           </Text>
           {/* <Text style={{ fontSize: 15, color: "black" }}>
           Let's Contribute to our earth

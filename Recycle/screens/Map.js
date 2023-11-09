@@ -1,4 +1,6 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+
 import {
   View,
   Text,
@@ -10,7 +12,7 @@ import MapView, { GooglePlacesAutocomplete } from "react-native-maps";
 import * as Location from "expo-location";
 import MapViewDirections from "react-native-maps-directions";
 import customMapStyleJSON from "../mapStyle";
-import OnePosition from "../components/Map Components/onePosition";
+import OnePosition from "../components/Map Components/OnePosition";
 import Modal from "react-native-modal";
 
 import axios from "axios";
@@ -21,7 +23,7 @@ import { SafeAreaView } from "react-native";
 import { collection, onSnapshot, doc, getDoc } from "firebase/firestore";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
 export default function Map() {
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState({});
   const API_KEY = "AIzaSyCz7OmCHc00wzjQAp4KcZKzzNK8lHCGkgo";
   const [loading, setLoding] = useState(false);
   const [currentRegion, setCurrentRegion] = useState(null);
@@ -34,35 +36,45 @@ export default function Map() {
   const [markers, setMarkers] = useState([]);
   const mapRef = useRef(null);
 
-  useEffect(() => {
-    const docUserref = doc(FIREBASE_DB, "users", FIREBASE_AUTH.currentUser?.uid)
+  useFocusEffect(
+    useCallback(() => {
+      (async () => {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== "granted") {
+          console.error("Permission to access location was denied");
+          return;
+        }
+        const locationSubscription = await Location.watchPositionAsync(
+          { accuracy: Location.Accuracy.High, timeInterval: 1000, distanceInterval: 10 }, // You can adjust the update frequency and distance threshold here
+          (newLocation) => {
+            setCurrentRegion({latitude:newLocation.coords.latitude,longitude:newLocation.coords.longitude,latitudeDelta: 0.01,
+              longitudeDelta: 0.01});
+          }
+        );
+        return () => {
+          if (locationSubscription) {
+            locationSubscription.remove();
+          }
+        };
+      })();
+      fetchUser();
+      fetch();
+      if (markers.length || currentRegion) setLoding(false);
+      console.log("Screen is focused! Refreshing...");
+    }, [])
+  );
+  // called insisede usefoucs
+  const fetchUser = () => {
+    const docUserref = doc(
+      FIREBASE_DB,
+      "users",
+      FIREBASE_AUTH.currentUser?.uid
+    );
     getDoc(docUserref).then((snapshot) => {
-      setUser({ ...snapshot.data() })
-    })
-  }, [])
-
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        console.error("Permission to access location was denied");
-        return;
-      }
-      let location = await Location.getCurrentPositionAsync({});
-      const { latitude, longitude } = location.coords;
-      const object = {
-        latitude,
-        longitude,
-        latitudeDelta: 0.02,
-        longitudeDelta: 0.02,
-      };
-      setCurrentRegion({ ...object });
-    })();
-
-    fetch();
-    if (markers.length || currentRegion) setLoding(false);
-  }, []);
-
+      setUser({ ...snapshot.data() });
+    });
+  };
+  // called insisede usefoucs
   const fetch = () => {
     const markersCollectionRef = collection(FIREBASE_DB, "markers");
     let data = [];
@@ -130,20 +142,35 @@ export default function Map() {
     mapRef.current.animateCamera(newCameraSettings, { duration: 2000 });
   };
 
-  const getSelectedInformation = async (info, theMode) => { 
-    const data = await axios.post(
-      `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${currentRegion?.latitude},${currentRegion?.longitude}&destinations=${info.location?.latitude},${info.location?.longitude}&mode=${theMode}&key=${API_KEY}`
-    );
-    setCurrentInformation({ ...data.data.rows[0].elements[0], ...data.data, ...info });
+ 
+  const getSelectedInformation = async (info, theMode) => {
+    try {
+      const data = await axios.post(
+        `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${
+          currentRegion?.latitude
+        },${currentRegion?.longitude}&destinations=${info.location?.latitude},${
+          info.location?.longitude
+        }&mode=${theMode || mode}&key=${API_KEY}`
+      );
+
+      setCurrentInformation({
+        ...data.data.rows[0].elements[0],
+        ...data.data,
+        ...info,
+      });
+    } catch (error) {
+      console.log("google api fetching errror");
+      console.log(error);
+    }
   };
 
   const recyclableItems = [
-    "Aluminum Cans",
-    "Glass Bottles",
-    "Paper",
-    "Plastic Bottles",
-    "Cardboard Boxes",
-    "Steel Cans",
+    {id:1,type:"Aluminum Cans"},
+    {id:2,type:"Glass Bottles"},
+    {id:3,type:"Paper"},
+    {id:4,type:"Plastic Bottles"},
+    {id:5,type:"Cardboard Boxes"},
+    {id:6,type:"Steel Cans"},
   ];
 
   return (
@@ -160,10 +187,10 @@ export default function Map() {
           rotateEnabled={true}
         >
           {markers?.map((loc, key) => {
+            if(!loc.completed)
             return (
               <OnePosition
                 user={user}
-
                 loc={loc}
                 setselectedPos={setselectedPos}
                 setVisibleModal={setVisibleModal}
@@ -228,9 +255,9 @@ export default function Map() {
         }
       </Modal>
 
-      {/* <Filtrel recyclableItems={recyclableItems} /> */}
+      <Filtrel recyclableItems={recyclableItems} />
 
-      {user?.type === "accumulator" &&
+      {user?.type === "accumulator" && (
         <TouchableOpacity
           style={styles.addPost}
           onPress={() => {
@@ -239,8 +266,7 @@ export default function Map() {
         >
           <Text style={{ color: "white", fontSize: 30 }}>+</Text>
         </TouchableOpacity>
-
-      }
+      )}
     </SafeAreaView>
   );
 }

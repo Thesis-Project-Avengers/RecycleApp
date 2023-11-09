@@ -3,22 +3,22 @@ import React ,{useState} from 'react'
 
 const Filtrel = ({recyclableItems}) => {
     const [cata, setCata] = useState("");
-    
+    console.log(recyclableItems);
   return (
     <FlatList
     style={{ position: "absolute", top: "5%", padding:"5%" }}
     data={recyclableItems}
-    renderItem={({ item,key}) => {
+    renderItem={({item}) => {
       return (
         <TouchableOpacity
-        key={key}
+        
           onPress={() => {
-            setCata(item);
+            setCata(item.type);
           }}
         >
           <Text
             style={
-              cata === item
+              cata === item.type
                 ? {
                     padding: 10,
                     borderWidth: 1,
@@ -36,12 +36,12 @@ const Filtrel = ({recyclableItems}) => {
                   }
             }
           >
-            {item}
+            {item.type}
           </Text>
         </TouchableOpacity>
       );
     }}
-    keyExtractor={(item) => item.key}
+    keyExtractor={(item) => item.id}
     horizontal={true}
     showsHorizontalScrollIndicator={false}
   />

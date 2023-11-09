@@ -29,6 +29,8 @@ import TransactionScreen from "./screens/TransactionScreen";
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator();
 export default function App() {
+ 
+  // console.log(FIREBASE_AUTH.currentUser?.displayName);
   //Onboarding
   // const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState(true)
   const [first, setFirst] = useState(true);
@@ -56,7 +58,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={"ombording"}
+        initialRouteName={"App"}
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="ombording" component={OnboardingScreen} />
@@ -140,6 +142,7 @@ export const RealApp = () => {
           ),
         }}
         name="Map"
+        
         component={Map}
       />
       <Tab.Screen
