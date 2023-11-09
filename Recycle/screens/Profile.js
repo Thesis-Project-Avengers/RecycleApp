@@ -7,14 +7,32 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useCallback, useState } from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon2 from "react-native-vector-icons/FontAwesome5";
 import Icon3 from "react-native-vector-icons/FontAwesome5";
 import Icon4 from "react-native-vector-icons/Entypo";
 import Icon5 from "react-native-vector-icons/AntDesign";
-import { FIREBASE_AUTH } from "../firebaseConfig";
+import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
+import { useFocusEffect } from "@react-navigation/native";
+import { doc, getDoc } from "firebase/firestore";
 const Profile = ({ navigation }) => {
+  const [userProfileInfo, setProfileInfo] = useState({})
+  useFocusEffect(useCallback(() => {
+    const getUser = async () => {
+      try {
+        const userDocRef = doc(FIREBASE_DB, "users", FIREBASE_AUTH.currentUser?.uid)
+        await getDoc(userDocRef).then((user) => {
+          setProfileInfo(user.data());
+          // setForm({ firstName: user.data().firstName, lastName: user.data().lastName, email: user.data().email, photoURL: user.data().photoURL })
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getUser();
+
+  }, []))
   return (
     <SafeAreaView>
       <ScrollView showsVerticalScrollIndicator={false} style={styles.scroll}>
@@ -29,16 +47,16 @@ const Profile = ({ navigation }) => {
             <Text style={{ textAlign: "center", color: "white", fontSize: 16 }}>
               100
             </Text>
-            <Image source={require("../assets/coin.png")} style={styles.imageCoin}  />
+            <Image source={require("../assets/coin.png")} style={styles.imageCoin} />
           </View>
         </View>
         <View style={styles.imageTextName}>
           <Image
-            source={{ uri: FIREBASE_AUTH.currentUser?.photoURL }}
+            source={{ uri: userProfileInfo?.photoURL }}
             style={styles.imageProfile}
           />
           <Text style={styles.textName}>
-            {FIREBASE_AUTH.currentUser?.displayName}
+            {userProfileInfo?.displayName}
           </Text>
         </View>
         <View style={styles.statContainer}>
@@ -59,7 +77,7 @@ const Profile = ({ navigation }) => {
         <View style={{ marginBottom: 25 }}>
           <View style={styles.oneButton}>
             <Icon4 name="back-in-time" size={20} color={"#93C572"} />
-            <TouchableOpacity  onPress={() => { navigation.navigate("transaction") }} >
+            <TouchableOpacity onPress={() => { navigation.navigate("transaction") }} >
               <Text style={{ fontSize: 17 }}>My Transactions</Text>
             </TouchableOpacity>
           </View>
@@ -98,9 +116,9 @@ const Profile = ({ navigation }) => {
 };
 export default Profile;
 const styles = StyleSheet.create({
-  imageCoin:{
-    width:20,
-    height:20
+  imageCoin: {
+    width: 20,
+    height: 20
   },
   returnPoints: {
     flexDirection: "row",
@@ -115,10 +133,10 @@ const styles = StyleSheet.create({
     padding: 5,
     width: 90,
     textAlign: "center",
-    flexDirection:"row",
-    gap:5,
-    justifyContent:"center",
-    alignItems:"center"
+    flexDirection: "row",
+    gap: 5,
+    justifyContent: "center",
+    alignItems: "center"
   },
   return: {
     padding: 15,

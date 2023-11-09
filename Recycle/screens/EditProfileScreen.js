@@ -1,19 +1,34 @@
 import { View, Text, Image, TextInput, TouchableOpacity, ScrollView } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StyleSheet } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { FIREBASE_AUTH, FIREBASE_DB, FIREBASE_STORAGE } from "../firebaseConfig";
 import * as ImagePicker from 'expo-image-picker';
 import uuid from "uuid"
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import {  doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { updateProfile } from "firebase/auth";
 
 const EditProfileScreen = () => {
   const [user, setUser] = useState(null)
   const [imageChanged, setImageChanged] = useState(false)
+  useFocusEffect(useCallback(() => {
+    console.log("inside edit profile screen" );
 
+    const getUser = async () => {
+      try {
+        const userDocRef = doc(FIREBASE_DB, "users", FIREBASE_AUTH.currentUser?.uid)
+        await getDoc(userDocRef).then((user) => {
+          setUser(user.data());
+          setForm({ firstName: user.data().firstName, lastName: user.data().lastName, email: user.data().email, photoURL: user.data().photoURL })
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getUser();
+  }, []))
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -32,20 +47,8 @@ const EditProfileScreen = () => {
     }
   }
   // console.log(form);
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const userDocRef = doc(FIREBASE_DB, "users", FIREBASE_AUTH.currentUser?.uid)
-        await getDoc(userDocRef).then((user) => {
-          setUser(user.data());
-          setForm({ firstName: user.data().firstName, lastName: user.data().lastName, email: user.data().email, photoURL: user.data().photoURL })
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    getUser();
-  }, [])
+
+
 
   const uploadImageAsync = async (uri) => {
     // Why are we using XMLHttpRequest? See:
