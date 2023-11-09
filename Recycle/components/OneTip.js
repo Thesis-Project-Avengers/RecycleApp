@@ -21,7 +21,6 @@ const OneTip = ({ tip }) => {
             setPosterInfo(doc.data())
         })
     }, []))
-    // console.log(FIREBASE_AUTH.currentUser.uid);
 
     const [isLiked, setIsliked] = useState(tip.isLiked.includes(FIREBASE_AUTH.currentUser.uid))
     const [isFavourite, setIsfavourite] = useState(tip.isFavourite.includes(FIREBASE_AUTH.currentUser.uid))

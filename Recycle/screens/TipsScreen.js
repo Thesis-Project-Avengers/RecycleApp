@@ -22,6 +22,19 @@ const TipsScreen = () => {
         content: null,
         image: null,
     });
+    useFocusEffect(useCallback(() => {
+        const refrence = collection(FIREBASE_DB, "Tips")
+        const q = query(refrence, orderBy("createdAt", "desc"));
+        getDocs(q).then((querySnapshot) => {
+            const tipsData = [];
+            querySnapshot.forEach((doc) => {
+                const data = { id: doc.id, ...doc.data() }
+                tipsData.push(data);
+            });
+            setTips(tipsData);
+        })
+        setLoading(false);
+    }, [update]))
 
     const uploadImageAsync = async (uri) => {
         // Why are we using XMLHttpRequest? See:
@@ -90,20 +103,8 @@ const TipsScreen = () => {
             console.log(error);
         }
     }
-    useFocusEffect(useCallback(() => {
-        const refrence = collection(FIREBASE_DB, "Tips")
-        const q = query(refrence, orderBy("createdAt", "desc"));
-        getDocs(q).then((querySnapshot) => {
-            const tipsData = [];
-            querySnapshot.forEach((doc) => {
-                const data = { id: doc.id, ...doc.data() }
-                tipsData.push(data);
-            });
-            setTips(tipsData);
-        })
-        setLoading(false);
-    }, [update]))
-   
+
+
 
     if (!loading) {
         if (tips.length > 0) {
