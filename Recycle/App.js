@@ -25,6 +25,7 @@ import AccOnboarding from "./components/AccOnboarding";
 import CommentsScreen from "./screens/CommentsScreen";
 import CollOmbording from "./components/SecondOnBording";
 import TransactionScreen from "./screens/TransactionScreen";
+import SpecificChatScreen from "./screens/SpecificChatScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator();
@@ -159,7 +160,7 @@ export const RealApp = () => {
           ),
         }}
         name="Chat"
-        component={ChatScreen}
+        component={ChatStack}
       />
       <Tab.Screen
         options={{
@@ -194,6 +195,7 @@ export const ProfileStack = () => {
 };
 
 
+
 export const TipsStack = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -210,3 +212,14 @@ export const TipsStack = () => {
     </Stack.Navigator>
   );
 };
+
+
+export const ChatStack = () => {
+  return (
+    <Stack.Navigator initialRouteName="specificChat" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="allchats" component={ChatScreen} />
+      <Stack.Screen name="specificChat" component={SpecificChatScreen} />
+    </Stack.Navigator>
+  )
+
+}
