@@ -56,6 +56,8 @@ export default function App() {
   React.useEffect(() => {
     fetch();
   }, []);
+
+  
   return (
     <NavigationContainer>
       <Stack.Navigator
