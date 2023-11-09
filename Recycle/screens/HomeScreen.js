@@ -68,7 +68,7 @@ const HomeScreen = ({ navigation }) => {
         <Services />
         <Stats users={collectorsUsers} />
         <TipsHome />
-        {/* <Stats users={accumulatorsUsers} /> */}
+        <Stats users={accumulatorsUsers} />
       </ScrollView>
     </SafeAreaView>
   );
