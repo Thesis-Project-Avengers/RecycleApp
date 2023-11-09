@@ -3,7 +3,6 @@ import React ,{useState} from 'react'
 
 const Filtrel = ({recyclableItems}) => {
     const [cata, setCata] = useState("");
-    console.log(recyclableItems);
   return (
     <FlatList
     style={{ position: "absolute", top: "5%", padding:"5%" }}

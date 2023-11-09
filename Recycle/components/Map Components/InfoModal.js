@@ -15,6 +15,7 @@ const InfoModal = ({
   getSelectedInformation,
   selectedPos,
   mode,
+  setWayModal
 }) => {
   const [user,setUser] = useState({})
   useEffect(()=>{
@@ -42,6 +43,7 @@ const getUserInfo = async ()=>{
         index={0}
       >
         <InfoOfModal
+        setWayModal={setWayModal}
            currentInformation={currentInformation}
            currentRegion={currentRegion}
            handleAnimate={handleAnimate}
