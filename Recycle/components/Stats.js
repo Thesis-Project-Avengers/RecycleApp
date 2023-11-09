@@ -18,7 +18,7 @@ const Stats = ({ users }) => {
       return new Animated.Value(0);
     })
   ).current;
-  console.log("thisanimated values  ", animatedValues);
+  // console.log("thisanimated values  ", animatedValues);
 
   useEffect(() => {
     const animations = animatedValues.map((value, index) =>
