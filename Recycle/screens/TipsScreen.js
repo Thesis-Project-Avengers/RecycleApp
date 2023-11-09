@@ -10,6 +10,8 @@ import { FIREBASE_AUTH, FIREBASE_DB, FIREBASE_STORAGE } from '../firebaseConfig'
 import { addDoc, collection, getDocs, orderBy, query, serverTimestamp } from 'firebase/firestore'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 
 const TipsScreen = () => {
     const [tips, setTips] = useState([])
@@ -20,6 +22,19 @@ const TipsScreen = () => {
         content: null,
         image: null,
     });
+    useFocusEffect(useCallback(() => {
+        const refrence = collection(FIREBASE_DB, "Tips")
+        const q = query(refrence, orderBy("createdAt", "desc"));
+        getDocs(q).then((querySnapshot) => {
+            const tipsData = [];
+            querySnapshot.forEach((doc) => {
+                const data = { id: doc.id, ...doc.data() }
+                tipsData.push(data);
+            });
+            setTips(tipsData);
+        })
+        setLoading(false);
+    }, [update]))
 
     const uploadImageAsync = async (uri) => {
         // Why are we using XMLHttpRequest? See:
@@ -69,10 +84,7 @@ const TipsScreen = () => {
             const tipscollection = collection(FIREBASE_DB, 'Tips');
             const tipData = {
                 ...tipForm,
-                user: {
-                    displayName: FIREBASE_AUTH.currentUser?.displayName,
-                    photoURL: FIREBASE_AUTH.currentUser?.photoURL
-                },
+                posterId: FIREBASE_AUTH.currentUser?.uid,
                 createdAt: serverTimestamp(),
                 isLiked: [],
                 numlikes: 0,
@@ -92,19 +104,7 @@ const TipsScreen = () => {
         }
     }
 
-    useEffect(() => {
-        const refrence = collection(FIREBASE_DB, "Tips")
-        const q = query(refrence, orderBy("createdAt", "desc"));
-        getDocs(q).then((querySnapshot) => {
-            const tipsData = [];
-            querySnapshot.forEach((doc) => {
-                const data = { id: doc.id, ...doc.data() }
-                tipsData.push(data);
-            });
-            setTips(tipsData);
-        })
-        setLoading(false);
-    }, [update])
+
 
     if (!loading) {
         if (tips.length > 0) {

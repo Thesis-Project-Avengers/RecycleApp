@@ -33,6 +33,8 @@ const AddModal = ({ recyclableItems, currentRegion, setVisibleAddModal }) => {
         quantity: Math.trunc(quantity),
         category: selected,
         completed: false,
+        visibility:true,
+        completed:false,
         createdAt: serverTimestamp(),
       });
       setVisibleAddModal(0);
@@ -99,12 +101,12 @@ const AddModal = ({ recyclableItems, currentRegion, setVisibleAddModal }) => {
                   <TouchableOpacity
                     key={key}
                     onPress={() => {
-                      setSelected(item);
+                      setSelected(item.type);
                     }}
                   >
                     <Text
                       style={
-                        selected === item
+                        selected === item.type
                           ? {
                               padding: 10,
                               borderWidth: 1,
@@ -121,7 +123,7 @@ const AddModal = ({ recyclableItems, currentRegion, setVisibleAddModal }) => {
                             }
                       }
                     >
-                      {item}
+                      {item.type}
                     </Text>
                   </TouchableOpacity>
                 );

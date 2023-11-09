@@ -3,27 +3,32 @@ import React, { useEffect, useState } from "react";
 import OneTipHome from "../components/OneTipHome";
 import { FIREBASE_DB } from "../firebaseConfig";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { useFocusEffect } from "@react-navigation/native";
+import { useCallback } from "react";
 
 const TipsHome = () => {
   const [tips, setTips] = useState([]);
-  useEffect(() => {
+  const [loading, setLoading] = useState(true);
+  useFocusEffect(useCallback(() => {
     const refrence = collection(FIREBASE_DB, "Tips")
     const q = query(refrence, orderBy("createdAt", "desc"));
     getDocs(q).then((querySnapshot) => {
       const tipsData = [];
       querySnapshot.forEach((doc) => {
-        if (doc.data().image) {
+        if (!doc.data().image) {
           const data = { id: doc.id, ...doc.data() }
           tipsData.push(data);
         }
       });
       setTips(tipsData);
+      setLoading(false);
     })
-  }, []);
-  if (tips.length === 0) {
-    return null;
+  }, []))
+
+  if (loading) {
+    return <ActivityIndicator size="small" color="green" />
   }
-  else if (tips.length > 0) {
+  else if (!loading) {
     return (
       <View style={styles.container}>
         <View style={styles.textContainer}>
@@ -44,14 +49,15 @@ const TipsHome = () => {
         </ScrollView>
       </View>
     );
-  } else {
-    return (
-      <View style={{ flex: 1, justifyContent: "flex-start", alignItems: "center" }}>
-        <ActivityIndicator size="large" color="green" />
-        <Text>Loading</Text>
-      </View>
-    );
   }
+  // else {
+  //   return (
+  //     <View style={{ flex: 1, justifyContent: "flex-start", alignItems: "center" }}>
+  //       <ActivityIndicator size="large" color="green" />
+  //       <Text>Loading</Text>
+  //     </View>
+  //   );
+  // }
 };
 
 export default TipsHome;
