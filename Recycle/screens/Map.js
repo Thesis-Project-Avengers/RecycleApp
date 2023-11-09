@@ -12,7 +12,7 @@ import MapView, { GooglePlacesAutocomplete } from "react-native-maps";
 import * as Location from "expo-location";
 import MapViewDirections from "react-native-maps-directions";
 import customMapStyleJSON from "../mapStyle";
-import OnePosition from "../components/Map Components/onePosition";
+import OnePosition from "../components/Map Components/OnePosition";
 import Modal from "react-native-modal";
 
 import axios from "axios";
@@ -47,7 +47,8 @@ export default function Map() {
         const locationSubscription = await Location.watchPositionAsync(
           { accuracy: Location.Accuracy.High, timeInterval: 1000, distanceInterval: 10 }, // You can adjust the update frequency and distance threshold here
           (newLocation) => {
-            setCurrentRegion({latitude:newLocation.coords.latitude,longitude:newLocation.coords.longitude,});
+            setCurrentRegion({latitude:newLocation.coords.latitude,longitude:newLocation.coords.longitude,latitudeDelta: 0.01,
+              longitudeDelta: 0.01});
           }
         );
         return () => {
@@ -164,12 +165,12 @@ export default function Map() {
   };
 
   const recyclableItems = [
-    "Aluminum Cans",
-    "Glass Bottles",
-    "Paper",
-    "Plastic Bottles",
-    "Cardboard Boxes",
-    "Steel Cans",
+    {id:1,type:"Aluminum Cans"},
+    {id:2,type:"Glass Bottles"},
+    {id:3,type:"Paper"},
+    {id:4,type:"Plastic Bottles"},
+    {id:5,type:"Cardboard Boxes"},
+    {id:6,type:"Steel Cans"},
   ];
 
   return (
@@ -186,6 +187,7 @@ export default function Map() {
           rotateEnabled={true}
         >
           {markers?.map((loc, key) => {
+            if(!loc.completed)
             return (
               <OnePosition
                 user={user}
@@ -253,7 +255,7 @@ export default function Map() {
         }
       </Modal>
 
-      {/* <Filtrel recyclableItems={recyclableItems} /> */}
+      <Filtrel recyclableItems={recyclableItems} />
 
       {user?.type === "accumulator" && (
         <TouchableOpacity

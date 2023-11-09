@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React, { useMemo } from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Icons from "react-native-vector-icons/FontAwesome5";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc, updateDoc } from "firebase/firestore";
 import { set, ref, onChildChanged, onChildAdded, off } from "firebase/database";
 import {
   FIREBASE_AUTH,
@@ -11,7 +11,15 @@ import {
 } from "../../firebaseConfig";
 import { useState } from "react";
 import { ActivityIndicator } from "react-native";
-import { useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import {
+  faBottleWater,
+  faBox,
+  faDrumSteelpan,
+  faShieldHalved,
+  faToiletPaper,
+  faWineBottle,
+} from "@fortawesome/free-solid-svg-icons";
 
 const InfoOfModal = ({
   currentInformation,
@@ -29,6 +37,7 @@ const InfoOfModal = ({
   const memoizedCollectingLoading = useMemo(() => {
     return collectingLoading;
   }, [collectingLoading]);
+
   const requestsRef = ref(
     FIREBASE_REALTIME_DB,
     "requests/" + currentInformation?.id + "/" + FIREBASE_AUTH.currentUser?.uid
@@ -91,14 +100,45 @@ const InfoOfModal = ({
     }
   };
 
+  const handleAccept = async () => {
+    try {
+      const docref = doc(FIREBASE_DB, "markers",currentInformation?.id);
+      await updateDoc(docref, {
+        visibility:false,
+        visibleBy:[FIREBASE_AUTH.currentUser?.uid,currentInformation?.ownerId]
+      });
+    } catch (error) {
+      console.log("in handleRequest ");
+    }
+  };
+
+  const generateIcon = (iconName) => {
+    if (iconName === "Paper") {
+      return faMugSaucer;
+    } else if (iconName === "Cardboard Boxes") {
+      return faBox;
+    } else if (iconName === "Plastic Bottles") {
+      return faBottleWater;
+    } else if (iconName === "Glass Bottles") {
+      return faWineBottle;
+    } else if (iconName === "Steel Cans") {
+      return faDrumSteelpan;
+    } else {
+      return faShieldHalved;
+    }
+  };
+
   return (
     <View style={styles.Content}>
-      <Icon
-        name="bottle-wine-outline"
-        size={30}
+      <View style={{flexDirection:"column",alignItems:"center",width:"100%",justifyContent:"center"}}>
+        <View style={{flexDirection:"row",alignItems:"center",justifyContent:"center",gap:10}}>
+      <Text style={{fontSize:25}}>{currentInformation.quantity}</Text>
+      <FontAwesomeIcon
+        icon={generateIcon(currentInformation.category)}
+        size={40}
         color={"#93C572"}
         style={{
-          alignSelf: "center",
+           
           fontSize: 70,
           borderRadius: 50,
           borderWidth: 1,
@@ -107,16 +147,17 @@ const InfoOfModal = ({
           padding: 1,
         }}
       />
-      <Text style={styles.modalText}>
-        {currentInformation?.destination_addresses[0]}
-      </Text>
+      </View>
+       <Text style={{fontSize:25}}>{currentInformation.category}</Text>
+      </View>
+     
       <View
         style={{
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "space-around",
           width: "100%",
-          marginVertical: 20,
+          marginVertical:5,
         }}
       >
         <View style={{ flexDirection: "column", alignItems: "center" }}>
@@ -150,7 +191,9 @@ const InfoOfModal = ({
           </Text>
         </View>
       </View>
-
+      <Text style={styles.modalText}>
+        {currentInformation?.destination_addresses[0]}
+      </Text>
       <View
         style={{
           flexDirection: "row",
@@ -218,6 +261,7 @@ const InfoOfModal = ({
                   setShowWay(1);
                   setVisibleModal(0);
                   handleAnimate(currentRegion);
+                  handleAccept()
                 }}
               >
                 <Text
@@ -279,14 +323,14 @@ const styles = StyleSheet.create({
   Content: {
     height: "100%",
     backgroundColor: "white",
-    padding: 15,
-    justifyContent: "space-around",
-    alignItems: "center",
+    padding: 5,
+    justifyContent: "centre",
+    gap:5,
+    alignItems:"center"
   },
   modalText: {
-    fontSize: 25,
-    alignSelf: "center",
-    textAlign: "center",
+    fontSize: 20,
+    marginVertical:10
   },
   bottomModal: {
     justifyContent: "flex-end",

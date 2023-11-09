@@ -86,6 +86,7 @@ const TransactionScreen = () => {
       console.log(error);
     }
   };
+
   const handleRefuse = async (request) => {
     try {
       // in the real time
@@ -106,6 +107,10 @@ const TransactionScreen = () => {
       await updateDoc(docref, {
         status: "rejected",
       });
+      const rejectedRequests = requests.filter((r) => {
+        return r.senderId !== request.senderId;
+      });
+      setRquests(rejectedRequests);
     } catch (error) {
       console.log(error);
     }
