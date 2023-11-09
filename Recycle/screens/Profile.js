@@ -14,6 +14,7 @@ import Icon3 from "react-native-vector-icons/FontAwesome5";
 import Icon4 from "react-native-vector-icons/Entypo";
 import Icon5 from "react-native-vector-icons/AntDesign";
 import { FIREBASE_AUTH } from "../firebaseConfig";
+
 const Profile = ({ navigation }) => {
   return (
     <SafeAreaView>
@@ -29,7 +30,10 @@ const Profile = ({ navigation }) => {
             <Text style={{ textAlign: "center", color: "white", fontSize: 16 }}>
               100
             </Text>
-            <Image source={require("../assets/coin.png")} style={styles.imageCoin}  />
+            <Image
+              source={require("../assets/coin.png")}
+              style={styles.imageCoin}
+            />
           </View>
         </View>
         <View style={styles.imageTextName}>
@@ -55,11 +59,18 @@ const Profile = ({ navigation }) => {
             <Text>100</Text>
           </View>
         </View>
+        {/* Rating user */}
+        {/* <RatingProfile/> */}
+        {/* <View style={{ flexDirection: "row" }}>{stars}</View> */}
         {/* <ScrollView style={styles.scroll}> */}
         <View style={{ marginBottom: 25 }}>
           <View style={styles.oneButton}>
             <Icon4 name="back-in-time" size={20} color={"#93C572"} />
-            <TouchableOpacity  onPress={() => { navigation.navigate("transaction") }} >
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("transaction");
+              }}
+            >
               <Text style={{ fontSize: 17 }}>My Transactions</Text>
             </TouchableOpacity>
           </View>
@@ -92,15 +103,16 @@ const Profile = ({ navigation }) => {
             </TouchableOpacity>
           </View>
         </View>
+        {/* <Review /> */}
       </ScrollView>
     </SafeAreaView>
   );
 };
 export default Profile;
 const styles = StyleSheet.create({
-  imageCoin:{
-    width:20,
-    height:20
+  imageCoin: {
+    width: 20,
+    height: 20,
   },
   returnPoints: {
     flexDirection: "row",
@@ -115,10 +127,10 @@ const styles = StyleSheet.create({
     padding: 5,
     width: 90,
     textAlign: "center",
-    flexDirection:"row",
-    gap:5,
-    justifyContent:"center",
-    alignItems:"center"
+    flexDirection: "row",
+    gap: 5,
+    justifyContent: "center",
+    alignItems: "center",
   },
   return: {
     padding: 15,

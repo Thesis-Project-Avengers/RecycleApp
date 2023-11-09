@@ -61,15 +61,7 @@ export const styles = StyleSheet.create({
     padding: 10,
     // backgroundColor: "green",
   },
-  input: {
-    paddingVertical: 30,
-    // paddingHorizontal: 10,
-    backgroundColor: "#eee",
-    borderRadius: 20,
-    width: "100%",
-    textAlignVertical: "top",
-
-  }, textContainer: {
+  textContainer: {
     flexDirection: "row",
     justifyContent: "start",
     gap: 210,
