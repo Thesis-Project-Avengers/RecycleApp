@@ -31,6 +31,8 @@ import {
     getDocs,
     onSnapshot,
     orderBy,
+    serverTimestamp,
+    updateDoc,
 } from "firebase/firestore";
 
 const SpecificChatScreen = ({ route }) => {
@@ -132,11 +134,13 @@ const SpecificChatScreen = ({ route }) => {
             GiftedChat.append(previousMessages, messages)
         );
         const { _id, createdAt, text, user } = messages[0];
+
         const chatsCollectionRef = collection(
             FIREBASE_DB,
             "rooms/" + roomId + "/chats"
         );
         console.log("bfore add ", image);
+
         await addDoc(chatsCollectionRef, {
             _id,
             createdAt,
@@ -145,6 +149,11 @@ const SpecificChatScreen = ({ route }) => {
             image,
         });
         setImage(null)
+        const roomsCollection = doc(FIREBASE_DB, "rooms", roomId)
+        updateDoc(roomsCollection, {
+            lastMessage: text,
+            lastMessageDate: serverTimestamp()
+        })
     }, []);
     if (loading) {
         return <View style={{ flex: 1, justifyContent: "center", alignItems: "center", flexDirection: "column" }}>

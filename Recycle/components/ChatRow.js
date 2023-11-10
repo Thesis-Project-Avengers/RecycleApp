@@ -33,7 +33,7 @@ const ChatRow = ({ room }) => {
         />
         <View>
           <Text>{chattedUserInfo?.displayName}</Text>
-          <Text>last message</Text>
+          <Text>{room?.lastMessage}</Text>
         </View>
       </View>
     </TouchableOpacity>
