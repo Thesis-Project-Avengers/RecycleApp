@@ -32,7 +32,6 @@ import {
     onSnapshot,
     orderBy,
 } from "firebase/firestore";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const SpecificChatScreen = ({ route }) => {
     const { roomId } = route.params;

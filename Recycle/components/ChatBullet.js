@@ -8,7 +8,7 @@ import { FIREBASE_AUTH, FIREBASE_DB } from '../firebaseConfig';
 
 const ChatBullet = ({ room }) => {
   const [chattedUserInfo, setChattedUserInfo] = useState({})
-  const navigation=useNavigation()
+  const navigation = useNavigation()
   useFocusEffect(
     useCallback(() => {
       const userId = room?.chattedOne === FIREBASE_AUTH.currentUser?.uid ? room?.connectedOne : room?.chattedOne
