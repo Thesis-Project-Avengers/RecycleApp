@@ -4,7 +4,14 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
-import { FieldValue, doc, updateDoc } from "firebase/firestore";
+import {
+  FieldValue,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
 
 const ScanQR = ({ route }) => {
   const [hasPermission, setHasPermission] = useState(null);
@@ -13,23 +20,28 @@ const ScanQR = ({ route }) => {
   const navigation = useNavigation();
   console.log(route.params);
 
-
-
   const handleTransaction = async () => {
-    const receiver = collection(FIREBASE_DB, "users",route.params.ownerId);
-    await getDocs(receiver).then((sanpshot) => {
-      console.log(sanpshot);
-    })
-    // const receiver = doc(FIREBASE_DB, "users",route.params.ownerId);
-    // await updateDoc(receiver, {
-    //   [pointes]: FieldValue.increment(route.params.pointes),
-    // });
+    let points;
+    const receiver = doc(FIREBASE_DB, "users", route.params?.ownerId);
+    await getDoc(receiver).then((sanpshot) => {
+      points = sanpshot.data().pointes;
+    });
+    await updateDoc(receiver, {
+      pointes: points + route.params.pointes,
+    });
 
-    // const senderId = doc(FIREBASE_DB, "users", FIREBASE_AUTH.currentUser?.uid);
-    // await updateDoc(senderId, {
-    //   [pointes]: FieldValue.increment(-route.params.pointes),
-    // });
-    console.log("done");
+    const senderId = doc(FIREBASE_DB, "users", FIREBASE_AUTH.currentUser?.uid);
+    await getDoc(senderId).then((sanpshot) => {
+      points = sanpshot.data().pointes;
+    });
+    await updateDoc(senderId, {
+      pointes: points - route.params.pointes,
+    });
+
+    const markerRef = doc(FIREBASE_DB, "markers", route.params.markerId);
+    await updateDoc(markerRef, {
+      completed: true,
+    });
   };
 
   const askForCameraPermission = () => {
@@ -45,10 +57,12 @@ const ScanQR = ({ route }) => {
 
   // what happens when we scan the bar code
   const handelBarCodeScanner = ({ type, data }) => {
-    setScanned(true);
-    setText(data);
-    //  data ?  navigation.navigate("Map") : null
-    console.log("type: " + type + "\n data: " + data);
+    if (data === route.params?.ownerId) {
+      setScanned(true);
+      setText(data);
+    } else {
+      alert("erreur");
+    }
   };
   // check permission and return the screens
   if (hasPermission == null) {

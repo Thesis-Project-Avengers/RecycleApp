@@ -231,7 +231,7 @@ const CollOmbording = () => {
                 onPress={() => {
                   handleGetStartedPress();
                   //   Alert.alert("done " + colQuestion);
-                  navigation.navigate("App"); // navigation && updtate the user
+                  navigation.navigate("App",{first:true}); // navigation && updtate the user
                   // navigation to the app  && updtae the user
                   StatusBar.setBarStyle("default");
                 }}

@@ -75,7 +75,9 @@ export default function Map() {
   );
 
   useEffect(() => {
+    if(selectedPos){
     getSelectedInformation(selectedPos, mode);
+  }
   }, [currentRegion]);
 
   // called insisede usefoucs
@@ -299,7 +301,7 @@ export default function Map() {
         coverScreen={false}
         onBackdropPress={() => setWayModal(null)}
       >
-        {<WayModal currentInformation={currentInformation} />}
+        {<WayModal currentInformation={currentInformation} setWayModal={setWayModal}/>}
       </Modal>
     </SafeAreaView>
   );
