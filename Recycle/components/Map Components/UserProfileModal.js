@@ -2,7 +2,7 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Icons from "react-native-vector-icons/Feather";
-import { addDoc, collection, doc } from "firebase/firestore";
+import { addDoc, collection, doc, serverTimestamp } from "firebase/firestore";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../../firebaseConfig";
 import { useNavigation } from "@react-navigation/native";
 const UserProfileModal = ({ user }) => {
@@ -27,7 +27,7 @@ const UserProfileModal = ({ user }) => {
   const handleChatClick = async () => {
     try {
       const roomsCollection = collection(FIREBASE_DB, "rooms");
-      const roomDocRef = await addDoc(roomsCollection, { chattedOne: user?.uid, connectedOne: FIREBASE_AUTH.currentUser?.uid });
+      const roomDocRef = await addDoc(roomsCollection, { chattedOne: user?.uid, connectedOne: FIREBASE_AUTH.currentUser?.uid, lastMessage: "...", lastMessageDate: serverTimestamp() });
       console.log("Document written with ID: ", roomDocRef.id);
       navigation.navigate("specificChat", { roomId: roomDocRef.id })
       // const chatsCollection = collection(FIREBASE_DB, "rooms", roomDocRef.id, "chats");

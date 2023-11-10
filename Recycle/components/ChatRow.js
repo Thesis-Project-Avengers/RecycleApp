@@ -25,16 +25,19 @@ const ChatRow = ({ room }) => {
   return (
     <TouchableOpacity onPress={handleRoomPressNavigation}>
       <View style={styles.messagesContainer}>
-        <Image
-          source={{
-            uri: chattedUserInfo?.photoURL,
-          }}
-          style={{ width: 50, height: 50, borderRadius: 50 }}
-        />
-        <View>
-          <Text>{chattedUserInfo?.displayName}</Text>
-          <Text>last message</Text>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+          <Image
+            source={{
+              uri: chattedUserInfo?.photoURL,
+            }}
+            style={{ width: 50, height: 50, borderRadius: 50 }}
+          />
+          <View style={{ gap: 2 }}>
+            <Text>{chattedUserInfo?.displayName}</Text>
+            <Text style={{ fontSize: 13 }}>{room?.lastMessage.slice(0, 27)}...</Text>
+          </View>
         </View>
+        <Text>{room?.lastMessageDate.toDate().toString().slice(16, 21)}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -44,7 +47,8 @@ export default ChatRow;
 const styles = StyleSheet.create({
   messagesContainer: {
     flexDirection: "row",
-    gap: 20,
+    // gap: 20,
+    justifyContent: "space-between",
     alignItems: "center",
     padding: 5,
     borderRadius: 35,

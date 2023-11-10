@@ -3,16 +3,17 @@ import * as ImagePicker from "expo-image-picker";
 import { uploadBytes, getDownloadURL } from "firebase/storage";
 import send from "../assets/send.png";
 import camera from "../assets/camera.png";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import {
     GiftedChat,
     InputToolbar,
     Actions,
     Bubble,
-    SystemMessage,
     Composer,
     Send,
     Message,
+    Avatar,
+    MessageText,
 } from "react-native-gifted-chat";
 import { ref } from "firebase/storage";
 import uuid from "uuid";
@@ -31,6 +32,8 @@ import {
     getDocs,
     onSnapshot,
     orderBy,
+    serverTimestamp,
+    updateDoc,
 } from "firebase/firestore";
 
 const SpecificChatScreen = ({ route }) => {
@@ -132,11 +135,13 @@ const SpecificChatScreen = ({ route }) => {
             GiftedChat.append(previousMessages, messages)
         );
         const { _id, createdAt, text, user } = messages[0];
+
         const chatsCollectionRef = collection(
             FIREBASE_DB,
             "rooms/" + roomId + "/chats"
         );
         console.log("bfore add ", image);
+
         await addDoc(chatsCollectionRef, {
             _id,
             createdAt,
@@ -145,6 +150,11 @@ const SpecificChatScreen = ({ route }) => {
             image,
         });
         setImage(null)
+        const roomsCollection = doc(FIREBASE_DB, "rooms", roomId)
+        updateDoc(roomsCollection, {
+            lastMessage: text,
+            lastMessageDate: serverTimestamp()
+        })
     }, []);
     if (loading) {
         return <View style={{ flex: 1, justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
@@ -152,33 +162,43 @@ const SpecificChatScreen = ({ route }) => {
             <Text>Loading....</Text>
         </View>
     } else {
-
         return (
             <GiftedChat
-
                 messages={messages}
                 text={text}
-                // isTyping
+                scrollToBottom
                 isCustomViewBottom
                 alwaysShowSend
-                //   renderMessage={(props) => {
-                //     const { currentMessage } = props;
-
-                //     // Check if the message contains an 'image' property
-                //     if (currentMessage.image) {
-                //       return (
-                //         <View>
-                //           <Image
-                //             source={{ uri: currentMessage.image }}
-                //             style={{ width: 200, height: 200 }} // Adjust the width and height as needed
-                //           />
-                //         </View>
-                //       );
-                //     }
-
-                //     // Render text messages
-                //     return <Bubble {...props} />;
-                //   }}
+                renderAvatar={(props) => (
+                    <Avatar
+                        {...props}
+                        imageStyle={{ left: { borderWidth: 2, borderColor: '#93C572' } }}
+                    />
+                )}
+                renderChatEmpty={() => (
+                    <View
+                        style={{ transform: [{ rotate: '180deg' }], flex: 1, justifyContent: "center", alignItems: "center" }}>
+                        <Text>No Messages For Now Start 👋</Text>
+                    </View>
+                )}
+                renderBubble={(props) => (
+                    <Bubble
+                        {...props}
+                        wrapperStyle={{
+                            left: { backgroundColor: "#DCDCDC" },
+                            right: { backgroundColor: "#93C572" },
+                        }}
+                    />
+                )}
+                renderMessage={(props) => (
+                    <Message
+                        {...props}
+                        containerStyle={{
+                            left: { padding: 2 },
+                            right: { padding: 2 },
+                        }}
+                    />
+                )}
                 renderSend={(props) => (
                     <Send
                         {...props}
@@ -203,7 +223,6 @@ const SpecificChatScreen = ({ route }) => {
                             fontFamily: "",
                             color: "#000",
                             backgroundColor: "#e8e9eb",
-                            opacity: 0.5,
                             borderWidth: 1,
                             borderRadius: 20,
                             borderColor: "transparent",
@@ -213,6 +232,7 @@ const SpecificChatScreen = ({ route }) => {
                         }}
                     />
                 )}
+
                 renderActions={(props) => (
                     <Actions
                         {...props}
@@ -230,11 +250,7 @@ const SpecificChatScreen = ({ route }) => {
                         )}
                         options={{
                             "Choose From Library": async () => {
-                                // here
-                                // (async () => {
-                                //   const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
-                                //   setHasGalleryPermission(galleryStatus.status == "granted")
-                                // })()
+
                                 await pickImage();
                             },
                             Cancel: () => {
@@ -249,14 +265,13 @@ const SpecificChatScreen = ({ route }) => {
                         {...props}
                         containerStyle={{
                             backgroundColor: "#fff",
-                            padding: 8,
+                            padding: 5,
                         }}
                         primaryStyle={{ alignItems: "center" }}
                     />
                 )}
                 renderUsernameOnMessage
                 showAvatarForEveryMessage
-                scrollToBottom
                 onInputTextChanged={setText}
                 onSend={(messages) => onSend(messages, image)}
                 user={{
