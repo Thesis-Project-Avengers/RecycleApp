@@ -117,7 +117,7 @@ export const RealApp = () => {
           ),
         }}
         name="Home"
-        component={TreeShop}
+        component={HomeScreen}
       />
       <Tab.Screen
         options={{
