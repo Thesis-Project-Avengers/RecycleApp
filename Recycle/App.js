@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { StatusBar } from "expo-status-bar";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -136,7 +134,7 @@ export const RealApp = () => {
       />
       <Tab.Screen
         options={{
-          tabBarIcon: ({ focused, color, size }) => (
+          tabBarIcon: ( { focused, color, size }) => (
             <Icon
               name="map"
               size={size ? size : 24}
@@ -222,7 +220,7 @@ export const TipsStack = () => {
 export const ChatStack = () => {
   return (
     <Stack.Navigator
-      initialRouteName="specificChat"
+      initialRouteName="allchats"
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="allchats" component={ChatScreen} />

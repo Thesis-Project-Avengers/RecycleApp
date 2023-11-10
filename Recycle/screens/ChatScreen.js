@@ -1,9 +1,34 @@
 import { View, Text, ScrollView, StyleSheet, Image } from "react-native";
-import React from "react";
+import React, { useCallback, useState } from "react";
 import ChatHeader from "../components/ChatHeader";
 import ChatBullet from "../components/ChatBullet";
 import ChatRow from "../components/ChatRow";
+import { useFocusEffect } from "@react-navigation/native";
+import { collection, getDocs, or, query, where } from "firebase/firestore";
+import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
 const ChatScreen = () => {
+  const [rooms, setRooms] = useState([]);
+  console.log(rooms);
+  // console.log(FIREBASE_AUTH.currentUser.uid);
+  useFocusEffect(
+    useCallback(() => {
+      const currentUsersRooms = collection(FIREBASE_DB, "rooms");
+      const q = query(
+        currentUsersRooms,
+        or(
+          where("chattedOne", "==", FIREBASE_AUTH.currentUser?.uid),
+          where("connectedOne", "==", FIREBASE_AUTH.currentUser?.uid)
+        )
+      );
+      const data = [];
+      getDocs(q).then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          data.push({ id: doc.id, ...doc.data() });
+        });
+        setRooms(data);
+      });
+    }, [])
+  );
   return (
     <View style={{ padding: 10, gap: 25, backgroundColor: "white" }}>
       <ChatHeader />
@@ -19,17 +44,9 @@ const ChatScreen = () => {
         <ChatBullet image="https://scontent.ftun9-1.fna.fbcdn.net/v/t39.30808-6/292294810_1093193028298518_8936023195463806182_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=5f2048&_nc_ohc=-hjlA_8N0TAAX9OkGdi&_nc_oc=AQlWgMCsZtr04ZHiZwKF6YoBKqNiTglW1WEXfL3rjFNho9E8Gbqh3tgYUbmgZaHKe2g&_nc_ht=scontent.ftun9-1.fna&oh=00_AfD48MhGWcnm-V1Rz5I9JjASJtgAZ1uPdL3QKWPshYirJA&oe=6544DCA8" />
       </ScrollView>
       <ScrollView style={{ height: "67%" }}>
-        <ChatRow />
-        <ChatRow />
-        <ChatRow />
-        <ChatRow />
-        <ChatRow />
-        <ChatRow />
-        <ChatRow />
-        <ChatRow />
-        <ChatRow />
-        <ChatRow />
-        <ChatRow />
+        {rooms.map((room, key) => {
+          return <ChatRow key={key} room={room} />;
+        })}
       </ScrollView>
     </View>
   );
