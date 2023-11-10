@@ -1,9 +1,10 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Icons from "react-native-vector-icons/FontAwesome5";
+import { useNavigation } from "@react-navigation/native";
 const WayModal = ({ currentInformation }) => {
   const API_KEY = "AIzaSyCz7OmCHc00wzjQAp4KcZKzzNK8lHCGkgo";
-
+const navigation = useNavigation()
   return (
     <View style={styles.addModalContent}>
       <View
@@ -49,6 +50,12 @@ const WayModal = ({ currentInformation }) => {
       {console.log(currentInformation.distance?.value)}
       {currentInformation.distance?.value <= 6 ? (
         <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("QrScanner",{
+            ownerId:currentInformation.ownerId,
+            pointes:currentInformation.pointes,
+          });
+        }}
           style={{
             backgroundColor: "#93C572",
             paddingHorizontal: 20,

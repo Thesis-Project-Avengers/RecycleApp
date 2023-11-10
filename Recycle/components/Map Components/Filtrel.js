@@ -10,7 +10,6 @@ const Filtrel = ({recyclableItems}) => {
     renderItem={({item}) => {
       return (
         <TouchableOpacity
-        
           onPress={() => {
             setCata(item.type);
           }}

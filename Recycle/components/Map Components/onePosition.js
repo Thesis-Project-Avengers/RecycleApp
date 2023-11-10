@@ -56,7 +56,8 @@ const OnePosition = ({
       } else {
         setVisibleModal(1);
       }
-      setPressCount(0); // Reset press count
+      setPressCount(0);
+     // Reset press count
     }
   };
 

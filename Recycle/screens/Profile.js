@@ -83,7 +83,11 @@ const Profile = ({ navigation }) => {
           </View>
           <View style={styles.oneButton}>
             <Icon5 name="qrcode" size={20} color={"#93C572"} />
-            <TouchableOpacity>
+            <TouchableOpacity
+             onPress={() => {
+              navigation.navigate("mycodeQr");
+            }}
+            >
               <Text style={{ fontSize: 17 }}>My Qr Code</Text>
             </TouchableOpacity>
           </View>
