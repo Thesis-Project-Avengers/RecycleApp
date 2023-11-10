@@ -24,6 +24,8 @@ import CommentsScreen from "./screens/CommentsScreen";
 import CollOmbording from "./components/SecondOnBording";
 import TransactionScreen from "./screens/TransactionScreen";
 import SpecificChatScreen from "./screens/SpecificChatScreen";
+import MyCodeQr from "./screens/MyCodeQr";
+import ScanQR from "./screens/ScanQR";
 
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator();
@@ -63,6 +65,7 @@ export default function App() {
         <Stack.Screen name="ombording" component={OnboardingScreen} />
         <Stack.Screen name="auth" component={AuthStack} />
         <Stack.Screen name="App" component={RealApp} />
+        <Stack.Screen name="QrScanner" component={ScanQR} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -186,6 +189,11 @@ export const ProfileStack = () => {
       <Stack.Screen
         name="transaction"
         component={TransactionScreen}
+        options={{ headerShown: true, title: "My Transaction" }}
+      />
+      <Stack.Screen
+        name="mycodeQr"
+        component={MyCodeQr}
         options={{ headerShown: true, title: "My Transaction" }}
       />
     </Stack.Navigator>
