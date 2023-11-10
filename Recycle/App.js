@@ -131,7 +131,7 @@ export const RealApp = () => {
       />
       <Tab.Screen
         options={{
-          tabBarIcon: ({ focused, color, size }) => (
+          tabBarIcon: ( { focused, color, size }) => (
             <Icon
               name="map"
               size={size ? size : 24}
