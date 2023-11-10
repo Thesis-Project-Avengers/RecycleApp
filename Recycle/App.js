@@ -66,6 +66,7 @@ export default function App() {
         <Stack.Screen name="auth" component={AuthStack} />
         <Stack.Screen name="App" component={RealApp} />
         <Stack.Screen name="QrScanner" component={ScanQR} />
+        <Stack.Screen name="specificChat" component={SpecificChatScreen} options={{ headerShown: true, title: "" }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -111,7 +112,7 @@ export const RealApp = () => {
               size={size ? size : 24}
               color={focused ? color : "#222222"}
               focused={focused}
-              // color={color}
+            // color={color}
             />
           ),
         }}
@@ -134,7 +135,7 @@ export const RealApp = () => {
       />
       <Tab.Screen
         options={{
-          tabBarIcon: ( { focused, color, size }) => (
+          tabBarIcon: ({ focused, color, size }) => (
             <Icon
               name="map"
               size={size ? size : 24}
@@ -158,7 +159,7 @@ export const RealApp = () => {
           ),
         }}
         name="Chat"
-        component={ChatStack}
+        component={ChatScreen}
       />
       <Tab.Screen
         options={{
@@ -224,7 +225,6 @@ export const ChatStack = () => {
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="allchats" component={ChatScreen} />
-      <Stack.Screen name="specificChat" component={SpecificChatScreen} />
     </Stack.Navigator>
   );
 };
