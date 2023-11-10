@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import React, { useCallback, useState } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { collection, doc, getDoc } from "firebase/firestore";
-import { FIREBASE_DB } from "../firebaseConfig";
+import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
 
 const ChatRow = ({ room }) => {
   // console.log(room);
@@ -11,13 +11,13 @@ const ChatRow = ({ room }) => {
   // console.log("userInfo",chattedUserInfo);
   useFocusEffect(
     useCallback(() => {
-      const userdocReference = doc(FIREBASE_DB, "users", room?.chattedOne);
+      const userId = room?.chattedOne === FIREBASE_AUTH.currentUser?.uid ? room?.connectedOne : room?.chattedOne
+      const userdocReference = doc(FIREBASE_DB, "users", userId);
       getDoc(userdocReference).then((doc) => {
         setChattedUserInfo(doc.data());
       });
     }, [])
   );
-
   const handleRoomPressNavigation = () => {
     navigation.navigate("specificChat", { roomId: room.id });
   };
