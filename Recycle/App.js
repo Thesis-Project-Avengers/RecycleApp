@@ -24,6 +24,7 @@ import CommentsScreen from "./screens/CommentsScreen";
 import CollOmbording from "./components/SecondOnBording";
 import TransactionScreen from "./screens/TransactionScreen";
 import SpecificChatScreen from "./screens/SpecificChatScreen";
+import ProfileVisitor from "./screens/ProfileVisitor";
 
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator();
@@ -53,7 +54,6 @@ export default function App() {
   React.useEffect(() => {
     fetch();
   }, []);
-
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -63,6 +63,7 @@ export default function App() {
         <Stack.Screen name="ombording" component={OnboardingScreen} />
         <Stack.Screen name="auth" component={AuthStack} />
         <Stack.Screen name="App" component={RealApp} />
+        <Stack.Screen name="profileVisitor"component={ProfileVisitor} />
       </Stack.Navigator>
     </NavigationContainer>
   );

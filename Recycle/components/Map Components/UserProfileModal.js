@@ -2,7 +2,10 @@ import { View, Text, Image,TouchableOpacity } from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Icons from "react-native-vector-icons/Feather";
-const UserProfileModal = ({user}) => {
+import { useNavigation } from "@react-navigation/native";
+const UserProfileModal = ({user, setVisibleModal}) => {
+  console.log("here user",user);
+  const navigation = useNavigation()
   const renderStars = (rating) => {
     
     const stars = [];
@@ -37,10 +40,11 @@ const UserProfileModal = ({user}) => {
           uri: user?.photoURL,
         }}
       />
-      <Text style={{ padding: 5,fontSize:20,letterSpacing:2}}> { user?.displayName}</Text>
+      <Text style={{ padding: 5,fontSize:20,letterSpacing:2}}> {user?.displayName}</Text>
       <View style={{ flexDirection: "row", marginVertical: 10 }}>
         {renderStars(user?.rating/5 || 1)}
       </View>
+      <TouchableOpacity  onPress={(()=>{navigation.navigate("profileVisitor");setVisibleModal(0)})} >
       <Text
         style={{
           padding: 10,
@@ -52,6 +56,7 @@ const UserProfileModal = ({user}) => {
       >
         View Profile
       </Text>
+      </TouchableOpacity>
     </View>
   );
 };
