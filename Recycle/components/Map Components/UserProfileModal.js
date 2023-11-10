@@ -44,7 +44,7 @@ const UserProfileModal = ({user, setVisibleModal}) => {
       <View style={{ flexDirection: "row", marginVertical: 10 }}>
         {renderStars(user?.rating/5 || 1)}
       </View>
-      <TouchableOpacity  onPress={(()=>{navigation.navigate("profileVisitor");setVisibleModal(0)})} >
+      <TouchableOpacity  onPress={(()=>{navigation.navigate("profileVisitor",user={user});setVisibleModal(0)})} >
       <Text
         style={{
           padding: 10,

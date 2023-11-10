@@ -65,7 +65,11 @@ export default function App() {
         <Stack.Screen name="ombording" component={OnboardingScreen} />
         <Stack.Screen name="auth" component={AuthStack} />
         <Stack.Screen name="App" component={RealApp} />
-        <Stack.Screen name="profileVisitor"component={ProfileVisitor} />
+        <Stack.Screen
+          name="profileVisitor"
+          component={ProfileVisitor}
+          options={{ headerShown: true }}
+        />
         <Stack.Screen name="QrScanner" component={ScanQR} />
       </Stack.Navigator>
     </NavigationContainer>
@@ -135,7 +139,7 @@ export const RealApp = () => {
       />
       <Tab.Screen
         options={{
-          tabBarIcon: ( { focused, color, size }) => (
+          tabBarIcon: ({ focused, color, size }) => (
             <Icon
               name="map"
               size={size ? size : 24}
