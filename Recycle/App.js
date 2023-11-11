@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { StatusBar } from "expo-status-bar";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -27,6 +25,8 @@ import CommentsScreen from "./screens/CommentsScreen";
 import CollOmbording from "./components/SecondOnBording";
 import TransactionScreen from "./screens/TransactionScreen";
 import SpecificChatScreen from "./screens/SpecificChatScreen";
+import MyCodeQr from "./screens/MyCodeQr";
+import ScanQR from "./screens/ScanQR";
 
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator();
@@ -67,6 +67,12 @@ export default function App() {
         <Stack.Screen name="auth" component={AuthStack} />
         <Stack.Screen name="App" component={RealApp} />
         <Stack.Screen name="Reviews" component={Reviews} />
+        <Stack.Screen name="QrScanner" component={ScanQR} />
+        <Stack.Screen
+          name="specificChat"
+          component={SpecificChatScreen}
+          options={{ headerShown: true, title: "" }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -159,7 +165,7 @@ export const RealApp = () => {
           ),
         }}
         name="Chat"
-        component={ChatStack}
+        component={ChatScreen}
       />
       <Tab.Screen
         options={{
@@ -192,7 +198,11 @@ export const ProfileStack = () => {
         component={TransactionScreen}
         options={{ headerShown: true, title: "My Transaction" }}
       />
-      {/*  */}
+      <Stack.Screen
+        name="mycodeQr"
+        component={MyCodeQr}
+        options={{ headerShown: true, title: "My Transaction" }}
+      />
     </Stack.Navigator>
   );
 };
@@ -217,11 +227,10 @@ export const TipsStack = () => {
 export const ChatStack = () => {
   return (
     <Stack.Navigator
-      initialRouteName="specificChat"
+      initialRouteName="allchats"
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="allchats" component={ChatScreen} />
-      <Stack.Screen name="specificChat" component={SpecificChatScreen} />
     </Stack.Navigator>
   );
 };

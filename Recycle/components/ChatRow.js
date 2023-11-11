@@ -1,20 +1,45 @@
-import { View, Text, StyleSheet, Image } from "react-native";
-import React from "react";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import React, { useCallback, useState } from "react";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { collection, doc, getDoc } from "firebase/firestore";
+import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
 
-const ChatRow = () => {
+const ChatRow = ({ room }) => {
+  // console.log(room);
+  const navigation = useNavigation();
+  const [chattedUserInfo, setChattedUserInfo] = useState({});
+  // console.log("userInfo",chattedUserInfo);
+  useFocusEffect(
+    useCallback(() => {
+      const userId = room?.chattedOne === FIREBASE_AUTH.currentUser?.uid ? room?.connectedOne : room?.chattedOne
+      const userdocReference = doc(FIREBASE_DB, "users", userId);
+      getDoc(userdocReference).then((doc) => {
+        setChattedUserInfo(doc.data());
+      });
+    }, [])
+  );
+  const handleRoomPressNavigation = () => {
+    navigation.navigate("specificChat", { roomId: room.id });
+  };
+
   return (
-    <View style={styles.messagesContainer}>
-      <Image
-        source={{
-          uri: "https://scontent.ftun9-1.fna.fbcdn.net/v/t39.30808-6/347253762_632332375434169_2230005292919228659_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5f2048&_nc_ohc=kq-7lFGMHY8AX_Vvp9L&_nc_ht=scontent.ftun9-1.fna&oh=00_AfD61NRsgJU3pfxXDGKzJoC0IGJIcoaQHLZNc-FmkR6rBw&oe=6545A321",
-        }}
-        style={{ width: 50, height: 50, borderRadius: 50 }}
-      />
-      <View>
-        <Text>khalil</Text>
-        <Text>hello im here</Text>
+    <TouchableOpacity onPress={handleRoomPressNavigation}>
+      <View style={styles.messagesContainer}>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+          <Image
+            source={{
+              uri: chattedUserInfo?.photoURL,
+            }}
+            style={{ width: 50, height: 50, borderRadius: 50 }}
+          />
+          <View style={{ gap: 2 }}>
+            <Text>{chattedUserInfo?.displayName}</Text>
+            <Text style={{ fontSize: 13 }}>{room?.lastMessage.slice(0, 27)}...</Text>
+          </View>
+        </View>
+        <Text>{room?.lastMessageDate.toDate().toString().slice(16, 21)}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -22,7 +47,8 @@ export default ChatRow;
 const styles = StyleSheet.create({
   messagesContainer: {
     flexDirection: "row",
-    gap: 20,
+    // gap: 20,
+    justifyContent: "space-between",
     alignItems: "center",
     padding: 5,
     borderRadius: 35,
