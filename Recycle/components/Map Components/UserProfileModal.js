@@ -4,11 +4,12 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import Icons from "react-native-vector-icons/Feather";
 import { addDoc, collection, doc, getDocs, or, query, serverTimestamp, where } from "firebase/firestore";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../../firebaseConfig";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useCallback } from "react";
+import { useState } from "react";
 const UserProfileModal = ({ user }) => {
   const navigation = useNavigation()
   const renderStars = (rating) => {
-
     const stars = [];
     for (let i = 1; i <= rating; i++) {
       stars.push(
@@ -23,6 +24,8 @@ const UserProfileModal = ({ user }) => {
     }
     return stars;
   };
+
+
 
   const handleChatClick = async () => {
     try {
@@ -74,7 +77,7 @@ const UserProfileModal = ({ user }) => {
       />
       <Text style={{ padding: 5, fontSize: 20, letterSpacing: 2 }}> {user?.displayName}</Text>
       <View style={{ flexDirection: "row", marginVertical: 10 }}>
-        {renderStars(user?.rating / 5 || 1)}
+        {renderStars(((user?.rating / (user?.nbrRaters * 5)*100)*0.05))}
       </View>
       <Text
         style={{

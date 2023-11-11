@@ -95,7 +95,8 @@ export const AuthStack = () => {
     </Stack.Navigator>
   );
 };
-export const RealApp = () => {
+export const RealApp = ({route}) => {
+  // console.log(route.params.first);
   return (
     <Tab.Navigator
       appearance={{
@@ -109,8 +110,10 @@ export const RealApp = () => {
         activeTintColor: "white",
         inactiveTintColor: "#222222",
       }}
+      
     >
       <Tab.Screen
+       initialParams={{first:route.params?.first}}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Icon

@@ -42,6 +42,7 @@ const AccOnboarding = () => {
         tasrhSorting: colQuestion["2"],
         interactionFriendly: colQuestion["3"],
         treeFriendly: colQuestion["4"],
+        points:0,
       };
       await updateDoc(docRef, data);
     } catch (error) {
