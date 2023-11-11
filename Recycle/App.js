@@ -66,7 +66,7 @@ export default function App() {
         <Stack.Screen name="ombording" component={OnboardingScreen} />
         <Stack.Screen name="auth" component={AuthStack} />
         <Stack.Screen name="App" component={RealApp} />
-        <Stack.Screen name="Reviews" component={Reviews} />
+        <Stack.Screen name="Reviews" component={Reviews} options={{headerShown:true,title:"My Reviews",headerTitleAlign:"center"}} />
         <Stack.Screen name="QrScanner" component={ScanQR} />
         <Stack.Screen
           name="specificChat"

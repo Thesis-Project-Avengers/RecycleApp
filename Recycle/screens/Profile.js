@@ -14,7 +14,6 @@ import Icon3 from "react-native-vector-icons/FontAwesome5";
 import Icon4 from "react-native-vector-icons/Entypo";
 import Icon5 from "react-native-vector-icons/AntDesign";
 // import Icon6 from "react-native-vector-icons/FontAwesome6";
-// import Icon7 from "react-native-vector-icons/FontAwesome6";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
 import { useFocusEffect } from "@react-navigation/native";
 import {
@@ -31,12 +30,10 @@ import OneReview from "../components/OneReview";
 const Profile = ({ navigation }) => {
   const [userProfileInfo, setProfileInfo] = useState({});
   const [reviews, setReviews] = useState([]);
-  console.log("this from profile",reviews);
-  // array bou zouz review mt3 sayed cintecte
   useFocusEffect(
     useCallback(() => {
       const getUser = async () => {
-        console.log("insisde user profile");
+        // console.log("insisde user profile");
         try {
           const userDocRef = doc(
             FIREBASE_DB,
@@ -52,6 +49,7 @@ const Profile = ({ navigation }) => {
         }
       };
       const getReviewoFcurentUser = async () => {
+        // console.log("inside secndond fucn", FIREBASE_AUTH.currentUser?.uid);
         try {
           const userCollectionRef = collection(FIREBASE_DB, "reviews");
           const q = query(
@@ -88,17 +86,18 @@ const Profile = ({ navigation }) => {
           color={"#93C572"}
           /> */}
           </View>
+          {/* {userProfileInfo.type==="collector"?<Icon6 name="person-walking-arrow-loop-left"size={45} color={"#93C572"}/>:<Icon6  name="person-walking-arrow-right" size={45} color={"#93C572"}/>}  */}
+
           <View style={styles.points}>
             <Text style={{ textAlign: "center", color: "white", fontSize: 16 }}>
               100
             </Text>
-            {/* {userProfileInfo.type === "collector" ?<Icon6 size={45} color={"#93C572" style={styles.oneRec}} /> :<Icon7 size={45} color={"#93C572"} />} */}
+
             <Image
               source={require("../assets/coin.png")}
               style={styles.imageCoin}
             />
           </View>
-          {/* {userProfileInfo.type==="collector"?<Icon6 name="person-walking-arrow-loop-left"size={45} color={"#93C572"}/>:<Icon7  name="person-walking-arrow-right" size={45} color={"#93C572"}/>}  */}
         </View>
         <View style={styles.imageTextName}>
           <Image
@@ -106,7 +105,8 @@ const Profile = ({ navigation }) => {
             style={styles.imageProfile}
           />
           <Text style={styles.textName}>{userProfileInfo?.displayName}</Text>
-          <RatingProfile />
+          
+          <RatingProfile userProfileInfo={userProfileInfo} />
 
           {/* badge w rating  */}
         </View>
@@ -139,15 +139,15 @@ const Profile = ({ navigation }) => {
             </TouchableOpacity>
           </View>
           <ScrollView
-            style={{ gap: 10 }}
+            contentContainerStyle={{ gap: 20 }}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
           >
-            {console.log("hi sisi", reviews)}
-
-            {/* {reviews.map((review) => (
-            <OneReview key={reviews.id} review={review} />
-          ))} */}
+            {
+            reviews.map((review,index) => (
+              <OneReview key={index} review={review} />
+            ))
+            }
           </ScrollView>
         </View>
 
@@ -165,9 +165,9 @@ const Profile = ({ navigation }) => {
           <View style={styles.oneButton}>
             <Icon5 name="qrcode" size={20} color={"#93C572"} />
             <TouchableOpacity
-             onPress={() => {
-              navigation.navigate("mycodeQr");
-            }}
+              onPress={() => {
+                navigation.navigate("mycodeQr");
+              }}
             >
               <Text style={{ fontSize: 17 }}>My Qr Code</Text>
             </TouchableOpacity>

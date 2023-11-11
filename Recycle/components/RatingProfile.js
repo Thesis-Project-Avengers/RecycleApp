@@ -2,7 +2,7 @@ import { View } from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-const RatingProfile = ({ user }) => {
+const RatingProfile = ({ userProfileInfo }) => {
   const renderStars = (rating) => {
     const stars = [];
     for (let i = 1; i <= rating; i++) {
@@ -21,7 +21,9 @@ const RatingProfile = ({ user }) => {
   return (
     <View style={{ alignItems: "center", justifyContent: "center" }}>
       <View style={{ flexDirection: "row", marginVertical: 10 }}>
-        {renderStars(user?.rating / 5 || 1)}
+        {renderStars(
+          ((userProfileInfo?.rating / (userProfileInfo?.nbrRaters * 5)*100)*0.05)
+        )}
       </View>
     </View>
   );
