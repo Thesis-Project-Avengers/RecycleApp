@@ -64,7 +64,7 @@ export default function App() {
         initialRouteName={"ombording"}
         screenOptions={{ headerShown: false }}
       >
-        <Stack.Screen name="ombording" component={OnboardingScreen} />
+        <Stack.Screen name="ombording" component={AccSpendPoint} />
         <Stack.Screen name="auth" component={AuthStack} />
         <Stack.Screen name="App" component={RealApp} />
       </Stack.Navigator>
@@ -117,7 +117,7 @@ export const RealApp = () => {
           ),
         }}
         name="Home"
-        component={HomeScreen}
+        component={TreeShop}
       />
       <Tab.Screen
         options={{
