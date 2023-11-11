@@ -28,6 +28,7 @@ import SpecificChatScreen from "./screens/SpecificChatScreen";
 import ProfileVisitor from "./screens/ProfileVisitor";
 import MyCodeQr from "./screens/MyCodeQr";
 import ScanQR from "./screens/ScanQR";
+import AllstatsScreen from "./screens/AllstatsScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator();
@@ -71,6 +72,7 @@ export default function App() {
           component={ProfileVisitor}
           options={{ headerShown: true }}
         />
+        <Stack.Screen name="allStatsScreen" component={AllstatsScreen} options={{headerShown:true,title:"Ranks",headerTitleAlign:"center"}} />
         <Stack.Screen name="Reviews" component={Reviews} options={{headerShown:true,title:"My Reviews",headerTitleAlign:"center"}} />
         <Stack.Screen name="QrScanner" component={ScanQR} />
         <Stack.Screen
