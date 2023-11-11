@@ -91,33 +91,30 @@ const HomeScreen = ({ navigation, route }) => {
       </ScrollView>
       {/* modal */}
       <Modal
-        isVisible={welcome === true}
+        isVisible={welcome === false}
         hasBackdrop={false}
-        coverScreen={true}
-        bac
-
-        // onBackdropPress={() => setWelcome(false)}
-      >
+        coverScreen={true}      >
         <View
           style={{
             backgroundColor: "white",
-            width: "70%",
+            
             alignSelf: "center",
             justifyContent: "flex-start",
             alignItems: "center",
-            height: "20%",
+    
             borderRadius: 50,
-            padding: 20,
-            zIndex:1
+            zIndex:1,
+            padding:30
           }}
         >
-          <Text>Welcome To Recycle Familly</Text>
+          <Text style={{fontSize:29,marginBottom:20}}>Welcome To Recycle Familly</Text>
+      
           <TouchableOpacity onPress={handleButtonClick} >
-          <Animatable.View animation="bounce" iterationCount="infinite">
-          <FontAwesomeIcon icon={faGift}  size={30}   bounce/>
+          <Animatable.View animation="bounce" iterationCount="infinite" style={{backgroundColor:"white"}}>
+          <FontAwesomeIcon icon={faGift}  size={30}  color="green"  bounce/>
           </Animatable.View>
           </TouchableOpacity>
-          
+          <Text s>Claim Your First Points</Text>
         </View>
       </Modal>
       {isConfettiVisible && (

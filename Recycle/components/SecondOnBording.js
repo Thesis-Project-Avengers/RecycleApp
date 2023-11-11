@@ -45,6 +45,7 @@ const CollOmbording = () => {
         hasTransport: colQuestion["2"],
         isEquipped: colQuestion["3"],
         natureFriendly: colQuestion["4"],
+        points: 100,
       };
       await updateDoc(docRef, data);
     } catch (error) {
