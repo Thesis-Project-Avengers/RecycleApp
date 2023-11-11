@@ -20,6 +20,7 @@ import ChooseScreen from "./screens/ChooseScreen";
 import CollectorScreen from "./screens/CollectorScreen";
 import AccumulatorScreen from "./screens/AccumulatorScreen";
 import ProfileCollector from "./screens/ProfileCollector";
+import Reviews from "./screens/Reviews";
 
 import AccOnboarding from "./components/AccOnboarding";
 import CommentsScreen from "./screens/CommentsScreen";
@@ -30,7 +31,6 @@ import SpecificChatScreen from "./screens/SpecificChatScreen";
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator();
 export default function App() {
-
   // console.log(FIREBASE_AUTH.currentUser?.displayName);
   //Onboarding
   // const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState(true)
@@ -57,7 +57,6 @@ export default function App() {
     fetch();
   }, []);
 
-  
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -67,6 +66,7 @@ export default function App() {
         <Stack.Screen name="ombording" component={OnboardingScreen} />
         <Stack.Screen name="auth" component={AuthStack} />
         <Stack.Screen name="App" component={RealApp} />
+        <Stack.Screen name="Reviews" component={Reviews} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -112,7 +112,7 @@ export const RealApp = () => {
               size={size ? size : 24}
               color={focused ? color : "#222222"}
               focused={focused}
-            // color={color}
+              // color={color}
             />
           ),
         }}
@@ -145,7 +145,6 @@ export const RealApp = () => {
           ),
         }}
         name="Map"
-
         component={Map}
       />
       <Tab.Screen
@@ -188,13 +187,15 @@ export const ProfileStack = () => {
     >
       <Stack.Screen name="mainprofile" component={Profile} />
       <Stack.Screen name="editprofile" component={EditProfileScreen} />
-      <Stack.Screen name="transaction" component={TransactionScreen} options={{ headerShown: true, title: "My Transaction" }} />
+      <Stack.Screen
+        name="transaction"
+        component={TransactionScreen}
+        options={{ headerShown: true, title: "My Transaction" }}
+      />
+      {/*  */}
     </Stack.Navigator>
-
   );
 };
-
-
 
 export const TipsStack = () => {
   return (
@@ -213,13 +214,14 @@ export const TipsStack = () => {
   );
 };
 
-
 export const ChatStack = () => {
   return (
-    <Stack.Navigator initialRouteName="specificChat" screenOptions={{ headerShown: false }}>
+    <Stack.Navigator
+      initialRouteName="specificChat"
+      screenOptions={{ headerShown: false }}
+    >
       <Stack.Screen name="allchats" component={ChatScreen} />
       <Stack.Screen name="specificChat" component={SpecificChatScreen} />
     </Stack.Navigator>
-  )
-
-}
+  );
+};

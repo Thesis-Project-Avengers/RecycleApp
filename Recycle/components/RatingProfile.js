@@ -1,64 +1,30 @@
-// import React, { useEffect, useState } from 'react';
-// import { View } from 'react-native';
-// import RatingReview from './RatingReview';
-// import { FIREBASE_DB } from '../firebaseConfig';
-// import { collection, getDocs } from 'firebase/firestore';
+import { View } from "react-native";
+import React from "react";
+import Icon from "react-native-vector-icons/FontAwesome";
 
-// const RatingProfile = () => {
-//   const [ratings, setRatings] = useState([]);
-//   const [averageRating, setAverageRating] = useState(0);
- 
+const RatingProfile = ({ user }) => {
+  const renderStars = (rating) => {
+    const stars = [];
+    for (let i = 1; i <= rating; i++) {
+      stars.push(
+        <Icon
+          key={i}
+          name="star"
+          size={20}
+          color="gold"
+          style={{ marginHorizontal: 2 }}
+        />
+      );
+    }
+    return stars;
+  };
+  return (
+    <View style={{ alignItems: "center", justifyContent: "center" }}>
+      <View style={{ flexDirection: "row", marginVertical: 10 }}>
+        {renderStars(user?.rating / 5 || 1)}
+      </View>
+    </View>
+  );
+};
 
-//   useEffect(() => {
-//     // Fetch ratings from Firebase
-//     // const fetchRatings = async () => {
-//     //   try {
-//         const ratingsCollection = collection(FIREBASE_DB, 'Ratings'); // Firebase path
-//         // const querySnapshot = await getDocs(ratingsCollection);
-//         getDocs(q).then((querySnapshot) => {
-//         const ratingData = [];
-//         querySnapshot.forEach((doc) => {
-//           if( doc.data()){
-//             ratingData.push(data.rating);
-//           }
-         
-//         });
-
-//         setRatings(ratingData);
-//       })
-//       // } catch (error) {
-//       //   console.error('Error fetching ratings:', error);
-//       // }
-//     // };
-
-   
-//   }, []);
-
-//   useEffect(() => {
-//     // Calculate the average rating
-//     if (rating.length > 0) {
-//       const totalRating = rating.reduce((acc, ratings) => acc + ratings, 0);
-//       const avgRating = totalRating / ratings.length;
-//       setAverageRating(avgRating);
-//     }
-//   }, [rating]);
-
- 
-
-//   return (
-//     <View>
-// <View style={{ flexDirection: 'row' }}>
-//         {Array.from({ length: 5 }).map((i, index) => (
-//           <RatingReview
-//             key={index}
-//             value={averageRating > index ? 1 : 0}
-//            
-//           />
-//         ))}
-//       </View>
-    
-//     </View>
-//   );
-// };
-
-// export default RatingProfile;
+export default RatingProfile;
