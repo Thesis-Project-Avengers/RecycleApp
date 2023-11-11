@@ -18,6 +18,7 @@ import ChooseScreen from "./screens/ChooseScreen";
 import CollectorScreen from "./screens/CollectorScreen";
 import AccumulatorScreen from "./screens/AccumulatorScreen";
 import ProfileCollector from "./screens/ProfileCollector";
+import Reviews from "./screens/Reviews";
 
 import AccOnboarding from "./components/AccOnboarding";
 import CommentsScreen from "./screens/CommentsScreen";
@@ -70,7 +71,13 @@ export default function App() {
           component={ProfileVisitor}
           options={{ headerShown: true }}
         />
+        <Stack.Screen name="Reviews" component={Reviews} options={{headerShown:true,title:"My Reviews",headerTitleAlign:"center"}} />
         <Stack.Screen name="QrScanner" component={ScanQR} />
+        <Stack.Screen
+          name="specificChat"
+          component={SpecificChatScreen}
+          options={{ headerShown: true, title: "" }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -93,7 +100,8 @@ export const AuthStack = () => {
     </Stack.Navigator>
   );
 };
-export const RealApp = () => {
+export const RealApp = ({route}) => {
+  // console.log(route.params.first);
   return (
     <Tab.Navigator
       appearance={{
@@ -107,8 +115,10 @@ export const RealApp = () => {
         activeTintColor: "white",
         inactiveTintColor: "#222222",
       }}
+      
     >
       <Tab.Screen
+       initialParams={{first:route.params?.first}}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Icon
@@ -163,7 +173,7 @@ export const RealApp = () => {
           ),
         }}
         name="Chat"
-        component={ChatStack}
+        component={ChatScreen}
       />
       <Tab.Screen
         options={{
@@ -222,14 +232,4 @@ export const TipsStack = () => {
   );
 };
 
-export const ChatStack = () => {
-  return (
-    <Stack.Navigator
-      initialRouteName="allchats"
-      screenOptions={{ headerShown: false }}
-    >
-      <Stack.Screen name="allchats" component={ChatScreen} />
-      <Stack.Screen name="specificChat" component={SpecificChatScreen} />
-    </Stack.Navigator>
-  );
-};
+

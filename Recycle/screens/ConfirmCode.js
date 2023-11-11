@@ -53,7 +53,7 @@ const ConfirmCode = ({ route, navigation }) => {
       if (!(await existsUser())) {
         navigation.navigate("formAfterAuth");
       } else {
-        navigation.navigate("App");
+        navigation.navigate("App",{first:false});
       }
     } catch (error) {
       console.log(error);

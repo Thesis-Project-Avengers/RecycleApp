@@ -27,7 +27,7 @@ const OnePosition = ({
 
   const generateIcon = (iconName) => {
     if (iconName === "Paper") {
-      return faMugSaucer;
+      return faToiletPaper;
     } else if (iconName === "Cardboard Boxes") {
       return faBox;
     } else if (iconName === "Plastic Bottles") {

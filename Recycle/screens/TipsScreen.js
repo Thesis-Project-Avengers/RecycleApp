@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView, Image, Touchable, TouchableOpacity, ActivityIndicator, TextInput } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, Image, Touchable, TouchableOpacity, ActivityIndicator, TextInput ,TouchableWithoutFeedback} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { FloatingAction } from 'react-native-floating-action'
@@ -113,7 +113,17 @@ const TipsScreen = () => {
                     style={{ gap: 10 }}
                     showsVerticalScrollIndicator={false}
                 >
-                    {tips.map((tip) => <OneTip key={tip.id} tip={tip} />)}
+                    {/* take me to the collectorProfile */}
+                    {tips.map((tip) => 
+                     <TouchableWithoutFeedback
+                     key={tip.id}
+                     onPress={() => {
+                        navigation.navigate("ProfileCollector");
+                      }}
+                   >
+                    <OneTip  tip={tip} />
+                    </TouchableWithoutFeedback>
+                    )}
 
                 </ScrollView>
                 <FloatingAction
