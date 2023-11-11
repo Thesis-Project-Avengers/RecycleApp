@@ -90,7 +90,7 @@ const Profile = ({ navigation }) => {
 
           <View style={styles.points}>
             <Text style={{ textAlign: "center", color: "white", fontSize: 16 }}>
-              100
+              {userProfileInfo?.points}
             </Text>
 
             <Image

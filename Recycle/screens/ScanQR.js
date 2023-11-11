@@ -24,18 +24,18 @@ const ScanQR = ({ route }) => {
     let points;
     const receiver = doc(FIREBASE_DB, "users", route.params?.ownerId);
     await getDoc(receiver).then((sanpshot) => {
-      points = sanpshot.data().pointes;
+      points = sanpshot.data().points;
     });
     await updateDoc(receiver, {
-      pointes: points + route.params.pointes,
+      points: points + route.params.points,
     });
 
     const senderId = doc(FIREBASE_DB, "users", FIREBASE_AUTH.currentUser?.uid);
     await getDoc(senderId).then((sanpshot) => {
-      points = sanpshot.data().pointes;
+      points = sanpshot.data().points;
     });
     await updateDoc(senderId, {
-      pointes: points - route.params.pointes,
+      points: points - route.params.points,
     });
 
     const markerRef = doc(FIREBASE_DB, "markers", route.params.markerId);
@@ -130,6 +130,7 @@ const ScanQR = ({ route }) => {
               }}
               onPress={() => {
                 handleTransaction();
+                route.params?.setRateModal(1)
                 navigation.navigate("Map");
               }}
             >

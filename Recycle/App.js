@@ -113,7 +113,7 @@ export const RealApp = ({route}) => {
       
     >
       <Tab.Screen
-      //  initialParams={{first:route.params.first}}
+       initialParams={{first:route.params?.first}}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Icon

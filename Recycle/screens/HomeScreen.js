@@ -22,15 +22,15 @@ import Modal from "react-native-modal";
 import ConfettiCannon from "react-native-confetti-cannon";
 import { Button } from "react-native-elements";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import * as Animatable from 'react-native-animatable';
+import * as Animatable from "react-native-animatable";
 
 // import Stats from "../components/Stats";r
 
 const HomeScreen = ({ navigation, route }) => {
   const [collectorsUsers, setCollectorsUsers] = useState([]);
   const [accumulatorsUsers, setAccumulatorUsers] = useState([]);
-  // const [welcome, setWelcome] = useState(route.params?.first);
-  const [welcome, setWelcome] = useState(true);
+  const [welcome, setWelcome] = useState(route.params?.first);
+  // const [welcome, setWelcome] = useState(true);
   const [isConfettiVisible, setConfettiVisible] = useState(false);
 
   // console.log("params", route.params?.first);
@@ -72,7 +72,7 @@ const HomeScreen = ({ navigation, route }) => {
     // After a delay, hide the confetti
     setTimeout(() => {
       setConfettiVisible(false);
-      setWelcome(false);
+      setWelcome(true);
     }, 5000); // Adjust the delay as needed
   };
 
@@ -93,44 +93,51 @@ const HomeScreen = ({ navigation, route }) => {
       <Modal
         isVisible={welcome === false}
         hasBackdrop={false}
-        coverScreen={true}      >
+        coverScreen={true}
+      >
         <View
           style={{
             backgroundColor: "white",
-            
+ 
             alignSelf: "center",
             justifyContent: "flex-start",
             alignItems: "center",
-    
+
             borderRadius: 50,
-            zIndex:1,
-            padding:30
+            zIndex: 1,
+            padding: 40,
+            paddingVertical:70,
           }}
         >
-          <Text style={{fontSize:29,marginBottom:20}}>Welcome To Recycle Familly</Text>
-      
-          <TouchableOpacity onPress={handleButtonClick} >
-          <Animatable.View animation="bounce" iterationCount="infinite" style={{backgroundColor:"white"}}>
-          <FontAwesomeIcon icon={faGift}  size={30}  color="green"  bounce/>
-          </Animatable.View>
+          <Text style={{ fontSize: 29, marginBottom: 20 }}>
+            Welcome To Recycle Familly
+          </Text>
+
+          <TouchableOpacity onPress={handleButtonClick}>
+            <Animatable.View
+              animation="bounce"
+              iterationCount="infinite"
+              style={{ backgroundColor: "white" }}
+            >
+              <FontAwesomeIcon icon={faGift} size={30} color="green" bounce />
+            </Animatable.View>
           </TouchableOpacity>
           <Text s>Claim Your First Points</Text>
         </View>
       </Modal>
       {isConfettiVisible && (
-            <View style={{zIndex:5}}>
-              <ConfettiCannon
-                count={100} // Adjust the number of confetti particles
-                origin={{ x: -10, y: 0 }} // Adjust the origin point
-                autoStart={true}
-                fadeOut={false}
-                fallSpeed={4000}
-                autoStartDelay={0}
-                explosionSpeed={100}
-              
-              />
-            </View>
-          )}
+        <View style={{ zIndex: 5 }}>
+          <ConfettiCannon
+            count={100} // Adjust the number of confetti particles
+            origin={{ x: -10, y: 0 }} // Adjust the origin point
+            autoStart={true}
+            fadeOut={false}
+            fallSpeed={4000}
+            autoStartDelay={0}
+            explosionSpeed={100}
+          />
+        </View>
+      )}
     </SafeAreaView>
   );
 };

@@ -1,8 +1,15 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Icons from "react-native-vector-icons/FontAwesome5";
-import { addDoc, collection, doc, setDoc, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { set, ref, onChildChanged, onChildAdded, off } from "firebase/database";
 import {
   FIREBASE_AUTH,
@@ -20,6 +27,8 @@ import {
   faToiletPaper,
   faWineBottle,
 } from "@fortawesome/free-solid-svg-icons";
+import { useFocusEffect } from "@react-navigation/native";
+import { Image } from "react-native";
 
 const InfoOfModal = ({
   currentInformation,
@@ -34,7 +43,27 @@ const InfoOfModal = ({
   setWayModal,
 }) => {
   const [collectingLoading, setCollectingLoanding] = useState(null);
+  const [theuser, setUser] = useState({});
 
+  useFocusEffect(
+    useCallback(() => {
+      const getUser = async () => {
+        try {
+          const userDocRef = doc(
+            FIREBASE_DB,
+            "users",
+            FIREBASE_AUTH.currentUser?.uid
+          );
+          await getDoc(userDocRef).then((user) => {
+            setUser(user.data());
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      getUser();
+    }, [])
+  );
   const memoizedCollectingLoading = useMemo(() => {
     return collectingLoading;
   }, [collectingLoading]);
@@ -134,6 +163,16 @@ const InfoOfModal = ({
 
   return (
     <View style={styles.Content}>
+      <View style={{alignSelf:"flex-end",flexDirection:"row",alignItems:"center",gap:10}}>
+        <Text style={{ fontSize: 25 }}>
+          {currentInformation?.points}
+        </Text>
+        <Image
+          source={require("../../assets/coin.png")}
+          style={{ width: 20,
+            height: 20}}
+        />
+      </View>
       <View
         style={{
           flexDirection: "column",
@@ -150,7 +189,7 @@ const InfoOfModal = ({
             gap: 10,
           }}
         >
-          <Text style={{ fontSize: 25 }}>{currentInformation.quantity}</Text>
+          <Text style={{ fontSize: 25 }}>{currentInformation?.quantity}</Text>
           <FontAwesomeIcon
             icon={generateIcon(currentInformation.category)}
             size={40}
@@ -165,7 +204,7 @@ const InfoOfModal = ({
             }}
           />
         </View>
-        <Text style={{ fontSize: 25 }}>{currentInformation.category}</Text>
+        <Text style={{ fontSize: 25 }}>{currentInformation?.category}</Text>
       </View>
 
       <View
@@ -238,90 +277,94 @@ const InfoOfModal = ({
         />
       </View>
 
-      <TouchableOpacity style={{ marginVertical: 20 }}>
-        {!collectingLoading ? (
-          <Text
-            onPress={() => {
-              handleRequest();
-              handelcollect();
-            }}
-            style={{
-              backgroundColor: "#93C572",
-              width: 200,
-              alignSelf: "center",
-              textAlign: "center",
-              paddingHorizontal: 40,
-              paddingVertical: 15,
-              fontSize: 15,
-              color: "white",
-              borderRadius: 50,
-              letterSpacing: 2,
-            }}
-          >
-            Collect
-          </Text>
-        ) : collectingLoading === "done" ? (
-          <View
-            style={{
-              flexDirection: "column",
-              gap: 10,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Text>Accepted</Text>
-            <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+      {currentInformation.points >= theuser.points ? (
+        <Text>You Don't have enough Points to claim</Text>
+      ) : (
+        <TouchableOpacity style={{ marginVertical: 20 }}>
+          {!collectingLoading ? (
+            <Text
+              onPress={() => {
+                handleRequest();
+                handelcollect();
+              }}
+              style={{
+                backgroundColor: "#93C572",
+                width: 200,
+                alignSelf: "center",
+                textAlign: "center",
+                paddingHorizontal: 40,
+                paddingVertical: 15,
+                fontSize: 15,
+                color: "white",
+                borderRadius: 50,
+                letterSpacing: 2,
+              }}
             >
-              <TouchableOpacity
-                onPress={() => {
-                  setShowWay(1);
-                  setVisibleModal(0);
-                  handleAnimate(currentRegion);
-                  handleAccept();
-                  setWayModal(1);
-                }}
+              Collect
+            </Text>
+          ) : collectingLoading === "done" ? (
+            <View
+              style={{
+                flexDirection: "column",
+                gap: 10,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text>Accepted</Text>
+              <View
+                style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
               >
-                <Text
-                  style={{
-                    backgroundColor: "green",
-                    padding: 10,
-                    borderRadius: 50,
-                    width: 100,
-                    textAlign: "center",
-                    color: "white",
+                <TouchableOpacity
+                  onPress={() => {
+                    setShowWay(1);
+                    setVisibleModal(0);
+                    handleAnimate(currentRegion);
+                    handleAccept();
+                    setWayModal(1);
                   }}
                 >
-                  Start
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <Text
-                  style={{
-                    backgroundColor: "red",
-                    padding: 10,
-                    borderRadius: 50,
-                    width: 100,
-                    textAlign: "center",
-                    color: "white",
-                  }}
-                >
-                  Cancel
-                </Text>
-              </TouchableOpacity>
+                  <Text
+                    style={{
+                      backgroundColor: "green",
+                      padding: 10,
+                      borderRadius: 50,
+                      width: 100,
+                      textAlign: "center",
+                      color: "white",
+                    }}
+                  >
+                    Start
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <Text
+                    style={{
+                      backgroundColor: "red",
+                      padding: 10,
+                      borderRadius: 50,
+                      width: 100,
+                      textAlign: "center",
+                      color: "white",
+                    }}
+                  >
+                    Cancel
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        ) : collectingLoading === "rejected" ? (
-          <View style={{ flexDirection: "row", gap: 10 }}>
-            <Text>rejected</Text>
-          </View>
-        ) : (
-          <View style={{ flexDirection: "row", gap: 10 }}>
-            <ActivityIndicator size="small" color="green" />
-            <Text>Waiting For Accepting </Text>
-          </View>
-        )}
-      </TouchableOpacity>
+          ) : collectingLoading === "rejected" ? (
+            <View style={{ flexDirection: "row", gap: 10 }}>
+              <Text>rejected</Text>
+            </View>
+          ) : (
+            <View style={{ flexDirection: "row", gap: 10 }}>
+              <ActivityIndicator size="small" color="green" />
+              <Text>Waiting For Accepting </Text>
+            </View>
+          )}
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -329,17 +372,8 @@ const InfoOfModal = ({
 export default InfoOfModal;
 
 const styles = StyleSheet.create({
-  modalContent: {
-    height: "50%",
-    backgroundColor: "white",
-    padding: 22,
-    justifyContent: "space-around",
-    alignItems: "center",
-    borderTopLeftRadius: 50,
-    borderTopRightRadius: 50,
-  },
   Content: {
-    height: "100%",
+    height: "70%",
     backgroundColor: "white",
     padding: 5,
     justifyContent: "centre",
