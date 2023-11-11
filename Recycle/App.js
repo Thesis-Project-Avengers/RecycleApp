@@ -26,7 +26,6 @@ import TransactionScreen from "./screens/TransactionScreen";
 import SpecificChatScreen from "./screens/SpecificChatScreen";
 import MyCodeQr from "./screens/MyCodeQr";
 import ScanQR from "./screens/ScanQR";
-import TreeShopScreen from "./screens/TreeShopScreen";
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator();
 export default function App() {
@@ -117,7 +116,7 @@ export const RealApp = () => {
           ),
         }}
         name="Home"
-        component={AccSpendPointScreen}
+        component={HomeScreen}
       />
       <Tab.Screen
         options={{
