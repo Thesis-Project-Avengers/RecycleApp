@@ -12,7 +12,7 @@ import MapView, { GooglePlacesAutocomplete } from "react-native-maps";
 import * as Location from "expo-location";
 import MapViewDirections from "react-native-maps-directions";
 import customMapStyleJSON from "../mapStyle";
-// import OnePosition from "../components/Map Components/OnePosition";
+import OnePosition from "../components/Map Components/OnePosition";
 import Modal from "react-native-modal";
 
 import axios from "axios";

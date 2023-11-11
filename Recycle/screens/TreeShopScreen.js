@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
 import React from 'react';
-import ChatHeader from './ChatHeader';
+// import ChatHeader from './ChatHeader';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 // import sabta from '../assets/belt.webp';
 import bond9a from '../assets/bond9a.jpg';
@@ -12,13 +12,13 @@ const TreeShop = () => {
     return (
         <GestureHandlerRootView>
             <View style={styles.container}>
-                <ChatHeader />
+                {/* <ChatHeader /> */}
                 <View style={styles.cardsContainer}>
                     <TreeCard />
                     <TreeCard />
                 </View>
             </View>
-        </GestureHandlerRootView>
+         </GestureHandlerRootView>
     );
 };
 
@@ -54,14 +54,15 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#ddd',
         borderRadius: 8,
-        overflow: 'hidden',
-        margin: 10,
-        backgroundColor: 'white',
-        height: '70%',
+        // overflow: 'hidden',
+        // margin: 10
+        // backgroundColor: 'green',
+        height: 250,
+        padding:20
     },
     image: {
         width: '100%',
-        height: '70%',
+        height: "100%",
     },
     cardTitle: {
         fontSize: 18,
@@ -71,10 +72,10 @@ const styles = StyleSheet.create({
     },
     info: {
         height: '30%',
-        backgroundColor: 'yellow',
+        // backgroundColor: 'yellow',
     },
     textReset: {
-        backgroundColor: 'yellow',
+        // backgroundColor: 'yellow',
     },
 });
 

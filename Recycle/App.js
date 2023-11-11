@@ -18,16 +18,15 @@ import ChooseScreen from "./screens/ChooseScreen";
 import CollectorScreen from "./screens/CollectorScreen";
 import AccumulatorScreen from "./screens/AccumulatorScreen";
 import ProfileCollector from "./screens/ProfileCollector";
-import AccSpendPoint from "./components/AccSpendPoint";
+import AccSpendPointScreen from "./screens/AccSpendPointScreen";
 import AccOnboarding from "./components/AccOnboarding";
 import CommentsScreen from "./screens/CommentsScreen";
 import CollOmbording from "./components/CollOmbording";
 import TransactionScreen from "./screens/TransactionScreen";
-import TreeShop from "./components/TreeShop";
 import SpecificChatScreen from "./screens/SpecificChatScreen";
 import MyCodeQr from "./screens/MyCodeQr";
 import ScanQR from "./screens/ScanQR";
-
+import TreeShopScreen from "./screens/TreeShopScreen";
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator();
 export default function App() {
@@ -63,7 +62,7 @@ export default function App() {
         initialRouteName={"App"}
         screenOptions={{ headerShown: false }}
       >
-        <Stack.Screen name="ombording" component={AccSpendPoint} />
+        <Stack.Screen name="ombording" component={OnboardingScreen} />
         <Stack.Screen name="auth" component={AuthStack} />
         <Stack.Screen name="App" component={RealApp} />
         <Stack.Screen name="QrScanner" component={ScanQR} />
@@ -118,7 +117,7 @@ export const RealApp = () => {
           ),
         }}
         name="Home"
-        component={TreeShop}
+        component={AccSpendPointScreen}
       />
       <Tab.Screen
         options={{

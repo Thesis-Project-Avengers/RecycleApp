@@ -1,13 +1,14 @@
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, ScrollView } from 'react-native';
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faAngleLeft, faAngleRight, faCommentsDollar, faHandshakeAngle, faShieldDog, faTree } from "@fortawesome/free-solid-svg-icons"
 import { LinearGradient } from 'expo-linear-gradient';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 const AccSpendPoint = () => {
   const [index, setIndex] = useState(0)
-  const items=[
+  const items = [
     ['Item 1 qzfzafqs segqsqdkjnnknkl',
       'Item 2 qzfzafqs segq sqdvdbs,l',
       'Item 3 qzfzafqs segq sqdvdbs q',
@@ -53,55 +54,61 @@ const AccSpendPoint = () => {
     }
   }
   const handelPrec = () => {
-    if(index === 0){
+    if (index === 0) {
       setIndex(3)
     }
     else {
       setIndex(index - 1)
     }
   }
+  const handleclickForest=()=>{
+    
+  }
   return (
-    <View style={styles.god}>
+    <SafeAreaView style={styles.god}>
       <View style={styles.mainViewContainer}>
-        <View style={{ height: '45%' }}>
-          <View style={styles.parent}>
-            <TouchableOpacity style={styles.children}>
-              <FontAwesomeIcon size={50} icon={faTree} style={{ color: "#000000", }} />
-              <Text style={styles.textDecor}>Make your forest</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.children}>
-              <FontAwesomeIcon size={50} icon={faCommentsDollar} style={{ color: "#000000", }} />
-              <Text style={styles.textDecor}>Spend you points</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.parent}>
-            <TouchableOpacity style={styles.children}>
-              <FontAwesomeIcon size={50} icon={faShieldDog} style={{ color: "#000000", }} />
-              <Text style={styles.textDecor} >Save Street dogs</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.children}>
-              <FontAwesomeIcon size={50} icon={faHandshakeAngle} style={{ color: "#000000", }} />
-              <Text style={styles.textDecor}>Cooperate with us</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <LinearGradient
-          colors={['#00ff00', '#008000']} // Adjust colors as needed
-          style={styles.mainCard}
-        >
-          <TouchableOpacity onPress={() => { handelPrec() }} style={{ width: "10%", marginHorizontal: 5 }}><FontAwesomeIcon size={36} icon={faAngleLeft} /></TouchableOpacity>
-          <View style={{ justifyContent: "center", alignItems: "center", width: "72%" }}>
-            {logos[index]}
-            <Text style={{ fontWeight: 'bold', marginVertical: 5 }}>{titles[index]}</Text>
-            <View style={{ padding: 15 }}>
-              <UnorderedList items={items[index]} />
+        <ScrollView
+          contentContainerStyle={{ height: 3000, gap: 20, paddingVertical: 20 }} >
+          <LinearGradient
+            colors={['#00ff00', '#008000']} // Adjust colors as needed
+            style={styles.mainCard}
+          >
+            <TouchableOpacity onPress={() => { handelPrec() }} style={{ width: "10%", marginHorizontal: 5 }}><FontAwesomeIcon size={36} icon={faAngleLeft} /></TouchableOpacity>
+            <View style={{ justifyContent: "center", alignItems: "center", width: "72%" }}>
+              {logos[index]}
+              <Text style={{ fontWeight: 'bold', marginVertical: 5 }}>{titles[index]}</Text>
+              <View style={{ padding: 15 }}>
+                <UnorderedList items={items[index]} />
+              </View>
+            </View>
+            <TouchableOpacity onPress={() => { handelSuiv() }} style={{ width: "10%", marginHorizontal: 5 }} ><FontAwesomeIcon size={36} icon={faAngleRight} /></TouchableOpacity>
+          </LinearGradient>
+          <View style={{ height: 270, gap: 5, width: "100%" }}>
+            <View style={styles.parent}>
+              <TouchableOpacity style={styles.children}>
+                <FontAwesomeIcon size={50} icon={faTree} style={{ color: "#000000", }} />
+                <Text style={styles.textDecor}>Make your forest</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.children}>
+                <FontAwesomeIcon size={50} icon={faCommentsDollar} style={{ color: "#000000", }} />
+                <Text style={styles.textDecor}>Spend you points</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.parent}>
+              <TouchableOpacity style={styles.children}>
+                <FontAwesomeIcon size={50} icon={faShieldDog} style={{ color: "#000000", }} />
+                <Text style={styles.textDecor} >Save Street dogs</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.children}>
+                <FontAwesomeIcon size={50} icon={faHandshakeAngle} style={{ color: "#000000", }} />
+                <Text style={styles.textDecor}>Cooperate with us</Text>
+              </TouchableOpacity>
             </View>
           </View>
-          <TouchableOpacity onPress={() => { handelSuiv() }} style={{ width: "10%", marginHorizontal: 5 }} ><FontAwesomeIcon size={36} icon={faAngleRight} /></TouchableOpacity>
-        </LinearGradient>
-       
+
+        </ScrollView>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 export const ListItem = ({ item }) => {
@@ -135,18 +142,21 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 20
     // backgroundColor: ''
   },
   mainViewContainer: {
     flexDirection: 'column',
     justifyContent: 'space-between',
-    height: '90%',
-    width: '90%',
+    height: '100%',
+    width: '100%',
+
+    // padding:20
     // gap: 5,
     // backgroundColor: "yellow",
   },
   parent: {
-    padding: 2.5,
+    // padding: 2.5,
     gap: 5,
     width: '100%',
     flexDirection: 'row',
@@ -155,7 +165,7 @@ const styles = StyleSheet.create({
     // gap: 10,
   },
   children: {
-    width: '50%',
+    width: '49%',
     height: "100%",
     backgroundColor: '#93c572',
     display: 'flex',
@@ -167,14 +177,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   mainCard: {
-    
+
     flexDirection: "row",
     backgroundColor: "orange",
     width: "100%",
     alignItems: "center",
     borderRadius: 10,
-    paddingTop: 10,
-    height: "37%"
+    // paddingTop: 10,
+    height: 250
   },
 
   listItem: {
