@@ -18,6 +18,7 @@ import ChooseScreen from "./screens/ChooseScreen";
 import CollectorScreen from "./screens/CollectorScreen";
 import AccumulatorScreen from "./screens/AccumulatorScreen";
 import ProfileCollector from "./screens/ProfileCollector";
+import Reviews from "./screens/Reviews";
 
 import AccOnboarding from "./components/AccOnboarding";
 import CommentsScreen from "./screens/CommentsScreen";
@@ -64,9 +65,14 @@ export default function App() {
       >
         <Stack.Screen name="ombording" component={OnboardingScreen} />
         <Stack.Screen name="auth" component={AuthStack} />
-        <Stack.Screen name="App" component={RealApp}   />
+        <Stack.Screen name="App" component={RealApp} />
+        <Stack.Screen name="Reviews" component={Reviews} options={{headerShown:true,title:"My Reviews",headerTitleAlign:"center"}} />
         <Stack.Screen name="QrScanner" component={ScanQR} />
-        <Stack.Screen name="specificChat" component={SpecificChatScreen} options={{ headerShown: true, title: "" }} />
+        <Stack.Screen
+          name="specificChat"
+          component={SpecificChatScreen}
+          options={{ headerShown: true, title: "" }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -115,7 +121,7 @@ export const RealApp = ({route}) => {
               size={size ? size : 24}
               color={focused ? color : "#222222"}
               focused={focused}
-            // color={color}
+              // color={color}
             />
           ),
         }}

@@ -18,8 +18,6 @@ const styles = StyleSheet.create({
         justifyContent: "space-around", 
         gap: 40, 
         alignItems : 'center' , 
-        marginTop: 10, 
-        // padding: 10, 
     }
 
 })

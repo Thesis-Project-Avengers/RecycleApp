@@ -49,7 +49,7 @@ const OnBroadingScreen = ({navigation}) => {
   titleStyles={styles.titleStyle}
   subTitleStyles={styles.subtitleStyle}
   bottomBarHighlight={false} 
-  bottomBarColor="green" 
+  bottomBarColor="#93c572" 
   />;
 };
 const styles = StyleSheet.create({
@@ -59,11 +59,11 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   titleStyle: {
-    color: 'green', 
+    color: "#93c572", 
     fontSize: 24, 
   },
   subtitleStyle: {
-    color: 'green', 
+    color: "#93c572", 
     fontSize: 16,
   }
 });
