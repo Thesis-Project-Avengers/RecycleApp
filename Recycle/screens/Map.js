@@ -47,10 +47,18 @@ export default function Map() {
           return;
         }
         const locationSubscription = await Location.watchPositionAsync(
-          { accuracy: Location.Accuracy.High, timeInterval: 1000, distanceInterval: 10 }, // You can adjust the update frequency and distance threshold here
+          {
+            accuracy: Location.Accuracy.High,
+            timeInterval: 1000,
+            distanceInterval: 10,
+          }, // You can adjust the update frequency and distance threshold here
           (newLocation) => {
-            setCurrentRegion({latitude:newLocation.coords.latitude,longitude:newLocation.coords.longitude,latitudeDelta: 0.01,
-              longitudeDelta: 0.01});
+            setCurrentRegion({
+              latitude: newLocation.coords.latitude,
+              longitude: newLocation.coords.longitude,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            });
           }
         );
         return () => {
@@ -61,16 +69,14 @@ export default function Map() {
       })();
       fetchUser();
       fetch();
-      if (markers.length || currentRegion) setLoding(false);
+      if (markers.length && currentRegion) setLoding(false);
       console.log("Screen is focused! Refreshing...");
     }, [])
   );
 
-useEffect(()=>{
-  getSelectedInformation(selectedPos,mode)
-},[currentRegion])
-
-
+  useEffect(() => {
+    getSelectedInformation(selectedPos, mode);
+  }, [currentRegion]);
 
   // called insisede usefoucs
   const fetchUser = () => {
@@ -151,7 +157,6 @@ useEffect(()=>{
     mapRef.current.animateCamera(newCameraSettings, { duration: 2000 });
   };
 
- 
   const getSelectedInformation = async (info, theMode) => {
     try {
       const data = await axios.post(
@@ -174,18 +179,28 @@ useEffect(()=>{
   };
 
   const recyclableItems = [
-    {id:1,type:"Aluminum Cans"},
-    {id:2,type:"Glass Bottles"},
-    {id:3,type:"Paper"},
-    {id:4,type:"Plastic Bottles"},
-    {id:5,type:"Cardboard Boxes"},
-    {id:6,type:"Steel Cans"},
+    { id: 1, type: "Aluminum Cans" },
+    { id: 2, type: "Glass Bottles" },
+    { id: 3, type: "Paper" },
+    { id: 4, type: "Plastic Bottles" },
+    { id: 5, type: "Cardboard Boxes" },
+    { id: 6, type: "Steel Cans" },
   ];
 
+  const initialCamera = {
+    center: {
+      ...currentRegion, // Initial longitude
+    },
+    heading: 0, // Set the bearing (rotation) to 90 degrees
+    pitch: 60,
+    tilt: 45, // Set the viewing angle (tilt) to 45 degrees
+    zoom: 15, // Initial zoom level
+  };
   return (
     <SafeAreaView style={styles.container}>
       {!loading ? (
         <MapView
+          camera={initialCamera}
           ref={mapRef}
           showsMyLocationButton={false}
           customMapStyle={customMapStyleJSON}
@@ -196,19 +211,19 @@ useEffect(()=>{
           rotateEnabled={true}
         >
           {markers?.map((loc, key) => {
-            if(!loc.completed)
-            return (
-              <OnePosition
-                user={user}
-                loc={loc}
-                setselectedPos={setselectedPos}
-                setVisibleModal={setVisibleModal}
-                getSelectedInformation={getSelectedInformation}
-                handleAnimateToRegion={handleAnimateToRegion}
-                setShowWay={setShowWay}
-                key={key}
-              />
-            );
+            if (!loc.completed)
+              return (
+                <OnePosition
+                  user={user}
+                  loc={loc}
+                  setselectedPos={setselectedPos}
+                  setVisibleModal={setVisibleModal}
+                  getSelectedInformation={getSelectedInformation}
+                  handleAnimateToRegion={handleAnimateToRegion}
+                  setShowWay={setShowWay}
+                  key={key}
+                />
+              );
           })}
           {showWay ? (
             <MapViewDirections
@@ -237,7 +252,7 @@ useEffect(()=>{
       >
         {
           <InfoModal
-          setWayModal={setWayModal}
+            setWayModal={setWayModal}
             currentInformation={currentInformation}
             currentRegion={currentRegion}
             handleAnimate={handleAnimate}
@@ -277,20 +292,15 @@ useEffect(()=>{
           <Text style={{ color: "white", fontSize: 30 }}>+</Text>
         </TouchableOpacity>
       )}
-   
+
       <Modal
         isVisible={wayModal === 1}
-        hasBackdrop = {false}
+        hasBackdrop={false}
         coverScreen={false}
         onBackdropPress={() => setWayModal(null)}
       >
-        { 
-          <WayModal
-          currentInformation={currentInformation}
-          />
-        }
+        {<WayModal currentInformation={currentInformation} />}
       </Modal>
-  
     </SafeAreaView>
   );
 }

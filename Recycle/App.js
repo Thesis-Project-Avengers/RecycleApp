@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { StatusBar } from "expo-status-bar";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -26,11 +24,13 @@ import CommentsScreen from "./screens/CommentsScreen";
 import CollOmbording from "./components/CollOmbording";
 import TransactionScreen from "./screens/TransactionScreen";
 import TreeShop from "./components/TreeShop";
+import SpecificChatScreen from "./screens/SpecificChatScreen";
+import MyCodeQr from "./screens/MyCodeQr";
+import ScanQR from "./screens/ScanQR";
 
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator();
 export default function App() {
-
   // console.log(FIREBASE_AUTH.currentUser?.displayName);
   //Onboarding
   // const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState(true)
@@ -57,16 +57,17 @@ export default function App() {
     fetch();
   }, []);
 
-  
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={"ombording"}
+        initialRouteName={"App"}
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="ombording" component={AccSpendPoint} />
         <Stack.Screen name="auth" component={AuthStack} />
         <Stack.Screen name="App" component={RealApp} />
+        <Stack.Screen name="QrScanner" component={ScanQR} />
+        <Stack.Screen name="specificChat" component={SpecificChatScreen} options={{ headerShown: true, title: "" }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -145,7 +146,6 @@ export const RealApp = () => {
           ),
         }}
         name="Map"
-
         component={Map}
       />
       <Tab.Screen
@@ -160,7 +160,7 @@ export const RealApp = () => {
           ),
         }}
         name="Chat"
-        component={ChatStack}
+        component={ChatScreen}
       />
       <Tab.Screen
         options={{
@@ -188,13 +188,19 @@ export const ProfileStack = () => {
     >
       <Stack.Screen name="mainprofile" component={Profile} />
       <Stack.Screen name="editprofile" component={EditProfileScreen} />
-      <Stack.Screen name="transaction" component={TransactionScreen} options={{ headerShown: true, title: "My Transaction" }} />
+      <Stack.Screen
+        name="transaction"
+        component={TransactionScreen}
+        options={{ headerShown: true, title: "My Transaction" }}
+      />
+      <Stack.Screen
+        name="mycodeQr"
+        component={MyCodeQr}
+        options={{ headerShown: true, title: "My Transaction" }}
+      />
     </Stack.Navigator>
-
   );
 };
-
-
 
 export const TipsStack = () => {
   return (
@@ -213,13 +219,13 @@ export const TipsStack = () => {
   );
 };
 
-
 export const ChatStack = () => {
   return (
-    <Stack.Navigator initialRouteName="specificChat" screenOptions={{ headerShown: false }}>
+    <Stack.Navigator
+      initialRouteName="allchats"
+      screenOptions={{ headerShown: false }}
+    >
       <Stack.Screen name="allchats" component={ChatScreen} />
-      <Stack.Screen name="specificChat" component={SpecificChatScreen} />
     </Stack.Navigator>
-  )
-
-}
+  );
+};
