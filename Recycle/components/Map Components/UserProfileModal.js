@@ -2,7 +2,7 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Icons from "react-native-vector-icons/Feather";
-import { addDoc, collection, doc, getDoc, serverTimestamp } from "firebase/firestore";
+import { addDoc, collection, doc, getDocs, or, query, serverTimestamp, where } from "firebase/firestore";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../../firebaseConfig";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useCallback } from "react";
@@ -29,10 +29,27 @@ const UserProfileModal = ({ user }) => {
 
   const handleChatClick = async () => {
     try {
-      const roomsCollection = collection(FIREBASE_DB, "rooms");
-      const roomDocRef = await addDoc(roomsCollection, { chattedOne: user?.uid, connectedOne: FIREBASE_AUTH.currentUser?.uid, lastMessage: "...", lastMessageDate: serverTimestamp() });
-      console.log("Document written with ID: ", roomDocRef.id);
-      navigation.navigate("specificChat", { roomId: roomDocRef.id })
+      let roomId;
+      const roomExists = async () => {
+        try {
+          const roomsCollection = collection(FIREBASE_DB, "rooms");
+          const q = query(roomsCollection, or(where("chattedOne", "==", user?.uid), where("chattedOne", "==", user?.uid)))
+          const roomDocSnapshot = await getDocs(q);
+          roomId = roomDocSnapshot.docs[0].id;
+          return !roomDocSnapshot.empty;
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      if (!await roomExists()) {
+        const roomsCollection = collection(FIREBASE_DB, "rooms");
+        const roomDocRef = await addDoc(roomsCollection, { chattedOne: user?.uid, connectedOne: FIREBASE_AUTH.currentUser?.uid, lastMessage: "...", lastMessageDate: serverTimestamp() });
+        // console.log("Document written with ID: ", roomDocRef.id);
+        navigation.navigate("specificChat", { roomId: roomDocRef.id });
+      } else {
+        navigation.navigate("specificChat", { roomId: roomId });
+
+      }
       // const chatsCollection = collection(FIREBASE_DB, "rooms", roomDocRef.id, "chats");
     } catch (error) {
       console.log("Error : when Creating the room ", error);
