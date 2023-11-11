@@ -224,13 +224,4 @@ export const TipsStack = () => {
   );
 };
 
-export const ChatStack = () => {
-  return (
-    <Stack.Navigator
-      initialRouteName="allchats"
-      screenOptions={{ headerShown: false }}
-    >
-      <Stack.Screen name="allchats" component={ChatScreen} />
-    </Stack.Navigator>
-  );
-};
+
