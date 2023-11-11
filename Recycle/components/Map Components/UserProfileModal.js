@@ -2,18 +2,12 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Icons from "react-native-vector-icons/Feather";
-<<<<<<< HEAD
-import { useNavigation } from "@react-navigation/native";
-const UserProfileModal = ({user, setVisibleModal}) => {
-  console.log("here user",user);
-=======
 import { addDoc, collection, doc, getDocs, or, query, serverTimestamp, where } from "firebase/firestore";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../../firebaseConfig";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useCallback } from "react";
 import { useState } from "react";
-const UserProfileModal = ({ user }) => {
->>>>>>> 5d71f24f3d4ef5137b1aee7f8011d77648a3f424
+const UserProfileModal = ({ user,setVisibleModal }) => {
   const navigation = useNavigation()
   const renderStars = (rating) => {
     const stars = [];
@@ -81,11 +75,7 @@ const UserProfileModal = ({ user }) => {
           uri: user?.photoURL,
         }}
       />
-<<<<<<< HEAD
-      <Text style={{ padding: 5,fontSize:20,letterSpacing:2}}> {user?.displayName}</Text>
-=======
       <Text style={{ padding: 5, fontSize: 20, letterSpacing: 2 }}> {user?.displayName}</Text>
->>>>>>> 5d71f24f3d4ef5137b1aee7f8011d77648a3f424
       <View style={{ flexDirection: "row", marginVertical: 10 }}>
         {renderStars(((user?.rating / (user?.nbrRaters * 5)*100)*0.05))}
       </View>
