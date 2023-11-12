@@ -23,6 +23,7 @@ import { SafeAreaView } from "react-native";
 import { collection, onSnapshot, doc, getDoc } from "firebase/firestore";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
 import WayModal from "../components/Map Components/WayModal";
+import ReviewModal from "../components/Map Components/ReviewModal";
 export default function Map() {
   const [user, setUser] = useState({});
   const API_KEY = "AIzaSyCz7OmCHc00wzjQAp4KcZKzzNK8lHCGkgo";
@@ -32,6 +33,7 @@ export default function Map() {
   const [visibleModal, setVisibleModal] = useState(null);
   const [addModal, setVisibleAddModal] = useState(null);
   const [wayModal, setWayModal] = useState(null);
+  const [rateModal, setRateModal] = useState(null);
   const [currentInformation, setCurrentInformation] = useState(null);
   const [showWay, setShowWay] = useState(0);
   const [mode, setMode] = useState("driving");
@@ -75,7 +77,9 @@ export default function Map() {
   );
 
   useEffect(() => {
+    if(selectedPos){
     getSelectedInformation(selectedPos, mode);
+  }
   }, [currentRegion]);
 
   // called insisede usefoucs
@@ -179,12 +183,12 @@ export default function Map() {
   };
 
   const recyclableItems = [
-    { id: 1, type: "Aluminum Cans" },
-    { id: 2, type: "Glass Bottles" },
-    { id: 3, type: "Paper" },
-    { id: 4, type: "Plastic Bottles" },
-    { id: 5, type: "Cardboard Boxes" },
-    { id: 6, type: "Steel Cans" },
+    { id: 1, type: "Aluminum Cans",kiloPrice:20,PiecePrice:0.5 },
+    { id: 2, type: "Glass Bottles",kiloPrice:5,PiecePrice:0.3 },
+    { id: 3, type: "Paper",kiloPrice:7,PiecePrice:0.07 },
+    { id: 4, type: "Plastic Bottles",kiloPrice:100,PiecePrice:0.4 },
+    { id: 5, type: "Cardboard Boxes" ,kiloPrice:7,PiecePrice:0.2},
+    { id: 6, type: "Steel Cans",kiloPrice:7,PiecePrice:0.5 },
   ];
 
   const initialCamera = {
@@ -299,7 +303,14 @@ export default function Map() {
         coverScreen={false}
         onBackdropPress={() => setWayModal(null)}
       >
-        {<WayModal currentInformation={currentInformation} />}
+        {<WayModal currentInformation={currentInformation} setWayModal={setWayModal} setRateModal={setRateModal}/>}
+      </Modal>
+      <Modal
+        isVisible={rateModal === 1}
+        hasBackdrop={false}
+        coverScreen={true}
+      >
+        {<ReviewModal currentInformation={currentInformation} setRateModal={setRateModal}/>}
       </Modal>
     </SafeAreaView>
   );

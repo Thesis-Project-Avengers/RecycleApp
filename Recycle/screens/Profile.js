@@ -13,26 +13,69 @@ import Icon2 from "react-native-vector-icons/FontAwesome5";
 import Icon3 from "react-native-vector-icons/FontAwesome5";
 import Icon4 from "react-native-vector-icons/Entypo";
 import Icon5 from "react-native-vector-icons/AntDesign";
+// import Icon6 from "react-native-vector-icons/FontAwesome6";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
 import { useFocusEffect } from "@react-navigation/native";
-import { doc, getDoc } from "firebase/firestore";
-const Profile = ({ navigation }) => {
-  const [userProfileInfo, setProfileInfo] = useState({})
-  useFocusEffect(useCallback(() => {
-    const getUser = async () => {
-      try {
-        const userDocRef = doc(FIREBASE_DB, "users", FIREBASE_AUTH.currentUser?.uid)
-        await getDoc(userDocRef).then((user) => {
-          setProfileInfo(user.data());
-          // setForm({ firstName: user.data().firstName, lastName: user.data().lastName, email: user.data().email, photoURL: user.data().photoURL })
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    getUser();
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
+import RatingProfile from "../components/RatingProfile";
+import OneReview from "../components/OneReview";
 
-  }, []))
+const Profile = ({ navigation }) => {
+  const [userProfileInfo, setProfileInfo] = useState({});
+  const [reviews, setReviews] = useState([]);
+  useFocusEffect(
+    useCallback(() => {
+      const getUser = async () => {
+        // console.log("insisde user profile");
+        try {
+          const userDocRef = doc(
+            FIREBASE_DB,
+            "users",
+            FIREBASE_AUTH.currentUser?.uid
+          );
+          await getDoc(userDocRef).then((user) => {
+            setProfileInfo(user.data());
+            // setForm({ firstName: user.data().firstName, lastName: user.data().lastName, email: user.data().email, photoURL: user.data().photoURL })
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      const getReviewoFcurentUser = async () => {
+        // console.log("inside secndond fucn", FIREBASE_AUTH.currentUser?.uid);
+        try {
+          const userCollectionRef = collection(FIREBASE_DB, "reviews");
+          const q = query(
+            userCollectionRef,
+            where("to", "==", FIREBASE_AUTH.currentUser?.uid)
+          );
+          await getDocs(q).then((snapshot) => {
+            console.log(snapshot.docs, "hi");
+            const data = [];
+            snapshot.docs.forEach((doc, index) => {
+              if (index < 2) {
+                data.push({ id: doc.id, ...doc.data() });
+              }
+            });
+            // setihookreviews
+            setReviews(data);
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
+      getUser();
+      getReviewoFcurentUser();
+    }, [])
+  );
   return (
     <SafeAreaView>
       <ScrollView showsVerticalScrollIndicator={false} style={styles.scroll}>
@@ -43,11 +86,17 @@ const Profile = ({ navigation }) => {
           color={"#93C572"}
           /> */}
           </View>
+          {/* {userProfileInfo.type==="collector"?<Icon6 name="person-walking-arrow-loop-left"size={45} color={"#93C572"}/>:<Icon6  name="person-walking-arrow-right" size={45} color={"#93C572"}/>}  */}
+
           <View style={styles.points}>
             <Text style={{ textAlign: "center", color: "white", fontSize: 16 }}>
-              100
+              {userProfileInfo?.points}
             </Text>
-            <Image source={require("../assets/coin.png")} style={styles.imageCoin} />
+
+            <Image
+              source={require("../assets/coin.png")}
+              style={styles.imageCoin}
+            />
           </View>
         </View>
         <View style={styles.imageTextName}>
@@ -55,9 +104,11 @@ const Profile = ({ navigation }) => {
             source={{ uri: userProfileInfo?.photoURL }}
             style={styles.imageProfile}
           />
-          <Text style={styles.textName}>
-            {userProfileInfo?.displayName}
-          </Text>
+          <Text style={styles.textName}>{userProfileInfo?.displayName}</Text>
+          
+          <RatingProfile userProfileInfo={userProfileInfo} />
+
+          {/* badge w rating  */}
         </View>
         <View style={styles.statContainer}>
           <View style={styles.oneRec}>
@@ -73,20 +124,50 @@ const Profile = ({ navigation }) => {
             <Text>100</Text>
           </View>
         </View>
-        {/* <ScrollView style={styles.scroll}> */}
+
+        {/* hne bech thot zouz review  */}
+        <View style={styles.container}>
+          <View style={styles.textContainer}>
+            <Text style={{ fontSize: 20, fontWeight: 700 }}>Reviews</Text>
+            <TouchableOpacity
+              style={{ flexDirection: "row", gap: 5 }}
+              onPress={() => {
+                navigation.navigate("Reviews");
+              }}
+            >
+              <Text style={{ fontSize: 13, color: "#93C572" }}>View All</Text>
+            </TouchableOpacity>
+          </View>
+          <ScrollView
+            contentContainerStyle={{ gap: 20 }}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+          >
+            {
+            reviews.map((review,index) => (
+              <OneReview key={index} review={review} />
+            ))
+            }
+          </ScrollView>
+        </View>
+
         <View style={{ marginBottom: 25 }}>
           <View style={styles.oneButton}>
             <Icon4 name="back-in-time" size={20} color={"#93C572"} />
-            <TouchableOpacity onPress={() => { navigation.navigate("transaction") }} >
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("transaction");
+              }}
+            >
               <Text style={{ fontSize: 17 }}>My Transactions</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.oneButton}>
             <Icon5 name="qrcode" size={20} color={"#93C572"} />
             <TouchableOpacity
-             onPress={() => {
-              navigation.navigate("mycodeQr");
-            }}
+              onPress={() => {
+                navigation.navigate("mycodeQr");
+              }}
             >
               <Text style={{ fontSize: 17 }}>My Qr Code</Text>
             </TouchableOpacity>
@@ -122,7 +203,7 @@ export default Profile;
 const styles = StyleSheet.create({
   imageCoin: {
     width: 20,
-    height: 20
+    height: 20,
   },
   returnPoints: {
     flexDirection: "row",
@@ -140,7 +221,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 5,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   return: {
     padding: 15,
@@ -194,5 +275,17 @@ const styles = StyleSheet.create({
     gap: 25,
     borderBottomWidth: 1,
     borderBottomColor: "#e1e1e1",
+  },
+  container: {
+    padding: 10,
+    // backgroundColor: "green",
+  },
+  textContainer: {
+    flexDirection: "row",
+    justifyContent: "start",
+    gap: 165,
+    alignItems: "center",
+    margin: 1,
+    padding: 5,
   },
 });

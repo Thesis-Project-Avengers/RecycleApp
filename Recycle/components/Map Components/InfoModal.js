@@ -63,7 +63,7 @@ const getUserInfo = async ()=>{
 export default InfoModal;
 const styles = StyleSheet.create({
   modalContent: {
-    height: "55%",
+    height: "60%",
     backgroundColor: "white",
     padding: 22,
     justifyContent: "space-around",

@@ -7,21 +7,22 @@ import {
   ScrollView,
 } from "react-native";
 import { CheckBox } from "react-native-elements";
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import SearchedElement from "./SearchedElement";
 import axios from "axios";
 import Slider from "@react-native-community/slider";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../../firebaseConfig";
 const AddModal = ({ recyclableItems, currentRegion, setVisibleAddModal }) => {
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState(recyclableItems[0]);
   const [searchText, setSearchText] = useState("");
   const [places, setPlaces] = useState([]);
   const API_KEY = "AIzaSyCz7OmCHc00wzjQAp4KcZKzzNK8lHCGkgo";
   const [selectedLocation, setLocation] = useState({});
   const [isChecked, setIsChecked] = useState(false);
   const [quantity, setQuantite] = useState(1);
-
+  const [unity, setUnity] = useState("kg");
+  const [points, setPoints] = useState(0);
   const handleAddItem = async () => {
     try {
       const markerCollectionRef = collection(FIREBASE_DB, "markers");
@@ -31,18 +32,19 @@ const AddModal = ({ recyclableItems, currentRegion, setVisibleAddModal }) => {
           : { latitude: selectedLocation.lat, longitude: selectedLocation.lng },
         ownerId: FIREBASE_AUTH.currentUser?.uid,
         quantity: Math.trunc(quantity),
-        category: selected,
+        category: selected?.type,
         completed: false,
-        visibility:true,
-        completed:false,
+        visibility: true,
+        completed: false,
         createdAt: serverTimestamp(),
+        points: points,
       });
       setVisibleAddModal(0);
     } catch (error) {
       console.log(error);
     }
   };
-
+  console.log(selected, quantity, unity, points);
   const toggleCheckbox = () => {
     setIsChecked(!isChecked);
   };
@@ -72,6 +74,17 @@ const AddModal = ({ recyclableItems, currentRegion, setVisibleAddModal }) => {
         setLocation(response.data.results[0].geometry.location);
       });
   };
+  const memorizePoints = useMemo(() => points, [points]);
+  useEffect(() => {
+    let withKg = quantity * selected.kiloPrice;
+    let withPeice = Math.trunc(quantity) * selected.PiecePrice;
+    if (unity === "kg") {
+      return setPoints(quantity * selected.kiloPrice);
+    }
+    if (unity === "piece") {
+      return setPoints(Math.trunc(quantity) * selected.PiecePrice);
+    }
+  }, [unity, quantity, selected]);
 
   return (
     <View style={styles.addModalContent}>
@@ -101,12 +114,12 @@ const AddModal = ({ recyclableItems, currentRegion, setVisibleAddModal }) => {
                   <TouchableOpacity
                     key={key}
                     onPress={() => {
-                      setSelected(item.type);
+                      setSelected(item);
                     }}
                   >
                     <Text
                       style={
-                        selected === item.type
+                        selected === item
                           ? {
                               padding: 10,
                               borderWidth: 1,
@@ -184,6 +197,80 @@ const AddModal = ({ recyclableItems, currentRegion, setVisibleAddModal }) => {
           <View
             style={{
               flexDirection: "row",
+              marginHorizontal: 50,
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Text>Unity</Text>
+            <TouchableOpacity
+              onPress={() => {
+                setUnity("kg");
+                // calculePoints();
+              }}
+              style={
+                unity === "kg"
+                  ? {
+                      backgroundColor: "#93C572",
+                      width: 50,
+                      padding: 5,
+                      borderRadius: 50,
+                    }
+                  : {
+                      backgroundColor: "white",
+                      width: 50,
+                      padding: 5,
+                      borderRadius: 50,
+                      borderWidth: 1,
+                    }
+              }
+            >
+              <Text
+                style={
+                  unity === "kg"
+                    ? { textAlign: "center", color: "white" }
+                    : { textAlign: "center", color: "black" }
+                }
+              >
+                kg
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setUnity("piece");
+                // calculePoints();
+              }}
+              style={
+                unity === "piece"
+                  ? {
+                      backgroundColor: "#93C572",
+                      width: 70,
+                      padding: 5,
+                      borderRadius: 50,
+                    }
+                  : {
+                      backgroundColor: "white",
+                      width: 70,
+                      padding: 5,
+                      borderRadius: 50,
+                      borderWidth: 1,
+                    }
+              }
+            >
+              <Text
+                style={
+                  unity === "piece"
+                    ? { textAlign: "center", color: "white" }
+                    : { textAlign: "center", color: "black" }
+                }
+              >
+                piece
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
               justifyContent: "space-between",
               paddingHorizontal: 10,
             }}
@@ -201,9 +288,11 @@ const AddModal = ({ recyclableItems, currentRegion, setVisibleAddModal }) => {
             thumbTintColor="#93C572"
             onValueChange={(value) => {
               setQuantite(value);
-              console.log(Math.trunc(quantity));
             }}
           />
+          <View>
+            <Text>Points : {points?.toFixed(2)}</Text>
+          </View>
           <TouchableOpacity>
             <Text
               onPress={() => {
@@ -236,7 +325,7 @@ const AddModal = ({ recyclableItems, currentRegion, setVisibleAddModal }) => {
 export default AddModal;
 const styles = StyleSheet.create({
   addModalContent: {
-    height: "80%",
+    height: "84%",
     backgroundColor: "white",
     padding: 22,
     justifyContent: "flex-start",
