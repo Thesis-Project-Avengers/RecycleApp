@@ -3,6 +3,7 @@ import React from 'react'
 import QRCode from 'react-native-qrcode-svg'
 
 const GenerateQr = () => {
+  
     const string ="yassine ya rjouli yassine ya 3sal"
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

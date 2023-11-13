@@ -183,12 +183,12 @@ export default function Map() {
   };
 
   const recyclableItems = [
-    { id: 1, type: "Aluminum Cans" },
-    { id: 2, type: "Glass Bottles" },
-    { id: 3, type: "Paper" },
-    { id: 4, type: "Plastic Bottles" },
-    { id: 5, type: "Cardboard Boxes" },
-    { id: 6, type: "Steel Cans" },
+    { id: 1, type: "Aluminum Cans",kiloPrice:20,PiecePrice:0.5 },
+    { id: 2, type: "Glass Bottles",kiloPrice:5,PiecePrice:0.3 },
+    { id: 3, type: "Paper",kiloPrice:7,PiecePrice:0.07 },
+    { id: 4, type: "Plastic Bottles",kiloPrice:100,PiecePrice:0.4 },
+    { id: 5, type: "Cardboard Boxes" ,kiloPrice:7,PiecePrice:0.2},
+    { id: 6, type: "Steel Cans",kiloPrice:7,PiecePrice:0.5 },
   ];
 
   const initialCamera = {
