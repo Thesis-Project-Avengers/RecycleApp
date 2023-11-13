@@ -26,8 +26,11 @@ import CommentsScreen from "./screens/CommentsScreen";
 import CollOmbording from "./components/CollOmbording";
 import TransactionScreen from "./screens/TransactionScreen";
 import SpecificChatScreen from "./screens/SpecificChatScreen";
+import ProfileVisitor from "./screens/ProfileVisitor";
 import MyCodeQr from "./screens/MyCodeQr";
 import ScanQR from "./screens/ScanQR";
+import AllstatsScreen from "./screens/AllstatsScreen";
+
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator();
 export default function App() {
@@ -56,7 +59,6 @@ export default function App() {
   React.useEffect(() => {
     fetch();
   }, []);
-
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -66,6 +68,12 @@ export default function App() {
         <Stack.Screen name="ombording" component={OnboardingScreen} />
         <Stack.Screen name="auth" component={AuthStack} />
         <Stack.Screen name="App" component={RealApp} />
+        <Stack.Screen
+          name="profileVisitor"
+          component={ProfileVisitor}
+          options={{ headerShown: true }}
+        />
+        <Stack.Screen name="allStatsScreen" component={AllstatsScreen} options={{headerShown:true,title:"Ranks",headerTitleAlign:"center"}} />
         <Stack.Screen name="Reviews" component={Reviews} options={{headerShown:true,title:"My Reviews",headerTitleAlign:"center"}} />
         <Stack.Screen name="QrScanner" component={ScanQR} />
         <Stack.Screen

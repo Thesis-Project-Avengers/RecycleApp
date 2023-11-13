@@ -7,7 +7,7 @@ import { FIREBASE_AUTH, FIREBASE_DB } from "../../firebaseConfig";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useCallback } from "react";
 import { useState } from "react";
-const UserProfileModal = ({ user }) => {
+const UserProfileModal = ({ user,setVisibleModal }) => {
   const navigation = useNavigation()
   const renderStars = (rating) => {
     const stars = [];
@@ -79,6 +79,7 @@ const UserProfileModal = ({ user }) => {
       <View style={{ flexDirection: "row", marginVertical: 10 }}>
         {renderStars(((user?.rating / (user?.nbrRaters * 5)*100)*0.05))}
       </View>
+      <TouchableOpacity  onPress={(()=>{navigation.navigate("profileVisitor",user={user});setVisibleModal(0)})} >
       <Text
         style={{
           padding: 10,
@@ -90,6 +91,7 @@ const UserProfileModal = ({ user }) => {
       >
         View Profile
       </Text>
+      </TouchableOpacity>
     </View>
   );
 };
