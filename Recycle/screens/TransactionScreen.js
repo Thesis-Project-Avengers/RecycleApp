@@ -11,7 +11,7 @@ import {
 import { useState } from "react";
 import { useEffect } from "react";
 import { useFocusEffect } from "@react-navigation/native";
-import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import { collection, doc, getDocs, onSnapshot, updateDoc } from "firebase/firestore";
 
 const TransactionScreen = () => {
   const [requests, setRquests] = useState([]);
@@ -20,8 +20,8 @@ const TransactionScreen = () => {
     useCallback(() => {
       const fetchRequests = async () => {
         const requestsCollectionRef = collection(FIREBASE_DB, "requests");
-        await getDocs(requestsCollectionRef).then((sanpshot) => {
-          let data = [];
+        let data = [];
+        onSnapshot(requestsCollectionRef, (sanpshot) => {
           sanpshot.docs.forEach((doc) => {
             if (
               doc.data().receiverId === FIREBASE_AUTH.currentUser?.uid &&
@@ -31,7 +31,19 @@ const TransactionScreen = () => {
             }
           });
           setRquests(data);
-        });
+        })
+        // await getDocs(requestsCollectionRef).then((sanpshot) => {
+        //   let data = [];
+        //   sanpshot.docs.forEach((doc) => {
+        //     if (
+        //       doc.data().receiverId === FIREBASE_AUTH.currentUser?.uid &&
+        //       doc.data().status === "pending"
+        //     ) {
+        //       data.push({ ...doc.data(), id: doc.id });
+        //     }
+        //   });
+        //   setRquests(data);
+        // });
       };
       fetchRequests();
     }, [])
@@ -61,11 +73,11 @@ const TransactionScreen = () => {
       await updateDoc(docref, {
         status: "done",
       });
-      const rejectedRequests = requests.filter((r) => {
-        return r.senderId !== request.senderId;
-      });
-      setRquests(rejectedRequests);
-      console.log(rejectedRequests);
+      // const rejectedRequests = requests.filter((r) => {
+      //   return r.senderId !== request.senderId;
+      // });
+      // setRquests(rejectedRequests);
+      // console.log(rejectedRequests);
       rejectedRequests.forEach((req) => {
         if (request?.markerId === req?.markerId) {
           set(
@@ -107,10 +119,10 @@ const TransactionScreen = () => {
       await updateDoc(docref, {
         status: "rejected",
       });
-      const rejectedRequests = requests.filter((r) => {
-        return r.senderId !== request.senderId;
-      });
-      setRquests(rejectedRequests);
+      // const rejectedRequests = requests.filter((r) => {
+      //   return r.senderId !== request.senderId;
+      // });
+      // setRquests(rejectedRequests);
     } catch (error) {
       console.log(error);
     }

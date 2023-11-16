@@ -28,6 +28,7 @@ import TransactionScreen from "./screens/TransactionScreen";
 import SpecificChatScreen from "./screens/SpecificChatScreen";
 import MyCodeQr from "./screens/MyCodeQr";
 import ScanQR from "./screens/ScanQR";
+import UserFavouritesTipsScreen from "./screens/UserFavouritesTipsScreen";
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator();
 export default function App() {
@@ -66,7 +67,7 @@ export default function App() {
         <Stack.Screen name="ombording" component={OnboardingScreen} />
         <Stack.Screen name="auth" component={AuthStack} />
         <Stack.Screen name="App" component={RealApp} />
-        <Stack.Screen name="Reviews" component={Reviews} options={{headerShown:true,title:"My Reviews",headerTitleAlign:"center"}} />
+        <Stack.Screen name="Reviews" component={Reviews} options={{ headerShown: true, title: "My Reviews", headerTitleAlign: "center" }} />
         <Stack.Screen name="QrScanner" component={ScanQR} />
         <Stack.Screen
           name="specificChat"
@@ -95,7 +96,7 @@ export const AuthStack = () => {
     </Stack.Navigator>
   );
 };
-export const RealApp = ({route}) => {
+export const RealApp = ({ route }) => {
   // console.log(route.params.first);
   return (
     <Tab.Navigator
@@ -110,10 +111,10 @@ export const RealApp = ({route}) => {
         activeTintColor: "white",
         inactiveTintColor: "#222222",
       }}
-      
+
     >
       <Tab.Screen
-       initialParams={{first:route.params?.first}}
+        initialParams={{ first: route.params?.first }}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Icon
@@ -121,7 +122,7 @@ export const RealApp = ({route}) => {
               size={size ? size : 24}
               color={focused ? color : "#222222"}
               focused={focused}
-              // color={color}
+            // color={color}
             />
           ),
         }}
@@ -204,6 +205,11 @@ export const ProfileStack = () => {
       <Stack.Screen
         name="mycodeQr"
         component={MyCodeQr}
+        options={{ headerShown: true, title: "My Transaction" }}
+      />
+       <Stack.Screen
+        name="myFavourites"
+        component={UserFavouritesTipsScreen}
         options={{ headerShown: true, title: "My Transaction" }}
       />
     </Stack.Navigator>
