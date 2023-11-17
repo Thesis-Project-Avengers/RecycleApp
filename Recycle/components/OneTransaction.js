@@ -78,7 +78,7 @@ const OneTransaction = ({ request, handleAccept, handleRefuse }) => {
               <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                 <Icon1 name="calendar" color="#93C572" size={17} />
                 <Text>
-                  {request.createdAt?.toDate().toString().slice(15, 18) > 12 ? request.createdAt?.toDate().toString().slice(15, 21) + " PM" : request.createdAt?.toDate().toString().slice(15, 21) + " AM"}
+                  {request?.createdAt?.toDate().toString().slice(15, 18) > 12 ? request?.createdAt?.toDate().toString().slice(15, 21) + " PM" : request?.createdAt?.toDate().toString().slice(15, 21) + " AM"}
                 </Text>
               </View>
             </View>
@@ -98,7 +98,7 @@ const OneTransaction = ({ request, handleAccept, handleRefuse }) => {
       </View>
 
 
-      
+
       {/* Hr Line */}
       <View style={{ backgroundColor: "black", height: 1, opacity: 0.1 }}>
       </View>
