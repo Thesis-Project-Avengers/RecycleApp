@@ -65,30 +65,15 @@ export default function App() {
   }, []);
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName={"App"}
-        screenOptions={{ headerShown: false }}
-      >
+      <Stack.Navigator initialRouteName={"App"} screenOptions={{ headerShown: false }} >
         <Stack.Screen name="ombording" component={OnboardingScreen} />
         <Stack.Screen name="auth" component={AuthStack} />
         <Stack.Screen name="App" component={RealApp} />
-
         <Stack.Screen name="Reviews" component={Reviews} options={{ headerShown: true, title: "My Reviews", headerTitleAlign: "center" }} />
-
-        <Stack.Screen
-          name="profileVisitor"
-          component={ProfileVisitor}
-          options={{ headerShown: true }}
-        />
-        <Stack.Screen name="allStatsScreen" component={AllstatsScreen} options={{headerShown:true,title:"Ranks",headerTitleAlign:"center"}} />
-        <Stack.Screen name="Reviews" component={Reviews} options={{headerShown:true,title:"My Reviews",headerTitleAlign:"center"}} />
-
+        <Stack.Screen name="profileVisitor" component={ProfileVisitor} options={{ headerShown: true }} />
+        <Stack.Screen name="allStatsScreen" component={AllstatsScreen} options={{ headerShown: true, title: "Ranks", headerTitleAlign: "center" }} />
         <Stack.Screen name="QrScanner" component={ScanQR} />
-        <Stack.Screen
-          name="specificChat"
-          component={SpecificChatScreen}
-          options={{ headerShown: true, title: "" }}
-        />
+        <Stack.Screen name="specificChat" component={SpecificChatScreen} options={{ headerShown: true, title: "" }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
