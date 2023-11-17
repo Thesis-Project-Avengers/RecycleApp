@@ -85,7 +85,7 @@ const InfoOfModal = ({
         receiverId: currentInformation?.ownerId,
         status: "pending",
         markerId: currentInformation?.id,
-        createdAt: serverTimestamp()
+        createdAt: new Date()
       });
     } catch (error) {
       console.log("in handleRequest ");
@@ -98,9 +98,9 @@ const InfoOfModal = ({
         ref(
           FIREBASE_REALTIME_DB,
           "requests/" +
-            currentInformation?.id +
-            "/" +
-            FIREBASE_AUTH.currentUser?.uid
+          currentInformation?.id +
+          "/" +
+          FIREBASE_AUTH.currentUser?.uid
         ),
         {
           senderId: FIREBASE_AUTH.currentUser?.uid,
@@ -113,9 +113,9 @@ const InfoOfModal = ({
       const requestsRef = ref(
         FIREBASE_REALTIME_DB,
         "requests/" +
-          currentInformation?.id +
-          "/" +
-          FIREBASE_AUTH.currentUser?.uid
+        currentInformation?.id +
+        "/" +
+        FIREBASE_AUTH.currentUser?.uid
       );
       onChildAdded(requestsRef, (snapshot) => {
         const data = snapshot.val();
@@ -164,14 +164,16 @@ const InfoOfModal = ({
 
   return (
     <View style={styles.Content}>
-      <View style={{alignSelf:"flex-end",flexDirection:"row",alignItems:"center",gap:10}}>
+      <View style={{ alignSelf: "flex-end", flexDirection: "row", alignItems: "center", gap: 10 }}>
         <Text style={{ fontSize: 25 }}>
           {currentInformation?.points}
         </Text>
         <Image
           source={require("../../assets/coin.png")}
-          style={{ width: 20,
-            height: 20}}
+          style={{
+            width: 20,
+            height: 20
+          }}
         />
       </View>
       <View
