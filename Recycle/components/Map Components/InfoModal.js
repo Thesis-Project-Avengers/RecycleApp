@@ -54,7 +54,7 @@ const getUserInfo = async ()=>{
            getSelectedInformation={getSelectedInformation}
            selectedPos={selectedPos}
         />
-        <UserProfileModal user={user}/>
+        <UserProfileModal  setVisibleModal={setVisibleModal}    user={user}/>
       </Swiper>
     </View>
   );

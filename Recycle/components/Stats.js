@@ -1,15 +1,15 @@
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { View, Text, StyleSheet, Image, Animated } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
+import { View, Text, StyleSheet, Image, Animated, TouchableOpacity } from "react-native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { collection, getDocs, orderBy } from "firebase/firestore";
 import { FIREBASE_DB } from "../firebaseConfig";
 import { query } from "firebase/database";
 
 const Stats = ({ users }) => {
+  const navigation=useNavigation()
   // const [images, setImages] = useState([]);
 
-  const val = 20;
 
   const images = [users[0]?.photoURL, users[1]?.photoURL, users[2]?.photoURL];
 
@@ -34,8 +34,11 @@ const Stats = ({ users }) => {
 
   return (
     <View style={{ width: "100%", padding: 20 }}>
-      <View style={{ marginBottom: 20 }}>
+      <View style={{ marginBottom: 20,flexDirection:"row",justifyContent:"space-between" }}>
         <Text>Collector Stats</Text>
+        <TouchableOpacity onPress={()=>{navigation.navigate("allStatsScreen")}} >
+        <Text  style={{color:"#93C572"}} >View All</Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.container}>
         {users.map((user, index) => {
