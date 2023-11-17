@@ -65,7 +65,7 @@ const ProfileVisitor = ({ route }) => {
         <View style={styles.header}>
           <Icon3 name="arrow-back-ios" size={30} />
           <Text style={{ fontSize: 17 }}>ProfileVisitor</Text>
-          <TouchableOpacity onPress={()=>{navigation.navigate("report")}}>
+          <TouchableOpacity onPress={()=>{navigation.navigate("report",{user})}}>
           
               <Icon2 name="megaphone" size={30} color={"red"} />
       
