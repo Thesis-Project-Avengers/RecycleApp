@@ -63,9 +63,11 @@ const ProfileVisitor = ({ route }) => {
         contentContainerStyle={{ padding: 20, height: "auto" }}
       >
         <View style={styles.header}>
+          <TouchableOpacity onPress={()=>{navigation.navigate("App")}} >
           <Icon3 name="arrow-back-ios" size={30} />
+          </TouchableOpacity>
           <Text style={{ fontSize: 17 }}>ProfileVisitor</Text>
-          <TouchableOpacity onPress={()=>{navigation.navigate("report")}}>
+          <TouchableOpacity onPress={()=>{navigation.navigate("report",{user})}}>
           
               <Icon2 name="megaphone" size={30} color={"red"} />
       
