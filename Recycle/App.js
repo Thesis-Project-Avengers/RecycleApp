@@ -205,12 +205,12 @@ export const ProfileStack = () => {
       <Stack.Screen
         name="mycodeQr"
         component={MyCodeQr}
-        options={{ headerShown: true, title: "My Transaction" }}
+        options={{ headerShown: true, title: "My Transaction", headerTitleAlign: "center" }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="myFavourites"
         component={UserFavouritesTipsScreen}
-        options={{ headerShown: true, title: "My Transaction" }}
+        options={{ headerShown: true, title: "My Favourites", headerTitleAlign: "center" }}
       />
     </Stack.Navigator>
   );

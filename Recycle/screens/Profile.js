@@ -13,7 +13,7 @@ import Icon2 from "react-native-vector-icons/FontAwesome5";
 import Icon3 from "react-native-vector-icons/FontAwesome5";
 import Icon4 from "react-native-vector-icons/Entypo";
 import Icon5 from "react-native-vector-icons/AntDesign";
-// import Icon6 from "react-native-vector-icons/FontAwesome6";
+import Icon6 from "react-native-vector-icons/Fontisto";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
 import { useFocusEffect } from "@react-navigation/native";
 import {
@@ -164,8 +164,8 @@ const Profile = ({ navigation }) => {
               <Text style={{ fontSize: 17 }}>My Transactions</Text>
             </TouchableOpacity>
           </View>
-          <View style={styles.oneButton}>
-            <Icon5 name="qrcode" size={20} color={"#93C572"} />
+          <View style={[styles.oneButton, { marginLeft: 5 }]}>
+            <Icon6 name="favorite" size={20} color={"#93C572"} />
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate("myFavourites");
