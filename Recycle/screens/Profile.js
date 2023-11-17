@@ -84,7 +84,7 @@ const Profile = ({ navigation }) => {
           /> */}
           </View>
           {/* {userProfileInfo.type==="collector"?<Icon6 name="person-walking-arrow-loop-left"size={45} color={"#93C572"}/>:<Icon6  name="person-walking-arrow-right" size={45} color={"#93C572"}/>}  */}
-
+            <TouchableOpacity onPress={()=>{navigation.navigate("convertion")}}  >
           <View style={styles.points}>
             <Text style={{ textAlign: "center", color: "white", fontSize: 16 }}>
               {userProfileInfo?.points}
@@ -95,6 +95,7 @@ const Profile = ({ navigation }) => {
               style={styles.imageCoin}
             />
           </View>
+          </TouchableOpacity>
         </View>
         <View style={styles.imageTextName}>
           <Image

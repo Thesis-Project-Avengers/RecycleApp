@@ -33,6 +33,11 @@ import ScanQR from "./screens/ScanQR";
 import UserFavouritesTipsScreen from "./screens/UserFavouritesTipsScreen";
 
 import AllstatsScreen from "./screens/AllstatsScreen";
+import ConvertionScrenn from "./screens/ConvertionScrenn";
+import { View } from "react-native-animatable";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { Image, Text } from "react-native-elements";
+import ReportScreen from "./screens/ReportScreen";
 
 
 const Stack = createNativeStackNavigator();
@@ -70,10 +75,11 @@ export default function App() {
         <Stack.Screen name="auth" component={AuthStack} />
         <Stack.Screen name="App" component={RealApp} />
         <Stack.Screen name="Reviews" component={Reviews} options={{ headerShown: true, title: "My Reviews", headerTitleAlign: "center" }} />
-        <Stack.Screen name="profileVisitor" component={ProfileVisitor} options={{ headerShown: true }} />
+        <Stack.Screen name="profileVisitor" component={ProfileVisitor} options={{ headerShown: false }} />
         <Stack.Screen name="allStatsScreen" component={AllstatsScreen} options={{ headerShown: true, title: "Ranks", headerTitleAlign: "center" }} />
         <Stack.Screen name="QrScanner" component={ScanQR} />
         <Stack.Screen name="specificChat" component={SpecificChatScreen} options={{ headerShown: true, title: "" }} />
+        <Stack.Screen name="report" component={ReportScreen} options={{headerShown:true}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -111,7 +117,6 @@ export const RealApp = ({ route }) => {
         activeTintColor: "white",
         inactiveTintColor: "#222222",
       }}
-
     >
       <Tab.Screen
         initialParams={{ first: route.params?.first }}
@@ -212,6 +217,11 @@ export const ProfileStack = () => {
         component={UserFavouritesTipsScreen}
         options={{ headerShown: true, title: "My Favourites", headerTitleAlign: "center" }}
       />
+      <Stack.Screen
+        name="convertion"
+        options={{ headerShown: true }}
+        component={ConvertionScrenn}
+      />
     </Stack.Navigator>
   );
 };
@@ -220,6 +230,8 @@ export const TipsStack = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="tipsMain" component={TipsScreen} />
+
+     
       <Stack.Screen
         name="commentScreen"
         component={CommentsScreen}
@@ -232,5 +244,3 @@ export const TipsStack = () => {
     </Stack.Navigator>
   );
 };
-
-
