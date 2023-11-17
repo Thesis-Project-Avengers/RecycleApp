@@ -30,6 +30,7 @@ import ProfileVisitor from "./screens/ProfileVisitor";
 import MyCodeQr from "./screens/MyCodeQr";
 import ScanQR from "./screens/ScanQR";
 import AllstatsScreen from "./screens/AllstatsScreen";
+import ConvertionScrenn from "./screens/ConvertionScrenn";
 
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator();
@@ -214,6 +215,7 @@ export const ProfileStack = () => {
         component={MyCodeQr}
         options={{ headerShown: true, title: "My Transaction" }}
       />
+      <Stack.Screen name="convertion" options={{headerShown:true}} component={ConvertionScrenn}/>
     </Stack.Navigator>
   );
 };
