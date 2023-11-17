@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView, Image, Touchable, TouchableOpacity, ActivityIndicator, TextInput ,TouchableWithoutFeedback} from 'react-native'
+import { View, Text, StyleSheet, ScrollView, Image, Touchable, TouchableOpacity, ActivityIndicator, TextInput, TouchableWithoutFeedback } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { FloatingAction } from 'react-native-floating-action'
@@ -7,7 +7,7 @@ import * as ImagePicker from 'expo-image-picker';
 import uuid from "uuid"
 import OneTip from '../components/OneTip'
 import { FIREBASE_AUTH, FIREBASE_DB, FIREBASE_STORAGE } from '../firebaseConfig'
-import { addDoc, collection, getDocs, orderBy, query, serverTimestamp } from 'firebase/firestore'
+import { addDoc, collection, getDocs, onSnapshot, orderBy, query, serverTimestamp } from 'firebase/firestore'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { useFocusEffect } from '@react-navigation/native';
@@ -25,9 +25,9 @@ const TipsScreen = () => {
     useFocusEffect(useCallback(() => {
         const refrence = collection(FIREBASE_DB, "Tips")
         const q = query(refrence, orderBy("createdAt", "desc"));
-        getDocs(q).then((querySnapshot) => {
+        onSnapshot(q, (querySnapshot) => {
             const tipsData = [];
-            querySnapshot.forEach((doc) => {
+            querySnapshot.docs.forEach((doc) => {
                 const data = { id: doc.id, ...doc.data() }
                 tipsData.push(data);
             });
@@ -114,15 +114,9 @@ const TipsScreen = () => {
                     showsVerticalScrollIndicator={false}
                 >
                     {/* take me to the collectorProfile */}
-                    {tips.map((tip) => 
-                     <TouchableWithoutFeedback
-                     key={tip.id}
-                     onPress={() => {
-                        navigation.navigate("ProfileCollector");
-                      }}
-                   >
-                    <OneTip  tip={tip} />
-                    </TouchableWithoutFeedback>
+                    {tips.map((tip, index) =>
+
+                        <OneTip key={index} tip={tip} />
                     )}
 
                 </ScrollView>

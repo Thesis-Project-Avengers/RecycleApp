@@ -29,12 +29,16 @@ import SpecificChatScreen from "./screens/SpecificChatScreen";
 import ProfileVisitor from "./screens/ProfileVisitor";
 import MyCodeQr from "./screens/MyCodeQr";
 import ScanQR from "./screens/ScanQR";
+
+import UserFavouritesTipsScreen from "./screens/UserFavouritesTipsScreen";
+
 import AllstatsScreen from "./screens/AllstatsScreen";
 import ConvertionScrenn from "./screens/ConvertionScrenn";
 import { View } from "react-native-animatable";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Image, Text } from "react-native-elements";
 import ReportScreen from "./screens/ReportScreen";
+
 
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator();
@@ -66,46 +70,16 @@ export default function App() {
   }, []);
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName={"App"}
-        screenOptions={{ headerShown: false }}
-      >
+      <Stack.Navigator initialRouteName={"App"} screenOptions={{ headerShown: false }} >
         <Stack.Screen name="ombording" component={OnboardingScreen} />
         <Stack.Screen name="auth" component={AuthStack} />
         <Stack.Screen name="App" component={RealApp} />
-        <Stack.Screen
-          name="profileVisitor"
-          component={ProfileVisitor}
-          // options={{
-          //   headerShown: true,
-           
-          // }}
-        />
-        <Stack.Screen
-          name="allStatsScreen"
-          component={AllstatsScreen}
-          options={{
-            headerShown: true,
-            title: "Ranks",
-            headerTitleAlign: "center",
-          }}
-        />
-        <Stack.Screen
-          name="Reviews"
-          component={Reviews}
-          options={{
-            headerShown: true,
-            title: "My Reviews",
-            headerTitleAlign: "center",
-          }}
-        />
+        <Stack.Screen name="Reviews" component={Reviews} options={{ headerShown: true, title: "My Reviews", headerTitleAlign: "center" }} />
+        <Stack.Screen name="profileVisitor" component={ProfileVisitor} options={{ headerShown: false }} />
+        <Stack.Screen name="allStatsScreen" component={AllstatsScreen} options={{ headerShown: true, title: "Ranks", headerTitleAlign: "center" }} />
         <Stack.Screen name="QrScanner" component={ScanQR} />
-        <Stack.Screen
-          name="specificChat"
-          component={SpecificChatScreen}
-          options={{ headerShown: true, title: "" }}
-        />
-      <Stack.Screen name="report" component={ReportScreen} options={{headerShown:true}}/>
+        <Stack.Screen name="specificChat" component={SpecificChatScreen} options={{ headerShown: true, title: "" }} />
+        <Stack.Screen name="report" component={ReportScreen} options={{headerShown:true}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -153,7 +127,7 @@ export const RealApp = ({ route }) => {
               size={size ? size : 24}
               color={focused ? color : "#222222"}
               focused={focused}
-              // color={color}
+            // color={color}
             />
           ),
         }}
@@ -236,7 +210,12 @@ export const ProfileStack = () => {
       <Stack.Screen
         name="mycodeQr"
         component={MyCodeQr}
-        options={{ headerShown: true, title: "My Transaction" }}
+        options={{ headerShown: true, title: "My Transaction", headerTitleAlign: "center" }}
+      />
+      <Stack.Screen
+        name="myFavourites"
+        component={UserFavouritesTipsScreen}
+        options={{ headerShown: true, title: "My Favourites", headerTitleAlign: "center" }}
       />
       <Stack.Screen
         name="convertion"

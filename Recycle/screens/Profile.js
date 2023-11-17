@@ -13,7 +13,7 @@ import Icon2 from "react-native-vector-icons/FontAwesome5";
 import Icon3 from "react-native-vector-icons/FontAwesome5";
 import Icon4 from "react-native-vector-icons/Entypo";
 import Icon5 from "react-native-vector-icons/AntDesign";
-// import Icon6 from "react-native-vector-icons/FontAwesome6";
+import Icon6 from "react-native-vector-icons/Fontisto";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
 import { useFocusEffect } from "@react-navigation/native";
 import {
@@ -42,14 +42,12 @@ const Profile = ({ navigation }) => {
           );
           await getDoc(userDocRef).then((user) => {
             setProfileInfo(user.data());
-            // setForm({ firstName: user.data().firstName, lastName: user.data().lastName, email: user.data().email, photoURL: user.data().photoURL })
           });
         } catch (error) {
           console.log(error);
         }
       };
-      const getReviewoFcurentUser = async () => {
-        // console.log("inside secndond fucn", FIREBASE_AUTH.currentUser?.uid);
+      const getReviewOfCurentUser = async () => {
         try {
           const userCollectionRef = collection(FIREBASE_DB, "reviews");
           const q = query(
@@ -57,14 +55,12 @@ const Profile = ({ navigation }) => {
             where("to", "==", FIREBASE_AUTH.currentUser?.uid)
           );
           await getDocs(q).then((snapshot) => {
-            console.log(snapshot.docs, "hi");
             const data = [];
             snapshot.docs.forEach((doc, index) => {
               if (index < 2) {
                 data.push({ id: doc.id, ...doc.data() });
               }
             });
-            // setihookreviews
             setReviews(data);
           });
         } catch (error) {
@@ -73,7 +69,8 @@ const Profile = ({ navigation }) => {
       };
 
       getUser();
-      getReviewoFcurentUser();
+      getReviewOfCurentUser();
+
     }, [])
   );
   return (
@@ -106,7 +103,7 @@ const Profile = ({ navigation }) => {
             style={styles.imageProfile}
           />
           <Text style={styles.textName}>{userProfileInfo?.displayName}</Text>
-          
+
           <RatingProfile userProfileInfo={userProfileInfo} />
 
           {/* badge w rating  */}
@@ -145,12 +142,17 @@ const Profile = ({ navigation }) => {
             showsHorizontalScrollIndicator={false}
           >
             {
-            reviews.map((review,index) => (
-              <OneReview key={index} review={review} />
-            ))
+              reviews.map((review, index) => (
+                <OneReview key={index} review={review} />
+              ))
             }
           </ScrollView>
         </View>
+
+
+
+
+        {/* Here The Favourites Tips  */}
 
         <View style={{ marginBottom: 25 }}>
           <View style={styles.oneButton}>
@@ -163,6 +165,19 @@ const Profile = ({ navigation }) => {
               <Text style={{ fontSize: 17 }}>My Transactions</Text>
             </TouchableOpacity>
           </View>
+          <View style={[styles.oneButton, { marginLeft: 5 }]}>
+            <Icon6 name="favorite" size={20} color={"#93C572"} />
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("myFavourites");
+              }}
+            >
+              <Text style={{ fontSize: 17 }}>My Favourites</Text>
+            </TouchableOpacity>
+          </View>
+
+
+
           <View style={styles.oneButton}>
             <Icon5 name="qrcode" size={20} color={"#93C572"} />
             <TouchableOpacity
