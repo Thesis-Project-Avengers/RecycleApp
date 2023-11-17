@@ -10,7 +10,7 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import { set, ref, onChildChanged, onChildAdded, off } from "firebase/database";
+import { set, ref, onChildChanged, onChildAdded, off, serverTimestamp } from "firebase/database";
 import {
   FIREBASE_AUTH,
   FIREBASE_DB,
@@ -85,6 +85,7 @@ const InfoOfModal = ({
         receiverId: currentInformation?.ownerId,
         status: "pending",
         markerId: currentInformation?.id,
+        createdAt: serverTimestamp()
       });
     } catch (error) {
       console.log("in handleRequest ");
