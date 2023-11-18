@@ -4,8 +4,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Feather";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+
 const HomeHeader = () => {
+  const navigation = useNavigation()
   const [user, setUser] = useState({})
   useFocusEffect(useCallback(() => {
     FIREBASE_AUTH.onAuthStateChanged(user => {
@@ -39,19 +41,18 @@ const HomeHeader = () => {
           </Text>
         </View>
       </View>
-      <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
+      <TouchableOpacity style={{ flexDirection: "row", gap: 5 }} onPress={()=>{navigation.navigate("store")}}>
+        
         <View style={styles.point}>
-          <Text style={{ fontSize: 15, color: "#fff" }}>{user.points}</Text>
-          <Image source={require("../assets/coin.png")} style={styles.imageCoin} />
-
+          {/* <Text style={{ fontSize: 15, color: "#fff" }}>{user.points}</Text> */}
+          {/* <Image source={require("../assets/coin.png")} style={styles.imageCoin} /> */}
+          <Icon name="shopping-cart"  size={25} color={'#93C572'}/>
         </View>
       </TouchableOpacity>
     </SafeAreaView>
   );
 };
-
 export default HomeHeader;
-
 const styles = StyleSheet.create({
   headerContainerHome: {
     flexDirection: "row",
@@ -84,11 +85,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 40,
-    backgroundColor: "#93C572",
+    // backgroundColor: "#93C572",
     position: "relative",
     zIndex: -1,
     flexDirection: "row",
-    gap: 5
+    gap: 7
   },
   imageCoin: {
     width: 20,

@@ -38,6 +38,7 @@ import { View } from "react-native-animatable";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Image, Text } from "react-native-elements";
 import ReportScreen from "./screens/ReportScreen";
+import StoreScreen from "./screens/StoreScreen";
 
 
 const Stack = createNativeStackNavigator();
@@ -80,6 +81,7 @@ export default function App() {
         <Stack.Screen name="QrScanner" component={ScanQR} />
         <Stack.Screen name="specificChat" component={SpecificChatScreen} options={{ headerShown: true, title: "" }} />
         <Stack.Screen name="report" component={ReportScreen} options={{headerShown:true}}/>
+      <Stack.Screen name="store" component={StoreScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

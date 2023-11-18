@@ -1,42 +1,23 @@
-import { Animated, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useFocusEffect } from "@react-navigation/native";
-import { useCallback } from "react";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
-import { useState } from "react";
-import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { useRef } from "react";
-import { useEffect } from "react";
+import { View, StyleSheet, Image, Text } from "react-native";
+import {FIREBASE_AUTH, FIREBASE_DB} from "../firebaseConfig"
 
 const AllstatsScreen = () => {
-    const [collectorsUsers, setCollectorsUsers] = useState([]);
-    const [accumulatorsUsers, setAccumulatorUsers] = useState([]);
-    const [color,setColor]=useState(false)
-    console.log(color);
-    // const [images,setImages]=useState([])
-    // console.log(collectorsUsers);
-    
+  const [allUsers, setAllUsers] = useState([]);
   useFocusEffect(
-    useCallback(() => {
+    React.useCallback(() => {
       const fetchUsers = async () => {
         try {
           const usersReference = collection(FIREBASE_DB, "users");
           const q = query(usersReference, orderBy("rating", "desc"));
-          let collector = [];
-          let accumulator = [];
+          let users = [];
           await getDocs(q).then((snapshot) => {
-            snapshot.docs.forEach((doc, index) => {
-              if (doc.data()?.type === "collector") {
-                collector.push({ ...doc.data(), id: doc.id });
-              }
-              if (doc.data()?.type === "accumulator") {
-                accumulator.push({ ...doc.data(), id: doc.id });
-              }
-            
+            snapshot.docs.forEach((doc) => {
+              users.push({ ...doc.data(), id: doc.id });
             });
-            setCollectorsUsers(collector);
-            setAccumulatorUsers(accumulator);
+            setAllUsers(users);
           });
         } catch (error) {
           console.log(error);
@@ -45,55 +26,46 @@ const AllstatsScreen = () => {
       fetchUsers();
     }, [])
   );
-  const images = [collectorsUsers[0]?.photoURL, collectorsUsers[1]?.photoURL, collectorsUsers[2]?.photoURL];
 
-
-
-  const animatedValues = useRef(
-    images.map(() => {
-      return new Animated.Value(0);
-    })
-  ).current;
-  console.log("thisanimated values  ", animatedValues);
-
-  useEffect(() => {
-    const animations = animatedValues.map((value, index) =>
-      Animated.timing(value, {
-        toValue: 1,
-        duration: 5500, // Animation duration in milliseconds
-        useNativeDriver: false,
-      })
-    );
-
-    Animated.stagger(200, animations).start();
-  }, []);
   return (
-    <View style={{ width: "100%", padding: 20 }}>
+    <View style={{ width: "100%", padding: 20,gap:30 }}>
+      <View style={{flexDirection:"row",justifyContent:"space-around",padding:10}}> 
+            <View style={{flexDirection:"row",gap:10,alignItems:"center"}}>
+              <View style={{width:20,height:20,backgroundColor:"#93C572",borderRadius:10}}></View>
+              <Text>Collector</Text>
+            </View>
+            <View style={{flexDirection:"row",gap:10,alignItems:"center"}}>
+              <View style={{width:20,height:20,backgroundColor:"orange",borderRadius:10}}></View>
+              <Text>Accumulator</Text>
+            </View>
+            <View style={{flexDirection:"row",gap:10,alignItems:"center"}}>
+              <View style={{width:20,height:20,backgroundColor:"lightgrey",borderRadius:10}}></View>
+              <Text>You</Text>
+            </View>
+            
+
+
+      </View>
+
+
       <View style={styles.container}>
-        {collectorsUsers.map((user, index) => {
-          let score = (((user?.rating / (user?.nbrRaters * 5)) * 100)*230)/100
+        {allUsers.map((user, index) => {
+          let score = (((user?.rating / (user?.nbrRaters * 5)) * 100) * 230) / 100;
           return (
             <View key={index} style={styles.barContainer}>
-              <Animated.View
+              <View
                 style={[
                   styles.bar,
                   {
                     height: 30,
-                    width: animatedValues[index]?.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [0, score],
-                    }),
+                    width: score,
+                    backgroundColor: user.uid===FIREBASE_AUTH.currentUser.uid? "lightgrey"  :user?.type==="collector"?"#93C572":"orange"
                   },
                 ]}
               />
-              <Animated.Image
-                source={{ uri: images[index] }}
-                style={[
-                  styles.image,
-                  {
-                    opacity: animatedValues[index],
-                  },
-                ]}
+              <Image
+                source={{ uri: user.photoURL }}
+                style={styles.image}
               />
             </View>
           );
@@ -106,30 +78,28 @@ const AllstatsScreen = () => {
 export default AllstatsScreen;
 
 const styles = StyleSheet.create({
-    container: {
-      backgroundColor: "#eee",
-      flexDirection: "column",
-      alignItems: "flex-end",
-      gap: 15,
-    },
-    barContainer: {
-      flexDirection: "row",
-      width: "100%",
-      alignItems: "center",
-      gap: 20,
-      marginRight: 10,
-    },
-    bar: {
-      backgroundColor: "#93C572",
-      borderTopRightRadius: 15,
-      borderBottomRightRadius: 15,
-    },
-    image: {
-      width: 30,
-      height: 30,
-      resizeMode: "contain",
-      marginBottom: 5,
-      borderRadius: 50,
-    },
-  });
-  
+  container: {
+    flexDirection: "column",
+    alignItems: "flex-end",
+    gap: 15,
+  },
+  barContainer: {
+    flexDirection: "row",
+    width: "100%",
+    alignItems: "center",
+    gap: 20,
+    marginRight: 10,
+  },
+  bar: {
+   
+    borderTopRightRadius: 15,
+    borderBottomRightRadius: 15,
+  },
+  image: {
+    width: 30,
+    height: 30,
+    resizeMode: "contain",
+    marginBottom: 5,
+    borderRadius: 50,
+  },
+});

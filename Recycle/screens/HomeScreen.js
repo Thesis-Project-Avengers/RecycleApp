@@ -30,10 +30,7 @@ const HomeScreen = ({ navigation, route }) => {
   const [collectorsUsers, setCollectorsUsers] = useState([]);
   const [accumulatorsUsers, setAccumulatorUsers] = useState([]);
   const [welcome, setWelcome] = useState(route.params?.first);
-  // const [welcome, setWelcome] = useState(true);
   const [isConfettiVisible, setConfettiVisible] = useState(false);
-
-  // console.log("params", route.params?.first);
 
   useFocusEffect(
     useCallback(() => {
@@ -45,7 +42,7 @@ const HomeScreen = ({ navigation, route }) => {
           let accumulator = [];
           await getDocs(q).then((snapshot) => {
             snapshot.docs.forEach((doc, index) => {
-              if (index < 3) {
+              if (collector.length < 3 && accumulator.length < 3) {
                 if (doc.data()?.type === "collector") {
                   collector.push({ ...doc.data(), id: doc.id });
                 }
@@ -73,7 +70,7 @@ const HomeScreen = ({ navigation, route }) => {
     setTimeout(() => {
       setConfettiVisible(false);
       setWelcome(true);
-    }, 5000); // Adjust the delay as needed
+    }, 2000); // Adjust the delay as needed
   };
 
   return (
@@ -122,7 +119,7 @@ const HomeScreen = ({ navigation, route }) => {
               <FontAwesomeIcon icon={faGift} size={30} color="green" bounce />
             </Animatable.View>
           </TouchableOpacity>
-          <Text s>Claim Your First Points</Text>
+          <Text >Claim Your First Points</Text>
         </View>
       </Modal>
       {isConfettiVisible && (

@@ -35,7 +35,7 @@ const Stats = ({ users }) => {
   return (
     <View style={{ width: "100%", padding: 20 }}>
       <View style={{ marginBottom: 20,flexDirection:"row",justifyContent:"space-between" }}>
-        <Text>Collector Stats</Text>
+        <Text style={{fontWeight:800,fontSize:16}}>{users[0]?.type==="collector"?"Collector stats":"Accumulator stats"}</Text>
         <TouchableOpacity onPress={()=>{navigation.navigate("allStatsScreen")}} >
         <Text  style={{color:"#93C572"}} >View All</Text>
         </TouchableOpacity>
@@ -53,7 +53,9 @@ const Stats = ({ users }) => {
                     width: animatedValues[index]?.interpolate({
                       inputRange: [0, 1],
                       outputRange: [0, score],
+                      
                     }),
+                    backgroundColor: user?.type==="collector"?"#93C572":"orange"
                   },
                 ]}
               />
@@ -78,7 +80,6 @@ export default Stats;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#eee",
     flexDirection: "column",
     alignItems: "flex-end",
     gap: 15,
