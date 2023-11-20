@@ -1,7 +1,7 @@
 // import  "dotenv/config"
 import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
-import {getDatabase} from "firebase/database"
+import { getDatabase } from "firebase/database"
 import { initializeAuth, getReactNativePersistence } from "firebase/auth"
 import { getFirestore } from "firebase/firestore"
 import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
@@ -19,10 +19,11 @@ import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 //   messagingSenderId: "637778408728",
 //   appId: "1:637778408728:web:cb36d1547108f4cd659a6d"
 // };
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: "AIzaSyDaiKBV81jX2kz8GWWFV-gJRp_sy6R_pfc",
   authDomain: "recyclev2-44dd8.firebaseapp.com",
   projectId: "recyclev2-44dd8",
+  databaseURL: "https://recyclev2-44dd8-default-rtdb.europe-west1.firebasedatabase.app",
   storageBucket: "recyclev2-44dd8.appspot.com",
   messagingSenderId: "358013929699",
   appId: "1:358013929699:web:68de6fa51703aeefed5dd6"

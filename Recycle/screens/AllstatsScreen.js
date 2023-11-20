@@ -51,6 +51,7 @@ const AllstatsScreen = () => {
       <View style={styles.container}>
         {allUsers.map((user, index) => {
           let score = (((user?.rating / (user?.nbrRaters * 5)) * 100) * 230) / 100;
+          console.log(score);
           return (
             <View key={index} style={styles.barContainer}>
               <View
@@ -58,11 +59,13 @@ const AllstatsScreen = () => {
                   styles.bar,
                   {
                     height: 30,
-                    width: score,
+                    width: score||500,
                     backgroundColor: user.uid===FIREBASE_AUTH.currentUser.uid? "lightgrey"  :user?.type==="collector"?"#93C572":"orange"
                   },
                 ]}
               />
+              <Text style={{position:"absolute",left:score*0.7,color:"white",fontWeight:"800",fontSize:16}}>{((user?.rating / (user?.nbrRaters * 5)) * 100).toFixed(0)}%</Text>
+
               <Image
                 source={{ uri: user.photoURL }}
                 style={styles.image}

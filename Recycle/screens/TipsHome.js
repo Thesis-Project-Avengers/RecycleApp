@@ -29,7 +29,7 @@ const TipsHome = () => {
   if (loading) {
     return <ActivityIndicator size="small" color="green" />
   }
-  else if (!loading) {
+  else if (!loading && tips.length > 0) { 
     return (
       <View style={styles.container}>
         <View style={styles.textContainer}>

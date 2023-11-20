@@ -11,6 +11,7 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { updateProfile } from "firebase/auth";
 
 const EditProfileScreen = () => {
+  const navigation=useNavigation()
   const [user, setUser] = useState(null)
   const [imageChanged, setImageChanged] = useState(false)
   useFocusEffect(useCallback(() => {
@@ -42,6 +43,7 @@ const EditProfileScreen = () => {
       await updateProfile(FIREBASE_AUTH.currentUser, { photoURL: form.photoURL, displayName: form.firstName + " " + form.lastName })
       // UPDATE FOR THE COLLECTION USERS 
       await updateDoc(docref, { ...form, displayName: form.firstName + " " + form.lastName });
+      navigation.goBack();
     } catch (error) {
       console.log(error);
     }
@@ -97,7 +99,6 @@ const EditProfileScreen = () => {
   }
 
 
-  const navigation = useNavigation()
   return (
     <SafeAreaView style={styles.mainContainerEditProfile} >
       <TouchableOpacity onPress={() => navigation.navigate("mainprofile")}>
@@ -132,10 +133,10 @@ const EditProfileScreen = () => {
 
               style={styles.inputEditProfile} placeholder="LastName" value={form.lastName} />
           </View>
-          <View style={styles.inputContainer}>
+          {/* <View style={styles.inputContainer}>
             <Text>Birth-date</Text>
             <TextInput style={styles.inputEditProfile} placeholder="Birth-date" />
-          </View>
+          </View> */}
           <View style={styles.inputContainer}>
             <Text>Email</Text>
             <TextInput

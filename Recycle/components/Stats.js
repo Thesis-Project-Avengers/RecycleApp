@@ -59,6 +59,7 @@ const Stats = ({ users }) => {
                   },
                 ]}
               />
+              <Text style={{position:"absolute",left:score*0.7,color:"white",fontWeight:"800",fontSize:16}}>{((user?.rating / (user?.nbrRaters * 5)) * 100).toFixed(0)}%</Text>
               <Animated.Image
                 source={{ uri: images[index] }}
                 style={[
