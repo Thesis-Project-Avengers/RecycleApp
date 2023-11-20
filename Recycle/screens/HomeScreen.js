@@ -30,8 +30,7 @@ const HomeScreen = ({ navigation, route }) => {
   const [collectorsUsers, setCollectorsUsers] = useState([]);
   const [accumulatorsUsers, setAccumulatorUsers] = useState([]);
   const [welcome, setWelcome] = useState(route.params?.first);
-  const [isConfettiVisible, setConfettiVisible] = useState(false);
-
+  const [isConfettiVisible, setConfettiVisible] = useState(route.params.first);
   useFocusEffect(
     useCallback(() => {
       const fetchUsers = async () => {
@@ -69,7 +68,7 @@ const HomeScreen = ({ navigation, route }) => {
     // After a delay, hide the confetti
     setTimeout(() => {
       setConfettiVisible(false);
-      setWelcome(true);
+      setWelcome(false);
     }, 2000); // Adjust the delay as needed
   };
 
@@ -88,7 +87,7 @@ const HomeScreen = ({ navigation, route }) => {
       </ScrollView>
       {/* modal */}
       <Modal
-        isVisible={welcome === false}
+        isVisible={welcome}
         hasBackdrop={false}
         coverScreen={true}
       >

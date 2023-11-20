@@ -63,7 +63,7 @@ const OneTip = ({ tip }) => {
                     <Text style={{ fontSize: 16, fontWeight: 900 }}>{posterInfo?.displayName}</Text>
                 </View>
                 <Text>
-                    {tip.createdAt.toDate().toString().slice(15, 18) > 12 ? tip.createdAt?.toDate().toString().slice(15, 21) + " PM" : tip.createdAt.toDate().toString().slice(15, 21) + " AM"}
+                    {tip.createdAt?.toDate().toString().slice(15, 18) > 12 ? tip.createdAt?.toDate().toString().slice(15, 21) + " PM" : tip.createdAt?.toDate().toString().slice(15, 21) + " AM"}
                 </Text>
             </View>
             {tip?.image &&
@@ -72,7 +72,6 @@ const OneTip = ({ tip }) => {
                 </TouchableOpacity>
             }
             <Text>{tip.content}</Text>
-
             <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
                 <TouchableOpacity
                     onPress={() => updateLikeState()}
@@ -96,7 +95,7 @@ const OneTip = ({ tip }) => {
                 <TouchableOpacity
                     onPress={() => updateFavouriteState()}
                     style={{ flexDirection: "row", gap: 5 }}>
-                    <MaterialIcons name={isFavourite ? "favorite" : "favorite-outline"} size={24} />
+                    <MaterialIcons name={isFavourite ? "favorite" : "favorite-outline"}  size={24} />
                 </TouchableOpacity>
             </View>
 

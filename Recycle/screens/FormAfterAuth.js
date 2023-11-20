@@ -46,6 +46,8 @@ const FormAfterAuth = ({ navigation }) => {
         const userData = {
           ...user,
           ...form,
+          nbrRaters:0,
+          rating:0
         };
         await updateProfile(FIREBASE_AUTH.currentUser, {
           displayName: form.firstName + " " + form.lastName,
