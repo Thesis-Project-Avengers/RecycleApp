@@ -20,7 +20,6 @@ import AccumulatorScreen from "./screens/AccumulatorScreen";
 import ProfileCollector from "./screens/ProfileCollector";
 import AccSpendPointScreen from "./screens/AccSpendPointScreen";
 import Reviews from "./screens/Reviews";
-import CategoryChoice from "./screens/CategoryChoice";
 import AccOnboarding from "./components/AccOnboarding";
 import CommentsScreen from "./screens/CommentsScreen";
 import CollOmbording from "./components/CollOmbording";
@@ -97,7 +96,7 @@ export const AuthStack = () => {
       <Stack.Screen name="formAfterAuth" component={FormAfterAuth} />
       <Stack.Screen name="chooseScreen" component={ChooseScreen} />
       <Stack.Screen name="collector" component={CollectorScreen} />
-      <Stack.Screen name="accumulator" component={CategoryChoice} />
+      <Stack.Screen name="accumulator" component={AccumulatorScreen} />
       <Stack.Screen name="profileCollector" component={ProfileCollector} />
       <Stack.Screen name="accQuestions" component={AccOnboarding} />
       <Stack.Screen name="collQuestions" component={CollOmbording} />
