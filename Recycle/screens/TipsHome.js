@@ -34,7 +34,7 @@ const TipsHome = () => {
       <View style={styles.container}>
         <View style={styles.textContainer}>
           <Text style={{ fontSize: 20, fontWeight: 700 }}>Tips</Text>
-          <TouchableOpacity onPress={()=>{navigation.navigate("tipsMain")}} style={{ flexDirection: "row", gap: 5 }}>
+          <TouchableOpacity onPress={()=>{navigation.navigate("Tips")}} style={{ flexDirection: "row", gap: 5 }}>
             <Text style={{ fontSize: 13, color: "#93C572" }}>View All</Text>
           </TouchableOpacity>
         </View>
