@@ -16,6 +16,7 @@ import Onboarding from "react-native-onboarding-swiper";
 import { useNavigation } from "@react-navigation/native";
 import { doc, updateDoc } from "firebase/firestore";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
+import { SafeAreaView } from "react-native-safe-area-context";
 const AccOnboarding = () => {
   const navigation = useNavigation();
   const [colQuestion, setColQuestion] = useState({
@@ -23,6 +24,14 @@ const AccOnboarding = () => {
     2: null,
     3: null,
     4: null,
+  });
+  const [cate,setCat]= useState({
+    aluminum: false,
+    glass:false,
+    paper:false,
+    plastic:false,
+    cardBoard:false,
+    steel:false
   });
   const onboardingRef = useRef(null);
   const handleYesPress = (index, value) => {
@@ -37,12 +46,19 @@ const AccOnboarding = () => {
   const handleGetStartedPress = async () => {
     try {
       const docRef = doc(FIREBASE_DB, "users", FIREBASE_AUTH.currentUser.uid);
+      let arr = []
+      for (let key in cate){
+        if(cate[key]){
+          arr.push(key)
+        }
+      }
       const data = {
         hasWaste: colQuestion["1"],
         tasrhSorting: colQuestion["2"],
         interactionFriendly: colQuestion["3"],
         treeFriendly: colQuestion["4"],
-        points:0,
+        categories: arr,
+        points: 0
       };
       await updateDoc(docRef, data);
     } catch (error) {
@@ -209,6 +225,47 @@ const AccOnboarding = () => {
             ),
           },
           {
+            title: "choose what kind of trash you can accumulate",
+            titleStyles: { color: "#93c572" },
+            subtitle: (
+              <View style={{gap:10}}>
+                <View style={{flexDirection:"row",gap:10}}>
+                  <TouchableOpacity   onPress={()=>{setCat({...cate,aluminum:!cate.aluminum}) }} style={cate.aluminum?styles.isClickedCat:styles.notClickedCat}>
+                    <Text>Aluminum </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity   onPress={()=>{setCat({...cate,glass:!cate.glass}) }}style={cate.glass?styles.isClickedCat:styles.notClickedCat}>
+                    <Text>Glass </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity   onPress={()=>{setCat({...cate,paper:!cate.paper}) }}style={cate.paper?styles.isClickedCat:styles.notClickedCat}>
+                    <Text>Paper</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={{flexDirection:"row",gap:10}}>
+                  <TouchableOpacity  onPress={()=>{setCat({...cate,plastic:!cate.plastic}) }} style={cate.plastic?styles.isClickedCat:styles.notClickedCat}>
+                    <Text>Plastic </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity  onPress={()=>{setCat({...cate,cardBoard:!cate.cardBoard}) }} style={cate.cardBoard?styles.isClickedCat:styles.notClickedCat}>
+                    <Text>Cardboard </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity  onPress={()=>{setCat({...cate,steel:!cate.steel}) }} style={cate.steel?styles.isClickedCat:styles.notClickedCat}>
+                    <Text>Steel </Text>
+                  </TouchableOpacity>
+                </View>
+                
+              </View>
+            ),
+            backgroundColor: "#ffff",
+            image: (
+              <Icon
+                style={{ justifyContent: "center" }}
+                name="rocket"
+                type="font-awesome"
+                size={100}
+                color="#93c572"
+              />
+            ),
+          },
+          {
             title: "That's Enough",
             titleStyles: { color: "#93c572" },
             subtitle: (
@@ -246,7 +303,7 @@ const AccOnboarding = () => {
         bottomBarColor={"#93c572"}
         transitionAnimationDuration={700}
         onSkip={() => {
-          onboardingRef.current.goToPage(4);
+          onboardingRef.current.goToPage(5);
         }}
         ref={onboardingRef}
       />
@@ -281,4 +338,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  isClickedCat:{
+    backgroundColor: "#93c572",
+    borderRadius: 15,
+    width:100,
+    alignItems:'center',
+    borderColor: "#93c572",
+    borderWidth: 2,
+    padding: 10 ,
+
+
+  },
+  notClickedCat: {
+    backgroundColor: "white",
+    borderRadius: 15,
+    width:100,
+    alignItems:'center',
+    borderColor: "#93c572",
+    borderWidth: 2,
+    padding: 10 
+
+  }
 });

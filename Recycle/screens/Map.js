@@ -77,9 +77,9 @@ export default function Map() {
   );
 
   useEffect(() => {
-    if(selectedPos){
-    getSelectedInformation(selectedPos, mode);
-  }
+    if (selectedPos) {
+      getSelectedInformation(selectedPos, mode);
+    }
   }, [currentRegion]);
 
   // called insisede usefoucs
@@ -164,10 +164,8 @@ export default function Map() {
   const getSelectedInformation = async (info, theMode) => {
     try {
       const data = await axios.post(
-        `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${
-          currentRegion?.latitude
-        },${currentRegion?.longitude}&destinations=${info.location?.latitude},${
-          info.location?.longitude
+        `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${currentRegion?.latitude
+        },${currentRegion?.longitude}&destinations=${info.location?.latitude},${info.location?.longitude
         }&mode=${theMode || mode}&key=${API_KEY}`
       );
 
@@ -183,12 +181,12 @@ export default function Map() {
   };
 
   const recyclableItems = [
-    { id: 1, type: "Aluminum Cans",kiloPrice:20,PiecePrice:0.5 },
-    { id: 2, type: "Glass Bottles",kiloPrice:5,PiecePrice:0.3 },
-    { id: 3, type: "Paper",kiloPrice:7,PiecePrice:0.07 },
-    { id: 4, type: "Plastic Bottles",kiloPrice:100,PiecePrice:0.4 },
-    { id: 5, type: "Cardboard Boxes" ,kiloPrice:7,PiecePrice:0.2},
-    { id: 6, type: "Steel Cans",kiloPrice:7,PiecePrice:0.5 },
+    { id: 1, type: "Aluminum Cans", kiloPrice: 20, PiecePrice: 0.5 },
+    { id: 2, type: "Glass Bottles", kiloPrice: 5, PiecePrice: 0.3 },
+    { id: 3, type: "Paper", kiloPrice: 7, PiecePrice: 0.07 },
+    { id: 4, type: "Plastic Bottles", kiloPrice: 100, PiecePrice: 0.4 },
+    { id: 5, type: "Cardboard Boxes", kiloPrice: 7, PiecePrice: 0.2 },
+    { id: 6, type: "Steel Cans", kiloPrice: 7, PiecePrice: 0.5 },
   ];
 
   const initialCamera = {
@@ -303,14 +301,14 @@ export default function Map() {
         coverScreen={false}
         onBackdropPress={() => setWayModal(null)}
       >
-        {<WayModal currentInformation={currentInformation} setWayModal={setWayModal} setRateModal={setRateModal}/>}
+        {<WayModal currentInformation={currentInformation} setWayModal={setWayModal} setRateModal={setRateModal} />}
       </Modal>
       <Modal
         isVisible={rateModal === 1}
         hasBackdrop={false}
         coverScreen={true}
       >
-        {<ReviewModal currentInformation={currentInformation} setRateModal={setRateModal}/>}
+        {<ReviewModal currentInformation={currentInformation} setRateModal={setRateModal} />}
       </Modal>
     </SafeAreaView>
   );
