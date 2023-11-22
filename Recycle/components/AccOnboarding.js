@@ -16,6 +16,7 @@ import Onboarding from "react-native-onboarding-swiper";
 import { useNavigation } from "@react-navigation/native";
 import { doc, updateDoc } from "firebase/firestore";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
+import { SafeAreaView } from "react-native-safe-area-context";
 const AccOnboarding = () => {
   const navigation = useNavigation();
   const [colQuestion, setColQuestion] = useState({
@@ -23,6 +24,7 @@ const AccOnboarding = () => {
     2: null,
     3: null,
     4: null,
+    5: [],
   });
   const onboardingRef = useRef(null);
   const handleYesPress = (index, value) => {
@@ -209,6 +211,39 @@ const AccOnboarding = () => {
             ),
           },
           {
+            title: "choose what kind of trash you can accumulate",
+            titleStyles: { color: "#93c572" },
+            subtitle: (
+              <TouchableOpacity
+                title={"Get Started"}
+                style={{
+                  backgroundColor: "#93c572",
+                  padding: 10,
+                  borderRadius: 5,
+                }}
+                textStyle={{ color: "#ffff" }}
+                onPress={() => {
+                  // Alert.alert('done');
+                  handleGetStartedPress();
+                  navigation.navigate("App"); // navigation && updtate the user
+                  // StatusBar.setBarStyle('default');
+                }}
+              >
+                <Text style={{ color: "white" }}>Get Started</Text>
+              </TouchableOpacity>
+            ),
+            backgroundColor: "#ffff",
+            image: (
+              <Icon
+                style={{ justifyContent: "center" }}
+                name="rocket"
+                type="font-awesome"
+                size={100}
+                color="#93c572"
+              />
+            ),
+          },
+          {
             title: "That's Enough",
             titleStyles: { color: "#93c572" },
             subtitle: (
@@ -246,7 +281,7 @@ const AccOnboarding = () => {
         bottomBarColor={"#93c572"}
         transitionAnimationDuration={700}
         onSkip={() => {
-          onboardingRef.current.goToPage(4);
+          onboardingRef.current.goToPage(5);
         }}
         ref={onboardingRef}
       />
