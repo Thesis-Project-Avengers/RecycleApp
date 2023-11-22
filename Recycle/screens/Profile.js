@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faPeopleCarryBox, faRecycle } from "@fortawesome/free-solid-svg-icons";
 import React, { useCallback, useState } from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon2 from "react-native-vector-icons/FontAwesome5";
@@ -28,9 +30,10 @@ import {
 } from "firebase/firestore";
 import RatingProfile from "../components/RatingProfile";
 import OneReview from "../components/OneReview";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Profile = ({ navigation }) => {
-  const { height, width } = Dimensions.get("window")
+  const { height, width } = Dimensions.get("window");
   // console.log("this is the height of the",height);
   const [userProfileInfo, setProfileInfo] = useState({});
   const [reviews, setReviews] = useState([]);
@@ -71,22 +74,42 @@ const Profile = ({ navigation }) => {
           console.log(error);
         }
       };
-
       getUser();
       getReviewOfCurentUser();
-
     }, [])
   );
   return (
     <SafeAreaView>
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={[styles.scroll, { minHeight: height * 1.4 }]}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={[
+          styles.scroll,
+          {
+            minHeight: "auto",
+            // userProfileInfo.type === "collector" ? height : height * 1.2,
+          },
+        ]}
+      >
         <View style={styles.returnPoints}>
-          <View style={styles.return}>
-          </View>
-          {/* {userProfileInfo.type==="collector"?<FontAwesome6 name="person-walking-arrow-loop-left"size={45} color={"#93C572"}/>:<FontAwesome6  name="person-walking-arrow-right" size={45} color={"#93C572"}/>}  */}
-          <TouchableOpacity onPress={() => { navigation.navigate("convertion") }}  >
+          {userProfileInfo.type === "collector" ? (
+            <FontAwesomeIcon
+              icon={faPeopleCarryBox}
+              size={30}
+              color="#93C572"
+            />
+          ) : (
+            <FontAwesomeIcon icon={faRecycle} size={30} color="#93C572" />
+          )}
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("convertion");
+            }}
+          >
             <View style={styles.points}>
-              <Text style={{ textAlign: "center", color: "white", fontSize: 16 }}>
+              <Text
+                style={{ textAlign: "center", color: "white", fontSize: 16 }}
+              >
                 {userProfileInfo?.points}
               </Text>
 
@@ -97,6 +120,7 @@ const Profile = ({ navigation }) => {
             </View>
           </TouchableOpacity>
         </View>
+
         <View style={styles.imageTextName}>
           <Image
             source={{ uri: userProfileInfo?.photoURL }}
@@ -124,8 +148,7 @@ const Profile = ({ navigation }) => {
         </View>
 
         {/* hne bech thot zouz review  */}
-        {
-          userProfileInfo?.type === "accumulator" &&
+        {userProfileInfo?.type === "accumulator" && (
           <View style={styles.container}>
             <View style={styles.textContainer}>
               <Text style={{ fontSize: 20, fontWeight: 700 }}>Reviews</Text>
@@ -143,28 +166,28 @@ const Profile = ({ navigation }) => {
               horizontal={true}
               showsHorizontalScrollIndicator={false}
             >
-              {
-                reviews.map((review, index) => (
-                  <OneReview key={index} review={review} />
-                ))
-              }
+              {reviews.map((review, index) => (
+                <OneReview key={index} review={review} />
+              ))}
             </ScrollView>
           </View>
-        }
+        )}
 
         {/* Here The Favourites Tips  */}
 
         <View style={{ marginBottom: 25 }}>
-          {userProfileInfo?.type === "accumulator" && <View style={styles.oneButton}>
-            <Icon4 name="back-in-time" size={20} color={"#93C572"} />
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("transaction");
-              }}
-            >
-              <Text style={{ fontSize: 17 }}>My Requests</Text>
-            </TouchableOpacity>
-          </View>}
+          {userProfileInfo?.type === "accumulator" && (
+            <View style={styles.oneButton}>
+              <Icon4 name="back-in-time" size={20} color={"#93C572"} />
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("transaction");
+                }}
+              >
+                <Text style={{ fontSize: 17 }}>My Requests</Text>
+              </TouchableOpacity>
+            </View>
+          )}
           <View style={[styles.oneButton, { marginLeft: 5 }]}>
             <Icon6 name="favorite" size={20} color={"#93C572"} />
             <TouchableOpacity
@@ -175,8 +198,6 @@ const Profile = ({ navigation }) => {
               <Text style={{ fontSize: 17 }}>My Favourites</Text>
             </TouchableOpacity>
           </View>
-
-
 
           <View style={styles.oneButton}>
             <Icon5 name="qrcode" size={20} color={"#93C572"} />
@@ -198,10 +219,13 @@ const Profile = ({ navigation }) => {
               <Text style={{ fontSize: 17 }}>Edit Profile</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => {
-            FIREBASE_AUTH.signOut();
-            navigation.navigate("signIn");
-          }}>
+          <TouchableOpacity
+            onPress={() => {
+              FIREBASE_AUTH.signOut();
+              AsyncStorage.setItem("isFirst", "false");
+              navigation.navigate("auth");
+            }}
+          >
             <View style={styles.oneButton}>
               <Icon name="logout" size={20} color={"#93C572"} />
               <TouchableOpacity>
@@ -229,6 +253,7 @@ const styles = StyleSheet.create({
   returnPoints: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
     // backgroundColor:"red",
     padding: 5,
     alignContent: "center",
@@ -282,7 +307,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   scroll: {
-    paddingVertical: 50,
+    paddingVertical: 30,
     paddingHorizontal: 20,
     // minHeight:1200,
     // backgroundColor:"red",

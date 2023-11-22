@@ -231,24 +231,24 @@ const AccOnboarding = () => {
               <View style={{gap:10}}>
                 <View style={{flexDirection:"row",gap:10}}>
                   <TouchableOpacity   onPress={()=>{setCat({...cate,aluminum:!cate.aluminum}) }} style={cate.aluminum?styles.isClickedCat:styles.notClickedCat}>
-                    <Text>Aluminum </Text>
+                    <Text  style={cate.aluminum?styles.textClicked:styles.textNotClicked}>Aluminum </Text>
                   </TouchableOpacity>
                   <TouchableOpacity   onPress={()=>{setCat({...cate,glass:!cate.glass}) }}style={cate.glass?styles.isClickedCat:styles.notClickedCat}>
-                    <Text>Glass </Text>
+                    <Text style={cate.glass?styles.textClicked:styles.textNotClicked}>Glass </Text>
                   </TouchableOpacity>
                   <TouchableOpacity   onPress={()=>{setCat({...cate,paper:!cate.paper}) }}style={cate.paper?styles.isClickedCat:styles.notClickedCat}>
-                    <Text>Paper</Text>
+                    <Text style={cate.paper?styles.textClicked:styles.textNotClicked}>Paper</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={{flexDirection:"row",gap:10}}>
                   <TouchableOpacity  onPress={()=>{setCat({...cate,plastic:!cate.plastic}) }} style={cate.plastic?styles.isClickedCat:styles.notClickedCat}>
-                    <Text>Plastic </Text>
+                    <Text style={cate.plastic?styles.textClicked:styles.textNotClicked}>Plastic </Text>
                   </TouchableOpacity>
                   <TouchableOpacity  onPress={()=>{setCat({...cate,cardBoard:!cate.cardBoard}) }} style={cate.cardBoard?styles.isClickedCat:styles.notClickedCat}>
-                    <Text>Cardboard </Text>
+                    <Text style={cate.cardBoard?styles.textClicked:styles.textNotClicked}>Cardboard </Text>
                   </TouchableOpacity>
                   <TouchableOpacity  onPress={()=>{setCat({...cate,steel:!cate.steel}) }} style={cate.steel?styles.isClickedCat:styles.notClickedCat}>
-                    <Text>Steel </Text>
+                    <Text style={cate.steel?styles.textClicked:styles.textNotClicked}>Steel </Text>
                   </TouchableOpacity>
                 </View>
                 
@@ -357,6 +357,11 @@ const styles = StyleSheet.create({
     borderColor: "#93c572",
     borderWidth: 2,
     padding: 10 
-
+  },
+  textClicked:{
+    color:"white"
+  },
+  textNotClicked:{
+    color:"#93c572"
   }
 });

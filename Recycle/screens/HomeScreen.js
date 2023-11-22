@@ -72,19 +72,17 @@ const HomeScreen = ({ navigation, route }) => {
       setWelcome(false);
     }, 2000); // Adjust the delay as needed
   };
-
   return (
     <SafeAreaView style={styles.container}>
       <HomeHeader />
       <ScrollView
         // then i will remove the height of the the scroll view
-        contentContainerStyle={{ height: 1200, gap: 30 }}
+        contentContainerStyle={{ height: 1500, gap: 30 }}
         showsVerticalScrollIndicator={false}
       >
         <Services />
-        {/* <Stats users={collectorsUsers} /> */}
+        <Stats users={collectorsUsers} />
         <TipsHome />
-        {/* <Stats users={accumulatorsUsers} /> */}
 
         {/* One To Go To tHE sTORE  */}
         <TouchableOpacity onPress={() => {
@@ -250,6 +248,7 @@ const HomeScreen = ({ navigation, route }) => {
           </View>
         </TouchableOpacity>
 
+        <Stats users={accumulatorsUsers} />
 
 
       </ScrollView>

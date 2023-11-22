@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import OnboardingScreen from "./components/OnBroadingScreen";
@@ -39,51 +39,84 @@ import { Image, Text } from "react-native-elements";
 import ReportScreen from "./screens/ReportScreen";
 import StoreScreen from "./screens/StoreScreen";
 
-
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator();
 export default function App() {
-  // console.log(FIREBASE_AUTH.currentUser?.displayName);
-  //Onboarding
-  // const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState(true)
-  const [first, setFirst] = useState(true);
-  const fetch = async () => {
-    const x = await AsyncStorage.getItem("first");
-    // console.log(x);
-    if (!x) {
-      setFirst(false);
-    } else {
-      AsyncStorage.setItem("first", "false");
+  const [isFirst, setFirst] = useState(null); // Initialize with null as loading state
+  const [isLoading, setLoading] = useState(true);
+  const fetchIsFirst = async () => {
+    try {
+      setLoading(true);
+      const state = await AsyncStorage.getItem("isFirst");
+      setFirst(state);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false); // Set loading to false regardless of success or failure
     }
-    // const appData = await AsyncStorage.getItem("isAppFirstLaunched")
-    // console.log(appData);
-    // if (appData == true) {
-    //   setIsAppFirstLaunched(false)
-    //   AsyncStorage.setItem('isAppFirstLaunched', 'false')
-    // } else {
-    //   setIsAppFirstLaunched(true)
-    //   AsyncStorage.setItem('isAppFirstLaunched', 'true')
-    // }
   };
-  React.useEffect(() => {
-    fetch();
+
+  useEffect(() => {
+    fetchIsFirst();
   }, []);
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName={"ombording"} screenOptions={{ headerShown: false }} >
-        <Stack.Screen name="ombording" component={OnboardingScreen} />
-        <Stack.Screen name="auth" component={AuthStack} />
-        <Stack.Screen name="App" component={RealApp} />
-        <Stack.Screen name="Reviews" component={Reviews} options={{ headerShown: true, title: "My Reviews", headerTitleAlign: "center" }} />
-        <Stack.Screen name="profileVisitor" component={ProfileVisitor} options={{ headerShown: false }} />
-        <Stack.Screen name="allStatsScreen" component={AllstatsScreen} options={{ headerShown: true, title: "Ranks", headerTitleAlign: "center" }} />
-        <Stack.Screen name="QrScanner" component={ScanQR} />
-        <Stack.Screen name="specificChat" component={SpecificChatScreen} options={{ headerShown: true, title: "" }} />
-        <Stack.Screen name="report" component={ReportScreen} options={{headerShown:true}}/>
-      <Stack.Screen name="store" component={StoreScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+
+  // Show a loading indicator or other UI while loading
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  } else {
+    console.log("welcome Hi After The set  ", isFirst);
+    return (
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName={isFirst ? "ombording" : "App"}
+          screenOptions={{ headerShown: false }}
+        >
+          <Stack.Screen name="ombording" component={OnboardingScreen} />
+          <Stack.Screen name="auth" component={AuthStack} />
+          <Stack.Screen name="App" component={RealApp} />
+          <Stack.Screen
+            name="Reviews"
+            component={Reviews}
+            options={{
+              headerShown: true,
+              title: "My Reviews",
+              headerTitleAlign: "left",
+            }}
+          />
+          <Stack.Screen
+            name="profileVisitor"
+            component={ProfileVisitor}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="allStatsScreen"
+            component={AllstatsScreen}
+            options={{
+              headerShown: true,
+              title: "Ranks",
+              headerTitleAlign: "left",
+            }}
+          />
+          <Stack.Screen name="QrScanner" component={ScanQR} />
+          <Stack.Screen
+            name="specificChat"
+            component={SpecificChatScreen}
+            options={{ headerShown: true, title: "" }}
+          />
+          <Stack.Screen
+            name="report"
+            component={ReportScreen}
+            options={{ headerShown: true, headerTitleAlign: "left" }}
+          />
+          <Stack.Screen name="store" component={StoreScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
 }
 export const AuthStack = () => {
   return (
@@ -128,7 +161,7 @@ export const RealApp = ({ route }) => {
               size={size ? size : 24}
               color={focused ? color : "#222222"}
               focused={focused}
-            // color={color}
+              // color={color}
             />
           ),
         }}
@@ -211,12 +244,20 @@ export const ProfileStack = () => {
       <Stack.Screen
         name="mycodeQr"
         component={MyCodeQr}
-        options={{ headerShown: true, title: "My Transaction", headerTitleAlign: "center" }}
+        options={{
+          headerShown: true,
+          title: "My Transaction",
+          headerTitleAlign: "center",
+        }}
       />
       <Stack.Screen
         name="myFavourites"
         component={UserFavouritesTipsScreen}
-        options={{ headerShown: true, title: "My Favourites", headerTitleAlign: "center" }}
+        options={{
+          headerShown: true,
+          title: "My Favourites",
+          headerTitleAlign: "center",
+        }}
       />
       <Stack.Screen
         name="convertion"
@@ -232,7 +273,6 @@ export const TipsStack = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="tipsMain" component={TipsScreen} />
 
-     
       <Stack.Screen
         name="commentScreen"
         component={CommentsScreen}

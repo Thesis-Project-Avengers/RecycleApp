@@ -59,12 +59,12 @@ const AllstatsScreen = () => {
                   styles.bar,
                   {
                     height: 30,
-                    width: score||500,
+                    width: score||20,
                     backgroundColor: user.uid===FIREBASE_AUTH.currentUser.uid? "lightgrey"  :user?.type==="collector"?"#93C572":"orange"
                   },
                 ]}
               />
-              <Text style={{position:"absolute",left:score*0.7,color:"white",fontWeight:"800",fontSize:16}}>{((user?.rating / (user?.nbrRaters * 5)) * 100).toFixed(0)}%</Text>
+             {score ?<Text style={{position:"absolute",left:score*0.7||0,color:"white",fontWeight:"800",fontSize:16}}>{((user?.rating / (user?.nbrRaters * 5)) * 100).toFixed(0)}%</Text>:null}
 
               <Image
                 source={{ uri: user.photoURL }}
