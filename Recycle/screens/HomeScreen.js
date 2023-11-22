@@ -82,9 +82,9 @@ const HomeScreen = ({ navigation, route }) => {
         showsVerticalScrollIndicator={false}
       >
         <Services />
-        <Stats users={collectorsUsers} />
+        {/* <Stats users={collectorsUsers} /> */}
         <TipsHome />
-        <Stats users={accumulatorsUsers} />
+        {/* <Stats users={accumulatorsUsers} /> */}
 
         {/* One To Go To tHE sTORE  */}
         <TouchableOpacity onPress={() => {

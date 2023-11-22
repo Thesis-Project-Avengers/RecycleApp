@@ -20,7 +20,6 @@ import AccumulatorScreen from "./screens/AccumulatorScreen";
 import ProfileCollector from "./screens/ProfileCollector";
 import AccSpendPointScreen from "./screens/AccSpendPointScreen";
 import Reviews from "./screens/Reviews";
-
 import AccOnboarding from "./components/AccOnboarding";
 import CommentsScreen from "./screens/CommentsScreen";
 import CollOmbording from "./components/CollOmbording";
@@ -34,7 +33,9 @@ import UserFavouritesTipsScreen from "./screens/UserFavouritesTipsScreen";
 
 import AllstatsScreen from "./screens/AllstatsScreen";
 import ConvertionScrenn from "./screens/ConvertionScrenn";
-
+import { View } from "react-native-animatable";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { Image, Text } from "react-native-elements";
 import ReportScreen from "./screens/ReportScreen";
 import StoreScreen from "./screens/StoreScreen";
 
@@ -69,7 +70,7 @@ export default function App() {
   }, []);
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={"App"} screenOptions={{ headerShown: false }} >
+      <Stack.Navigator initialRouteName={"ombording"} screenOptions={{ headerShown: false }} >
         <Stack.Screen name="ombording" component={OnboardingScreen} />
         <Stack.Screen name="auth" component={AuthStack} />
         <Stack.Screen name="App" component={RealApp} />
@@ -78,8 +79,8 @@ export default function App() {
         <Stack.Screen name="allStatsScreen" component={AllstatsScreen} options={{ headerShown: true, title: "Ranks", headerTitleAlign: "center" }} />
         <Stack.Screen name="QrScanner" component={ScanQR} />
         <Stack.Screen name="specificChat" component={SpecificChatScreen} options={{ headerShown: true, title: "" }} />
-        <Stack.Screen name="report" component={ReportScreen} options={{ headerShown: true }} />
-        <Stack.Screen name="store" component={StoreScreen} />
+        <Stack.Screen name="report" component={ReportScreen} options={{headerShown:true}}/>
+      <Stack.Screen name="store" component={StoreScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -103,9 +104,9 @@ export const AuthStack = () => {
   );
 };
 export const RealApp = ({ route }) => {
+  // console.log(route.params.first);
   return (
     <Tab.Navigator
-    initialRouteName="Home"
       appearance={{
         tabBarBackground: "#f7f6f6",
         shadow: true,
@@ -231,7 +232,7 @@ export const TipsStack = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="tipsMain" component={TipsScreen} />
 
-
+     
       <Stack.Screen
         name="commentScreen"
         component={CommentsScreen}

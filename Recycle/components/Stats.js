@@ -23,7 +23,7 @@ const Stats = ({ users }) => {
     })
   ).current;
 
-  useEffect(() => {
+  useFocusEffect(useCallback(() => {
     const animations = animatedValues.map((value, index) =>
       Animated.parallel([
         Animated.timing(value, {
@@ -40,7 +40,7 @@ const Stats = ({ users }) => {
     );
 
     Animated.stagger(200, animations).start();
-  }, []);
+  }, []));
 
   return (
     <View style={{ width: "100%", padding: 20 }}>
