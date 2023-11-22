@@ -314,6 +314,7 @@ const StoreScreen = () => {
             </View>
           </View>
         </View>
+       
         <View
           style={{
             backgroundColor: "#eee",

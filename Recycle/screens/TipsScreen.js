@@ -89,11 +89,10 @@ const TipsScreen = () => {
                 isLiked: [],
                 numlikes: 0,
                 isFavourite: []
-
-                // Add more fields as needed
             };
             await addDoc(tipscollection, tipData)
             setVisibleModal(false);
+            setLoading(true);
             setUpdate(!update)
             setTipForm({
                 content: null,

@@ -11,6 +11,7 @@ import {
 import React, { useCallback, useState } from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon2 from "react-native-vector-icons/FontAwesome5";
+// import FontAwesome6 from "react-native-vector-icons/FontAwesome6Pro";
 import Icon3 from "react-native-vector-icons/FontAwesome5";
 import Icon4 from "react-native-vector-icons/Entypo";
 import Icon5 from "react-native-vector-icons/AntDesign";
@@ -29,7 +30,7 @@ import RatingProfile from "../components/RatingProfile";
 import OneReview from "../components/OneReview";
 
 const Profile = ({ navigation }) => {
-  // const { ,width}=Dimensions.get("window")
+  const { height, width } = Dimensions.get("window")
   // console.log("this is the height of the",height);
   const [userProfileInfo, setProfileInfo] = useState({});
   const [reviews, setReviews] = useState([]);
@@ -78,15 +79,11 @@ const Profile = ({ navigation }) => {
   );
   return (
     <SafeAreaView>
-      <ScrollView showsVerticalScrollIndicator={false} style={styles.scroll}>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={[styles.scroll, { minHeight: height * 1.4 }]}>
         <View style={styles.returnPoints}>
           <View style={styles.return}>
-            {/* <Icon name="arrow-return-left" 
-          size={22}
-          color={"#93C572"}
-          /> */}
           </View>
-          {/* {userProfileInfo.type==="collector"?<Icon6 name="person-walking-arrow-loop-left"size={45} color={"#93C572"}/>:<Icon6  name="person-walking-arrow-right" size={45} color={"#93C572"}/>}  */}
+          {/* {userProfileInfo.type==="collector"?<FontAwesome6 name="person-walking-arrow-loop-left"size={45} color={"#93C572"}/>:<FontAwesome6  name="person-walking-arrow-right" size={45} color={"#93C572"}/>}  */}
           <TouchableOpacity onPress={() => { navigation.navigate("convertion") }}  >
             <View style={styles.points}>
               <Text style={{ textAlign: "center", color: "white", fontSize: 16 }}>
@@ -202,8 +199,8 @@ const Profile = ({ navigation }) => {
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {
-
-
+            FIREBASE_AUTH.signOut();
+            navigation.navigate("signIn");
           }}>
             <View style={styles.oneButton}>
               <Icon name="logout" size={20} color={"#93C572"} />
@@ -285,8 +282,9 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   scroll: {
-    padding: 20,
-    // height:"100%"
+    paddingVertical: 50,
+    paddingHorizontal: 20,
+    // minHeight:1200,
     // backgroundColor:"red",
     // gap:30
   },
