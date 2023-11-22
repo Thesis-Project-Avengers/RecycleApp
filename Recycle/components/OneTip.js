@@ -20,8 +20,8 @@ const OneTip = ({ tip }) => {
         })
     }, []))
 
-    const [isLiked, setIsliked] = useState(tip.isLiked.includes(FIREBASE_AUTH.currentUser.uid))
-    const [isFavourite, setIsfavourite] = useState(tip.isFavourite.includes(FIREBASE_AUTH.currentUser.uid))
+    const [isLiked, setIsliked] = useState(tip.isLiked?.includes(FIREBASE_AUTH.currentUser.uid))
+    const [isFavourite, setIsfavourite] = useState(tip.isFavourite?.includes(FIREBASE_AUTH.currentUser.uid))
     const [visibleModal, setVisibleModal] = useState(false);
     const updateFavouriteState = async () => {
         const documentReference = doc(FIREBASE_DB, 'Tips', tip.id);
@@ -71,7 +71,7 @@ const OneTip = ({ tip }) => {
                     <Image style={{ flex: 1, objectFit: "cover" }} height={150} borderRadius={25} source={{ uri: tip?.image }} />
                 </TouchableOpacity>
             }
-            <Text>{tip.content}</Text>
+            <Text>{tip?.content}</Text>
             <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
                 <TouchableOpacity
                     onPress={() => updateLikeState()}
@@ -95,7 +95,7 @@ const OneTip = ({ tip }) => {
                 <TouchableOpacity
                     onPress={() => updateFavouriteState()}
                     style={{ flexDirection: "row", gap: 5 }}>
-                    <MaterialIcons name={isFavourite ? "favorite" : "favorite-outline"}  size={24} />
+                    <MaterialIcons name={isFavourite ? "favorite" : "favorite-outline"} size={24} />
                 </TouchableOpacity>
             </View>
 

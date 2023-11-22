@@ -34,11 +34,11 @@ const HomeHeader = () => {
           uri: user?.photoURL
         }} style={styles.oneImage} />
         <View style={styles.text}>
-          <Text style={{ fontSize: 20, fontWeight: 900, color: "gray" }}>
-            Hi, </Text>
           <Text style={{ fontSize: 20, fontWeight: 900, color: "#93C572" }}>
-            {user?.firstName}
-          </Text>
+            Welcome</Text>
+          {/* <Text style={{ fontSize: 20, fontWeight: 900, color: "#93C572" }}>
+            {user?.firstName.length>10?user?.firstName.slice(0,5)+"...":user?.firstName}
+          </Text> */}
         </View>
       </View>
       <TouchableOpacity style={{ flexDirection: "row", gap: 5 }} onPress={()=>{navigation.navigate("store")}}>
