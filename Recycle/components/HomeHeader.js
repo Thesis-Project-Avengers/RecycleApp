@@ -34,20 +34,20 @@ const HomeHeader = () => {
           uri: user?.photoURL
         }} style={styles.oneImage} />
         <View style={styles.text}>
-          <Text style={{ fontSize: 20, fontWeight: 900, color: "gray" }}>
-            Hi, </Text>
           <Text style={{ fontSize: 20, fontWeight: 900, color: "#93C572" }}>
-            {user.displayName?.length > 10 ? user.displayName?.slice(0, 10) + "..." : user.displayName}{" "}
-          </Text>
+            Welcome</Text>
+          {/* <Text style={{ fontSize: 20, fontWeight: 900, color: "#93C572" }}>
+            {user?.firstName.length>10?user?.firstName.slice(0,5)+"...":user?.firstName}
+          </Text> */}
         </View>
       </View>
       <TouchableOpacity style={{ flexDirection: "row", gap: 5 }} onPress={()=>{navigation.navigate("store")}}>
         
         <View style={styles.point}>
-          {/* <Text style={{ fontSize: 15, color: "#fff" }}>{user.points}</Text> */}
-          {/* <Image source={require("../assets/coin.png")} style={styles.imageCoin} /> */}
-          <Icon name="shopping-cart"  size={25} color={'#93C572'}/>
+          <Text style={{ fontSize: 15, color: "#fff" }}>{user.points}</Text>
+          <Image source={require("../assets/coin.png")} style={styles.imageCoin} />
         </View>
+          <Icon name="shopping-cart"  size={25} color={'#93C572'}/>
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 40,
-    // backgroundColor: "#93C572",
+    backgroundColor: "#93C572",
     position: "relative",
     zIndex: -1,
     flexDirection: "row",

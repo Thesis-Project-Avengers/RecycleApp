@@ -20,8 +20,8 @@ const OneTip = ({ tip }) => {
         })
     }, []))
 
-    const [isLiked, setIsliked] = useState(tip.isLiked.includes(FIREBASE_AUTH.currentUser.uid))
-    const [isFavourite, setIsfavourite] = useState(tip.isFavourite.includes(FIREBASE_AUTH.currentUser.uid))
+    const [isLiked, setIsliked] = useState(tip.isLiked?.includes(FIREBASE_AUTH.currentUser.uid))
+    const [isFavourite, setIsfavourite] = useState(tip.isFavourite?.includes(FIREBASE_AUTH.currentUser.uid))
     const [visibleModal, setVisibleModal] = useState(false);
     const updateFavouriteState = async () => {
         const documentReference = doc(FIREBASE_DB, 'Tips', tip.id);
@@ -63,7 +63,7 @@ const OneTip = ({ tip }) => {
                     <Text style={{ fontSize: 16, fontWeight: 900 }}>{posterInfo?.displayName}</Text>
                 </View>
                 <Text>
-                    {tip.createdAt.toDate().toString().slice(15, 18) > 12 ? tip.createdAt?.toDate().toString().slice(15, 21) + " PM" : tip.createdAt.toDate().toString().slice(15, 21) + " AM"}
+                    {tip.createdAt?.toDate().toString().slice(15, 18) > 12 ? tip.createdAt?.toDate().toString().slice(15, 21) + " PM" : tip.createdAt?.toDate().toString().slice(15, 21) + " AM"}
                 </Text>
             </View>
             {tip?.image &&
@@ -71,8 +71,7 @@ const OneTip = ({ tip }) => {
                     <Image style={{ flex: 1, objectFit: "cover" }} height={150} borderRadius={25} source={{ uri: tip?.image }} />
                 </TouchableOpacity>
             }
-            <Text>{tip.content}</Text>
-
+            <Text>{tip?.content}</Text>
             <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
                 <TouchableOpacity
                     onPress={() => updateLikeState()}

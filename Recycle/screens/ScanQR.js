@@ -6,6 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
 import {
   FieldValue,
+  addDoc,
   collection,
   doc,
   getDoc,
@@ -32,16 +33,25 @@ const ScanQR = ({ route }) => {
 
     const senderId = doc(FIREBASE_DB, "users", FIREBASE_AUTH.currentUser?.uid);
     await getDoc(senderId).then((sanpshot) => {
-      points = sanpshot.data().points;
+      points = sanpshot.data()?.points;
     });
     await updateDoc(senderId, {
-      points: points - route.params.points,
+      points: points - route.params?.points,
     });
 
     const markerRef = doc(FIREBASE_DB, "markers", route.params.markerId);
     await updateDoc(markerRef, {
       completed: true,
     });
+    
+    const trasnactionsCollection = collection(FIREBASE_DB, "transactions")
+    await addDoc(trasnactionsCollection, {
+      senderId: FIREBASE_AUTH.currentUser?.uid,
+      receiverId: route.params?.ownerId,
+      amount: route.params?.points,
+      markerId: route.params?.markerId,
+      createdAt: new Date()
+    })
   };
 
   const askForCameraPermission = () => {
