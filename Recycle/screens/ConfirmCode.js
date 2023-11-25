@@ -54,7 +54,7 @@ const ConfirmCode = ({ route, navigation }) => {
       } else {
         navigation.navigate("App", { first: false });
       }
-     await AsyncStorage.setItem("isFirst", "false");
+      await AsyncStorage.setItem("isFirst", "false");
     } catch (error) {
       console.log(error);
     }
@@ -82,7 +82,7 @@ const ConfirmCode = ({ route, navigation }) => {
           tintColor={"#93C572"}
         />
         <TouchableOpacity style={styles.sendCode} onPress={confirmCode}>
-          <Text style={styles.buttonText}>Confirm verification</Text>
+          <Text style={styles.buttonText}>Continue</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>

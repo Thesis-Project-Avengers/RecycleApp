@@ -72,7 +72,7 @@ export default function App() {
     return (
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName={isFirst ? "ombording" : "App"}
+          initialRouteName={"ombording"}
           screenOptions={{ headerShown: false }}
         >
           <Stack.Screen name="ombording" component={OnboardingScreen} />
