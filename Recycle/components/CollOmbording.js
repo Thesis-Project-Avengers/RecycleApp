@@ -25,7 +25,14 @@ const CollOmbording = () => {
     3: null,
     4: null,
   });
-  console.log(colQuestion);
+  const [cate,setCat]= useState({
+    aluminum: false,
+    glass:false,
+    paper:false,
+    plastic:false,
+    cardBoard:false,
+    steel:false
+  });
   const onboardingRef = useRef(null);
   // console.log(colQuestion);
   const handleYesPress = (index, value) => {
@@ -37,15 +44,24 @@ const CollOmbording = () => {
     setColQuestion({ ...colQuestion, [index]: value });
     onboardingRef.current?.goNext();
   };
+  console.log(cate);
   const handleGetStartedPress = async () => {
     try {
       const docRef = doc(FIREBASE_DB, "users", FIREBASE_AUTH.currentUser.uid);
+      let arr = []
+      for (let key in cate){
+        if(cate[key]){
+          arr.push(key)
+        }
+      }
+      console.log(arr);
       const data = {
         pickingTrash: colQuestion["1"],
         hasTransport: colQuestion["2"],
         isEquipped: colQuestion["3"],
         natureFriendly: colQuestion["4"],
-        points: 100,
+        categories: arr,
+        points: 100
       };
       await updateDoc(docRef, data);
     } catch (error) {
@@ -60,7 +76,7 @@ const CollOmbording = () => {
         bottomBarColor={"#93c572"}
         transitionAnimationDuration={700}
         onSkip={() => {
-          onboardingRef.current.goToPage(4);
+          onboardingRef.current.goToPage(5);
         }}
         ref={onboardingRef}
         pages={[
@@ -218,6 +234,47 @@ const CollOmbording = () => {
             ),
           },
           {
+            title: "Choose what kind of trash you are interested in",
+            titleStyles: { color: "#93c572" },
+            subtitle: (
+              <View style={{gap:10}}>
+                <View style={{flexDirection:"row",gap:10}}>
+                  <TouchableOpacity   onPress={()=>{setCat({...cate,aluminum:!cate.aluminum}) }} style={cate.aluminum?styles.isClickedCat:styles.notClickedCat}>
+                    <Text  style={cate.aluminum?styles.textClicked:styles.textNotClicked}>Aluminum </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity   onPress={()=>{setCat({...cate,glass:!cate.glass}) }}style={cate.glass?styles.isClickedCat:styles.notClickedCat}>
+                    <Text style={cate.glass?styles.textClicked:styles.textNotClicked}>Glass </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity   onPress={()=>{setCat({...cate,paper:!cate.paper}) }}style={cate.paper?styles.isClickedCat:styles.notClickedCat}>
+                    <Text style={cate.paper?styles.textClicked:styles.textNotClicked}>Paper</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={{flexDirection:"row",gap:10}}>
+                  <TouchableOpacity  onPress={()=>{setCat({...cate,plastic:!cate.plastic}) }} style={cate.plastic?styles.isClickedCat:styles.notClickedCat}>
+                    <Text style={cate.plastic?styles.textClicked:styles.textNotClicked}>Plastic </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity  onPress={()=>{setCat({...cate,cardBoard:!cate.cardBoard}) }} style={cate.cardBoard?styles.isClickedCat:styles.notClickedCat}>
+                    <Text style={cate.cardBoard?styles.textClicked:styles.textNotClicked}>Cardboard </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity  onPress={()=>{setCat({...cate,steel:!cate.steel}) }} style={cate.steel?styles.isClickedCat:styles.notClickedCat}>
+                    <Text style={cate.steel?styles.textClicked:styles.textNotClicked}>Steel </Text>
+                  </TouchableOpacity>
+                </View>
+                
+              </View>
+            ),
+            backgroundColor: "#ffff",
+            image: (
+              <Icon
+                style={{ justifyContent: "center" }}
+                name="rocket"
+                type="font-awesome"
+                size={100}
+                color="#93c572"
+              />
+            ),
+          },
+          {
             title: "That's Enough",
             titleStyles: { color: "#93c572" },
             subtitle: (
@@ -283,5 +340,34 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: "center",
     justifyContent: "center",
+  }
+  ,
+  isClickedCat:{
+    backgroundColor: "#93c572",
+    borderRadius: 15,
+    width:100,
+    alignItems:'center',
+    borderColor: "#93c572",
+    borderWidth: 2,
+    padding: 10 ,
+
+
   },
+  notClickedCat: {
+    backgroundColor: "white",
+    borderRadius: 15,
+    width:100,
+    alignItems:'center',
+    borderColor: "#93c572",
+    borderWidth: 2,
+    padding: 10 
+
+  },
+  textClicked:{
+    color:"white"
+  },
+  textNotClicked:{
+    color:"#93c572"
+  }
+  
 });

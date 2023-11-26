@@ -28,6 +28,7 @@
     "expo-barcode-scanner": "~12.5.3",
     "expo-firebase-recaptcha": "^2.3.1",
     "expo-image-picker": "~14.3.2",
+    "expo-linear-gradient": "~12.3.0",
     "expo-location": "~16.1.0",
     "expo-status-bar": "~1.6.0",
     "firebase": "^10.5.2",
@@ -57,9 +58,7 @@
     "react-native-slider": "^0.11.0",
     "react-native-swiper": "^1.6.0",
     "react-native-vector-icons": "^10.0.1",
-    "react-native-webview": "13.2.2",
-    "expo-linear-gradient": "~12.3.0",
-    "react-native-reanimated": "~3.3.0"
+    "react-native-webview": "13.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import OnboardingScreen from "./components/OnBroadingScreen";
@@ -20,62 +20,103 @@ import AccumulatorScreen from "./screens/AccumulatorScreen";
 import ProfileCollector from "./screens/ProfileCollector";
 import AccSpendPointScreen from "./screens/AccSpendPointScreen";
 import Reviews from "./screens/Reviews";
-
 import AccOnboarding from "./components/AccOnboarding";
 import CommentsScreen from "./screens/CommentsScreen";
 import CollOmbording from "./components/CollOmbording";
 import TransactionScreen from "./screens/TransactionScreen";
 import SpecificChatScreen from "./screens/SpecificChatScreen";
+import ProfileVisitor from "./screens/ProfileVisitor";
 import MyCodeQr from "./screens/MyCodeQr";
 import ScanQR from "./screens/ScanQR";
+
+import UserFavouritesTipsScreen from "./screens/UserFavouritesTipsScreen";
+
+import AllstatsScreen from "./screens/AllstatsScreen";
+import ConvertionScrenn from "./screens/ConvertionScrenn";
+import { View } from "react-native-animatable";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { Image, Text } from "react-native-elements";
+import ReportScreen from "./screens/ReportScreen";
+import StoreScreen from "./screens/StoreScreen";
+
 const Stack = createNativeStackNavigator();
 const Tab = AnimatedTabBarNavigator();
 export default function App() {
-  // console.log(FIREBASE_AUTH.currentUser?.displayName);
-  //Onboarding
-  // const [isAppFirstLaunched, setIsAppFirstLaunched] = React.useState(true)
-  const [first, setFirst] = useState(true);
-  const fetch = async () => {
-    const x = await AsyncStorage.getItem("first");
-    // console.log(x);
-    if (!x) {
-      setFirst(false);
-    } else {
-      AsyncStorage.setItem("first", "false");
+  const [isFirst, setFirst] = useState(null); // Initialize with null as loading state
+  const [isLoading, setLoading] = useState(true);
+  const fetchIsFirst = async () => {
+    try {
+      setLoading(true);
+      const state = await AsyncStorage.getItem("isFirst");
+      setFirst(state);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false); // Set loading to false regardless of success or failure
     }
-    // const appData = await AsyncStorage.getItem("isAppFirstLaunched")
-    // console.log(appData);
-    // if (appData == true) {
-    //   setIsAppFirstLaunched(false)
-    //   AsyncStorage.setItem('isAppFirstLaunched', 'false')
-    // } else {
-    //   setIsAppFirstLaunched(true)
-    //   AsyncStorage.setItem('isAppFirstLaunched', 'true')
-    // }
   };
-  React.useEffect(() => {
-    fetch();
+
+  useEffect(() => {
+    fetchIsFirst();
   }, []);
 
-  return (
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName={"ombording"}
-        screenOptions={{ headerShown: false }}
-      >
-        <Stack.Screen name="ombording" component={OnboardingScreen} />
-        <Stack.Screen name="auth" component={AuthStack} />
-        <Stack.Screen name="App" component={RealApp} />
-        <Stack.Screen name="Reviews" component={Reviews} options={{headerShown:true,title:"My Reviews",headerTitleAlign:"center"}} />
-        <Stack.Screen name="QrScanner" component={ScanQR} />
-        <Stack.Screen
-          name="specificChat"
-          component={SpecificChatScreen}
-          options={{ headerShown: true, title: "" }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+  // Show a loading indicator or other UI while loading
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  } else {
+    console.log("welcome Hi After The set  ", isFirst);
+    return (
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName={"ombording"}
+          screenOptions={{ headerShown: false }}
+        >
+          <Stack.Screen name="ombording" component={OnboardingScreen} />
+          <Stack.Screen name="auth" component={AuthStack} />
+          <Stack.Screen name="App" component={RealApp} />
+          <Stack.Screen
+            name="Reviews"
+            component={Reviews}
+            options={{
+              headerShown: true,
+              title: "My Reviews",
+              headerTitleAlign: "left",
+            }}
+          />
+          <Stack.Screen
+            name="profileVisitor"
+            component={ProfileVisitor}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="allStatsScreen"
+            component={AllstatsScreen}
+            options={{
+              headerShown: true,
+              title: "Ranks",
+              headerTitleAlign: "left",
+            }}
+          />
+          <Stack.Screen name="QrScanner" component={ScanQR} />
+          <Stack.Screen
+            name="specificChat"
+            component={SpecificChatScreen}
+            options={{ headerShown: true, title: "" }}
+          />
+          <Stack.Screen
+            name="report"
+            component={ReportScreen}
+            options={{ headerShown: true, headerTitleAlign: "left" }}
+          />
+          <Stack.Screen name="store" component={StoreScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
 }
 export const AuthStack = () => {
   return (
@@ -95,7 +136,7 @@ export const AuthStack = () => {
     </Stack.Navigator>
   );
 };
-export const RealApp = ({route}) => {
+export const RealApp = ({ route }) => {
   // console.log(route.params.first);
   return (
     <Tab.Navigator
@@ -110,10 +151,9 @@ export const RealApp = ({route}) => {
         activeTintColor: "white",
         inactiveTintColor: "#222222",
       }}
-      
     >
       <Tab.Screen
-       initialParams={{first:route.params?.first}}
+        initialParams={{ first: route.params?.first }}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Icon
@@ -204,7 +244,25 @@ export const ProfileStack = () => {
       <Stack.Screen
         name="mycodeQr"
         component={MyCodeQr}
-        options={{ headerShown: true, title: "My Transaction" }}
+        options={{
+          headerShown: true,
+          title: "My Transaction",
+          headerTitleAlign: "center",
+        }}
+      />
+      <Stack.Screen
+        name="myFavourites"
+        component={UserFavouritesTipsScreen}
+        options={{
+          headerShown: true,
+          title: "My Favourites",
+          headerTitleAlign: "center",
+        }}
+      />
+      <Stack.Screen
+        name="convertion"
+        options={{ headerShown: true }}
+        component={ConvertionScrenn}
       />
     </Stack.Navigator>
   );
@@ -214,6 +272,7 @@ export const TipsStack = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="tipsMain" component={TipsScreen} />
+
       <Stack.Screen
         name="commentScreen"
         component={CommentsScreen}
@@ -226,5 +285,3 @@ export const TipsStack = () => {
     </Stack.Navigator>
   );
 };
-
-

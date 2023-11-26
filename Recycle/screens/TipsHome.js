@@ -3,10 +3,11 @@ import React, { useEffect, useState } from "react";
 import OneTipHome from "../components/OneTipHome";
 import { FIREBASE_DB } from "../firebaseConfig";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useCallback } from "react";
 
 const TipsHome = () => {
+  const navigation = useNavigation()
   const [tips, setTips] = useState([]);
   const [loading, setLoading] = useState(true);
   useFocusEffect(useCallback(() => {
@@ -28,12 +29,12 @@ const TipsHome = () => {
   if (loading) {
     return <ActivityIndicator size="small" color="green" />
   }
-  else if (!loading) {
+  else if (!loading && tips.length > 0) { 
     return (
       <View style={styles.container}>
         <View style={styles.textContainer}>
           <Text style={{ fontSize: 20, fontWeight: 700 }}>Tips</Text>
-          <TouchableOpacity style={{ flexDirection: "row", gap: 5 }}>
+          <TouchableOpacity onPress={()=>{navigation.navigate("Tips")}} style={{ flexDirection: "row", gap: 5 }}>
             <Text style={{ fontSize: 13, color: "#93C572" }}>View All</Text>
           </TouchableOpacity>
         </View>

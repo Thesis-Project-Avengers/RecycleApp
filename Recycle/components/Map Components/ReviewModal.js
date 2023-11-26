@@ -10,7 +10,14 @@ import Icons from "react-native-vector-icons/FontAwesome5";
 import { useNavigation } from "@react-navigation/native";
 import { Rating, AirbnbRating } from "react-native-ratings";
 import { useState } from "react";
-import { addDoc, collection, doc, increment, serverTimestamp, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  increment,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../../firebaseConfig";
 
 const ReviewModal = ({ currentInformation, setRateModal }) => {
@@ -32,11 +39,11 @@ const ReviewModal = ({ currentInformation, setRateModal }) => {
       });
       const rateRef = collection(FIREBASE_DB, "reviews");
       await addDoc(rateRef, {
-        cotent: content,
+        content: content,
         from: FIREBASE_AUTH.currentUser?.uid,
         to: currentInformation?.ownerId,
         stars: rate,
-        createAt: serverTimestamp(),
+        createdAt: serverTimestamp(),
       });
       setRateModal(0);
     } catch (error) {
@@ -70,7 +77,9 @@ const ReviewModal = ({ currentInformation, setRateModal }) => {
           paddingHorizontal: 30,
           borderRadius: 50,
         }}
-        onPress={()=>{hundleRating()}}
+        onPress={() => {
+          hundleRating();
+        }}
       >
         <Text style={{ color: "white" }}>Done</Text>
       </TouchableOpacity>

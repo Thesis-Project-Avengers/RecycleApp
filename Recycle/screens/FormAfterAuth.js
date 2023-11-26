@@ -46,6 +46,10 @@ const FormAfterAuth = ({ navigation }) => {
         const userData = {
           ...user,
           ...form,
+          nbrRaters: 0,
+          createdAt: new Date(),
+          rating: 0,
+          isBlocked:false
         };
         await updateProfile(FIREBASE_AUTH.currentUser, {
           displayName: form.firstName + " " + form.lastName,
@@ -93,8 +97,8 @@ const FormAfterAuth = ({ navigation }) => {
                   form.firstName.length === 0
                     ? "black"
                     : form.firstName.length > 5
-                    ? "green"
-                    : "red",
+                      ? "green"
+                      : "red",
               }}
               onChangeText={(firstName) => {
                 setForm({ ...form, firstName });
@@ -111,8 +115,8 @@ const FormAfterAuth = ({ navigation }) => {
                   form.lastName.length === 0
                     ? "black"
                     : form.lastName.length > 4
-                    ? "green"
-                    : "red",
+                      ? "green"
+                      : "red",
               }}
             />
           </View>
@@ -127,8 +131,8 @@ const FormAfterAuth = ({ navigation }) => {
                 borderColor: !form.email
                   ? "black"
                   : checkEmail(form.email)
-                  ? "green"
-                  : "red",
+                    ? "green"
+                    : "red",
               }}
             />
           </View>

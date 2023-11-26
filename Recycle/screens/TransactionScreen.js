@@ -11,17 +11,18 @@ import {
 import { useState } from "react";
 import { useEffect } from "react";
 import { useFocusEffect } from "@react-navigation/native";
-import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import { collection, doc, getDocs, onSnapshot, updateDoc } from "firebase/firestore";
 
 const TransactionScreen = () => {
   const [requests, setRquests] = useState([]);
+  const [update, setUpdate] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
       const fetchRequests = async () => {
         const requestsCollectionRef = collection(FIREBASE_DB, "requests");
-        await getDocs(requestsCollectionRef).then((sanpshot) => {
-          let data = [];
+        let data = [];
+        onSnapshot(requestsCollectionRef, (sanpshot) => {
           sanpshot.docs.forEach((doc) => {
             if (
               doc.data().receiverId === FIREBASE_AUTH.currentUser?.uid &&
@@ -31,10 +32,10 @@ const TransactionScreen = () => {
             }
           });
           setRquests(data);
-        });
+        })
       };
       fetchRequests();
-    }, [])
+    }, [update])
   );
 
   const memoizedRequests = useMemo(() => {
@@ -64,8 +65,6 @@ const TransactionScreen = () => {
       const rejectedRequests = requests.filter((r) => {
         return r.senderId !== request.senderId;
       });
-      setRquests(rejectedRequests);
-      console.log(rejectedRequests);
       rejectedRequests.forEach((req) => {
         if (request?.markerId === req?.markerId) {
           set(
@@ -82,6 +81,7 @@ const TransactionScreen = () => {
           );
         }
       });
+      setUpdate(!update);
     } catch (error) {
       console.log(error);
     }
@@ -107,10 +107,7 @@ const TransactionScreen = () => {
       await updateDoc(docref, {
         status: "rejected",
       });
-      const rejectedRequests = requests.filter((r) => {
-        return r.senderId !== request.senderId;
-      });
-      setRquests(rejectedRequests);
+      setUpdate(!update);
     } catch (error) {
       console.log(error);
     }
@@ -118,7 +115,7 @@ const TransactionScreen = () => {
 
   return (
     <SafeAreaView>
-      <ScrollView contentContainerStyle={{ gap: 15 }}>
+      <ScrollView contentContainerStyle={{ gap: 15, padding: 20 }}>
         {requests.map((request, index) => (
           <OneTransaction
             key={index}

@@ -6,14 +6,18 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faPeopleCarryBox, faRecycle } from "@fortawesome/free-solid-svg-icons";
 import React, { useCallback, useState } from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Icon2 from "react-native-vector-icons/FontAwesome5";
+// import FontAwesome6 from "react-native-vector-icons/FontAwesome6Pro";
 import Icon3 from "react-native-vector-icons/FontAwesome5";
 import Icon4 from "react-native-vector-icons/Entypo";
 import Icon5 from "react-native-vector-icons/AntDesign";
-// import Icon6 from "react-native-vector-icons/FontAwesome6";
+import Icon6 from "react-native-vector-icons/Fontisto";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../firebaseConfig";
 import { useFocusEffect } from "@react-navigation/native";
 import {
@@ -26,8 +30,11 @@ import {
 } from "firebase/firestore";
 import RatingProfile from "../components/RatingProfile";
 import OneReview from "../components/OneReview";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Profile = ({ navigation }) => {
+  const { height, width } = Dimensions.get("window");
+  // console.log("this is the height of the",height);
   const [userProfileInfo, setProfileInfo] = useState({});
   const [reviews, setReviews] = useState([]);
   useFocusEffect(
@@ -42,14 +49,12 @@ const Profile = ({ navigation }) => {
           );
           await getDoc(userDocRef).then((user) => {
             setProfileInfo(user.data());
-            // setForm({ firstName: user.data().firstName, lastName: user.data().lastName, email: user.data().email, photoURL: user.data().photoURL })
           });
         } catch (error) {
           console.log(error);
         }
       };
-      const getReviewoFcurentUser = async () => {
-        // console.log("inside secndond fucn", FIREBASE_AUTH.currentUser?.uid);
+      const getReviewOfCurentUser = async () => {
         try {
           const userCollectionRef = collection(FIREBASE_DB, "reviews");
           const q = query(
@@ -57,55 +62,72 @@ const Profile = ({ navigation }) => {
             where("to", "==", FIREBASE_AUTH.currentUser?.uid)
           );
           await getDocs(q).then((snapshot) => {
-            console.log(snapshot.docs, "hi");
             const data = [];
             snapshot.docs.forEach((doc, index) => {
               if (index < 2) {
                 data.push({ id: doc.id, ...doc.data() });
               }
             });
-            // setihookreviews
             setReviews(data);
           });
         } catch (error) {
           console.log(error);
         }
       };
-
       getUser();
-      getReviewoFcurentUser();
+      getReviewOfCurentUser();
     }, [])
   );
   return (
     <SafeAreaView>
-      <ScrollView showsVerticalScrollIndicator={false} style={styles.scroll}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={[
+          styles.scroll,
+          {
+            minHeight: "auto",
+            // userProfileInfo.type === "collector" ? height : height * 1.2,
+          },
+        ]}
+      >
         <View style={styles.returnPoints}>
-          <View style={styles.return}>
-            {/* <Icon name="arrow-return-left" 
-          size={22}
-          color={"#93C572"}
-          /> */}
-          </View>
-          {/* {userProfileInfo.type==="collector"?<Icon6 name="person-walking-arrow-loop-left"size={45} color={"#93C572"}/>:<Icon6  name="person-walking-arrow-right" size={45} color={"#93C572"}/>}  */}
-
-          <View style={styles.points}>
-            <Text style={{ textAlign: "center", color: "white", fontSize: 16 }}>
-              {userProfileInfo?.points}
-            </Text>
-
-            <Image
-              source={require("../assets/coin.png")}
-              style={styles.imageCoin}
+          {userProfileInfo.type === "collector" ? (
+            <FontAwesomeIcon
+              icon={faPeopleCarryBox}
+              size={30}
+              color="#93C572"
             />
-          </View>
+          ) : (
+            <FontAwesomeIcon icon={faRecycle} size={30} color="#93C572" />
+          )}
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("convertion");
+            }}
+          >
+            <View style={styles.points}>
+              <Text
+                style={{ textAlign: "center", color: "white", fontSize: 16 }}
+              >
+                {userProfileInfo?.points}
+              </Text>
+
+              <Image
+                source={require("../assets/coin.png")}
+                style={styles.imageCoin}
+              />
+            </View>
+          </TouchableOpacity>
         </View>
+
         <View style={styles.imageTextName}>
           <Image
             source={{ uri: userProfileInfo?.photoURL }}
             style={styles.imageProfile}
           />
           <Text style={styles.textName}>{userProfileInfo?.displayName}</Text>
-          
+
           <RatingProfile userProfileInfo={userProfileInfo} />
 
           {/* badge w rating  */}
@@ -126,42 +148,57 @@ const Profile = ({ navigation }) => {
         </View>
 
         {/* hne bech thot zouz review  */}
-        <View style={styles.container}>
-          <View style={styles.textContainer}>
-            <Text style={{ fontSize: 20, fontWeight: 700 }}>Reviews</Text>
-            <TouchableOpacity
-              style={{ flexDirection: "row", gap: 5 }}
-              onPress={() => {
-                navigation.navigate("Reviews");
-              }}
+        {userProfileInfo?.type === "accumulator" && (
+          <View style={styles.container}>
+            <View style={styles.textContainer}>
+              <Text style={{ fontSize: 20, fontWeight: 700 }}>Reviews</Text>
+              <TouchableOpacity
+                style={{ flexDirection: "row", gap: 5 }}
+                onPress={() => {
+                  navigation.navigate("Reviews");
+                }}
+              >
+                <Text style={{ fontSize: 13, color: "#93C572" }}>View All</Text>
+              </TouchableOpacity>
+            </View>
+            <ScrollView
+              contentContainerStyle={{ gap: 20 }}
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
             >
-              <Text style={{ fontSize: 13, color: "#93C572" }}>View All</Text>
-            </TouchableOpacity>
+              {reviews.map((review, index) => (
+                <OneReview key={index} review={review} />
+              ))}
+            </ScrollView>
           </View>
-          <ScrollView
-            contentContainerStyle={{ gap: 20 }}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-          >
-            {
-            reviews.map((review,index) => (
-              <OneReview key={index} review={review} />
-            ))
-            }
-          </ScrollView>
-        </View>
+        )}
+
+        {/* Here The Favourites Tips  */}
 
         <View style={{ marginBottom: 25 }}>
-          <View style={styles.oneButton}>
-            <Icon4 name="back-in-time" size={20} color={"#93C572"} />
+          {userProfileInfo?.type === "accumulator" && (
+            <View style={styles.oneButton}>
+              <Icon4 name="back-in-time" size={20} color={"#93C572"} />
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("transaction");
+                }}
+              >
+                <Text style={{ fontSize: 17 }}>My Requests</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+          <View style={[styles.oneButton, { marginLeft: 5 }]}>
+            <Icon6 name="favorite" size={20} color={"#93C572"} />
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate("transaction");
+                navigation.navigate("myFavourites");
               }}
             >
-              <Text style={{ fontSize: 17 }}>My Transactions</Text>
+              <Text style={{ fontSize: 17 }}>My Favourites</Text>
             </TouchableOpacity>
           </View>
+
           <View style={styles.oneButton}>
             <Icon5 name="qrcode" size={20} color={"#93C572"} />
             <TouchableOpacity
@@ -182,18 +219,26 @@ const Profile = ({ navigation }) => {
               <Text style={{ fontSize: 17 }}>Edit Profile</Text>
             </View>
           </TouchableOpacity>
-          <View style={styles.oneButton}>
-            <Icon name="logout" size={20} color={"#93C572"} />
-            <TouchableOpacity>
-              <Text style={{ fontSize: 17 }}>Log Out</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.oneButton}>
+          <TouchableOpacity
+            onPress={() => {
+              FIREBASE_AUTH.signOut();
+              AsyncStorage.setItem("isFirst", "false");
+              navigation.navigate("auth");
+            }}
+          >
+            <View style={styles.oneButton}>
+              <Icon name="logout" size={20} color={"#93C572"} />
+              <TouchableOpacity>
+                <Text style={{ fontSize: 17 }}>Log Out</Text>
+              </TouchableOpacity>
+            </View>
+          </TouchableOpacity>
+          {/* <View style={styles.oneButton}>
             <Icon name="logout" size={20} color={"#93C572"} />
             <TouchableOpacity>
               <Text style={{ fontSize: 17 }}>Delete Account</Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -208,6 +253,7 @@ const styles = StyleSheet.create({
   returnPoints: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
     // backgroundColor:"red",
     padding: 5,
     alignContent: "center",
@@ -261,8 +307,9 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   scroll: {
-    padding: 20,
-    // height:"100%"
+    paddingVertical: 30,
+    paddingHorizontal: 20,
+    // minHeight:1200,
     // backgroundColor:"red",
     // gap:30
   },

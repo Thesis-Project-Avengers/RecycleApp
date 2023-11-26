@@ -22,7 +22,7 @@ const RatingProfile = ({ userProfileInfo }) => {
     <View style={{ alignItems: "center", justifyContent: "center" }}>
       <View style={{ flexDirection: "row", marginVertical: 10 }}>
         {renderStars(
-          ((userProfileInfo?.rating / (userProfileInfo?.nbrRaters * 5)*100)*0.05)
+          ((userProfileInfo?.rating / (userProfileInfo?.nbrRaters * 5)*100)*0.05)||1
         )}
       </View>
     </View>

@@ -29,7 +29,6 @@ const ConfirmCode = ({ route, navigation }) => {
     try {
       const credential = PhoneAuthProvider.credential(verificationId, code);
       // from here u create the credential object
-      console.log("creeee", credential);
       const res = await signInWithCredential(auth, credential);
       // added to ther firebase
       setCode("");
@@ -53,38 +52,38 @@ const ConfirmCode = ({ route, navigation }) => {
       if (!(await existsUser())) {
         navigation.navigate("formAfterAuth");
       } else {
-        navigation.navigate("App",{first:false});
+        navigation.navigate("App", { first: false });
       }
+      await AsyncStorage.setItem("isFirst", "false");
     } catch (error) {
       console.log(error);
     }
   };
   return (
-
     <ScrollView contentContainerStyle={styles.container}>
-      <View style={{justifyContent:"center",alignItems:"center",gap:40}} > 
-      <View
-        style={{
-          // height: "100%",
-          alignItems: "center",
-          justifyContent: "center",
-          width: "90%",
-        }}
-      >
-        <Image
-          source={require("../assets/confirme.png")}
-          style={{ width: "100%", height: 300 }}
+      <View style={{ justifyContent: "center", alignItems: "center", gap: 40 }}>
+        <View
+          style={{
+            // height: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "90%",
+          }}
+        >
+          <Image
+            source={require("../assets/confirme.png")}
+            style={{ width: "100%", height: 300 }}
+          />
+        </View>
+        <OTPTextView
+          inputCount={"6"}
+          width={"10%"}
+          handleTextChange={setCode}
+          tintColor={"#93C572"}
         />
-      </View>
-      <OTPTextView
-        inputCount={"6"}
-        width={"10%"}
-        handleTextChange={setCode}
-        tintColor={"#93C572"}
-      />
-      <TouchableOpacity style={styles.sendCode} onPress={confirmCode}>
-        <Text style={styles.buttonText}>Confirm verification</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.sendCode} onPress={confirmCode}>
+          <Text style={styles.buttonText}>Continue</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -93,7 +92,7 @@ const ConfirmCode = ({ route, navigation }) => {
 export default ConfirmCode;
 const styles = StyleSheet.create({
   container: {
-  // height:"100%",
+    // height:"100%",
     // gap: 40,
   },
   textInput: {
