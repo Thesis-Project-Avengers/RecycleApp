@@ -79,8 +79,8 @@ const OneTip = ({ tip }) => {
                     <Icon
                         onPress={() => updateLikeState()}
                         size={20}
-                        name={isLiked ? "trash" : "trash-o"}
-                        color={isLiked && "green"}
+                        name={"recycle"}
+                        color={isLiked ? "green" : "black"}
                     />
                     <Text style={{ fontWeight: 700 }}>{tip.numlikes}</Text>
                 </TouchableOpacity>
