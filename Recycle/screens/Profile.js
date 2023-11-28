@@ -123,7 +123,7 @@ const Profile = ({ navigation }) => {
 
         <View style={styles.imageTextName}>
           <Image
-            source={{ uri: userProfileInfo?.photoURL }}
+            source={{ uri: userProfileInfo?.photoURL  }}
             style={styles.imageProfile}
           />
           <Text style={styles.textName}>{userProfileInfo?.displayName}</Text>

@@ -49,17 +49,19 @@ const FormAfterAuth = ({ navigation }) => {
           nbrRaters: 0,
           createdAt: new Date(),
           rating: 0,
-          isBlocked:false
+          isBlocked: false,
         };
         await updateProfile(FIREBASE_AUTH.currentUser, {
           displayName: form.firstName + " " + form.lastName,
           photoURL:
             "https://imebehavioralhealth.com/wp-content/uploads/2021/10/user-icon-placeholder-1.png",
         });
-        await setDoc(
-          doc(FIREBASE_DB, "users", FIREBASE_AUTH.currentUser.uid),
-          userData
-        );
+        await setDoc(doc(FIREBASE_DB, "users", FIREBASE_AUTH.currentUser.uid), {
+          ...userData,
+          displayName: form.firstName + " " + form.lastName,
+          photoURL:
+            "https://imebehavioralhealth.com/wp-content/uploads/2021/10/user-icon-placeholder-1.png",
+        });
         navigation.navigate("chooseScreen");
       } else {
         Alert.alert("Verify Inforamtion");
@@ -97,8 +99,8 @@ const FormAfterAuth = ({ navigation }) => {
                   form.firstName.length === 0
                     ? "black"
                     : form.firstName.length > 5
-                      ? "green"
-                      : "red",
+                    ? "green"
+                    : "red",
               }}
               onChangeText={(firstName) => {
                 setForm({ ...form, firstName });
@@ -115,8 +117,8 @@ const FormAfterAuth = ({ navigation }) => {
                   form.lastName.length === 0
                     ? "black"
                     : form.lastName.length > 4
-                      ? "green"
-                      : "red",
+                    ? "green"
+                    : "red",
               }}
             />
           </View>
@@ -131,8 +133,8 @@ const FormAfterAuth = ({ navigation }) => {
                 borderColor: !form.email
                   ? "black"
                   : checkEmail(form.email)
-                    ? "green"
-                    : "red",
+                  ? "green"
+                  : "red",
               }}
             />
           </View>
