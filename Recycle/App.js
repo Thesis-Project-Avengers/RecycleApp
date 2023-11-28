@@ -256,7 +256,7 @@ export const ProfileStack = () => {
         options={{
           headerShown: true,
           title: "My Favourites",
-          headerTitleAlign: "center",
+          headerTitleAlign: "left",
         }}
       />
       <Stack.Screen
