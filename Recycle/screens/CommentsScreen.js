@@ -40,10 +40,7 @@ const CommentsScreen = ({ route }) => {
                 await addDoc(commentsRef, {
                     content,
                     tipId,
-                    user: {
-                        displayName: FIREBASE_AUTH.currentUser?.displayName,
-                        photoURL: FIREBASE_AUTH.currentUser?.photoURL
-                    },
+                    commenterId: FIREBASE_AUTH.currentUser?.uid,
                     createdAt: serverTimestamp()
                 })
                 setUpdate(!update)
