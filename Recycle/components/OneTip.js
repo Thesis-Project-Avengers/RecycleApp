@@ -80,7 +80,7 @@ const OneTip = ({ tip }) => {
                         onPress={() => updateLikeState()}
                         size={20}
                         name={"recycle"}
-                        color={isLiked ? "green" : "black"}
+                        color={isLiked ? "#93c752" : "black"}
                     />
                     <Text style={{ fontWeight: 700 }}>{tip.numlikes}</Text>
                 </TouchableOpacity>
@@ -95,7 +95,7 @@ const OneTip = ({ tip }) => {
                 <TouchableOpacity
                     onPress={() => updateFavouriteState()}
                     style={{ flexDirection: "row", gap: 5 }}>
-                    <MaterialIcons name={isFavourite ? "favorite" : "favorite-outline"} size={24} />
+                    <MaterialIcons name={isFavourite ? "favorite" : "favorite-outline"} color={isFavourite&& "#93c752"} size={24} />
                 </TouchableOpacity>
             </View>
 
