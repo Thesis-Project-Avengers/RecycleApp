@@ -51,7 +51,7 @@ const AllstatsScreen = () => {
       <View style={styles.container}>
         {allUsers.map((user, index) => {
           let score = (((user?.rating / (user?.nbrRaters * 5)) * 100) * 230) / 100;
-          console.log(score);
+          // console.log(score);
           return (
             <View key={index} style={styles.barContainer}>
               <View

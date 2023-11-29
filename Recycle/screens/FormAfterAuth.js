@@ -98,7 +98,7 @@ const FormAfterAuth = ({ navigation }) => {
                 borderColor:
                   form.firstName.length === 0
                     ? "black"
-                    : form.firstName.length > 5
+                    : form.firstName.length > 2
                     ? "green"
                     : "red",
               }}
