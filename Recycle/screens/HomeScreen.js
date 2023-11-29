@@ -42,13 +42,11 @@ const HomeScreen = ({ navigation, route }) => {
           let accumulator = [];
           await getDocs(q).then((snapshot) => {
             snapshot.docs.forEach((doc, index) => {
-              if (collector.length < 3 && accumulator.length < 3) {
-                if (doc.data()?.type === "collector") {
-                  collector.push({ ...doc.data(), id: doc.id });
-                }
-                if (doc.data()?.type === "accumulator") {
-                  accumulator.push({ ...doc.data(), id: doc.id });
-                }
+              if (doc.data()?.type === "collector"&& collector.length<3) {
+                collector.push({ ...doc.data(), id: doc.id });
+              }
+              if (doc.data()?.type === "accumulator" && accumulator.length<3) {
+                accumulator.push({ ...doc.data(), id: doc.id });
               }
             });
             setCollectorsUsers(collector);
@@ -84,7 +82,7 @@ const HomeScreen = ({ navigation, route }) => {
         <Stats users={collectorsUsers} />
         <TipsHome />
 
-        {/* One To Go To tHE sTORE  */}
+        {/* One To Go To tHE STORE  */}
         <TouchableOpacity onPress={() => {
           navigation.navigate("store");
         }}

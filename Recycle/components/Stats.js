@@ -58,9 +58,7 @@ const Stats = ({ users }) => {
         }}
       >
         <Text style={{ fontWeight: 800, fontSize: 16 }}>
-          {users[0]?.type === "collector"
-            ? "Collector stats"
-            : "Accumulator stats"}
+          Stats
         </Text>
         <TouchableOpacity onPress={() => navigation.navigate("allStatsScreen")}>
           <Text style={{ color: "#93C572" }}>View All</Text>

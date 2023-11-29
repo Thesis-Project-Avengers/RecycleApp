@@ -1,6 +1,6 @@
 import { RealApp } from "./stacks/RealAppStack";
 import { AuthStack } from "./stacks/AuthStack";
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
